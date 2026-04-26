@@ -2,7 +2,7 @@
 'use strict';
 
 // ── Backend URL - Apna Vercel URL yahan dalein ──
-    const API_URL = 'https://folio-craft-lp84zy19w-zahrabatoolmns-sketchs-projects.vercel.app';
+    const API_URL = 'https://folio-craft-two.vercel.app/api';
 // ── Token Helper ──
 const getToken  = ()        => localStorage.getItem('fc_token');
 const setToken  = (token)   => localStorage.setItem('fc_token', token);
