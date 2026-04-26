@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Preview | FolioCraft</title>
+  <link rel="stylesheet" href="preview.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+
+<!-- ─── TOP BAR ─── -->
+<header class="topbar">
+  <div class="brand">
+    <div class="dot"></div>
+    <div>
+      <h1>Preview</h1>
+      <p id="templateLabel">Loading template…</p>
+    </div>
+  </div>
+
+  <div class="actions">
+  <button class="btn ghost" id="backBtn" type="button">← Back to Wizard</button>
+  <button class="btn primary" id="downloadBtn" type="button">
+    <span id="downloadBtnLabel">⬇ Download ZIP</span>
+  </button>
+</div>
+</header>
+
+<!-- ─── MAIN LAYOUT ─── -->
+<main class="layout">
+
+  <!-- LEFT PANEL -->
+  <section class="panel">
+
+    <!-- Data check -->
+    <div class="panel-section">
+      <h2>Portfolio Data</h2>
+      <div class="kv">
+        <div class="k">Name</div>     <div class="v" id="pvName">—</div>
+        <div class="k">Title</div>    <div class="v" id="pvTitle">—</div>
+        <div class="k">Template</div> <div class="v" id="pvTemplate">—</div>
+        <div class="k">Email</div>    <div class="v" id="pvEmail">—</div>
+        <div class="k">Projects</div> <div class="v" id="pvProjects">—</div>
+        <div class="k">Skills</div>   <div class="v" id="pvSkills">—</div>
+      </div>
+    </div>
+
+    <div class="panel-divider"></div>
+
+    <!-- Status -->
+    <div class="panel-section">
+      <h2>Status</h2>
+      <div class="status-badge ready" id="statusBadge">
+        <span class="sd"></span>
+        <span id="statusText">Ready to download</span>
+      </div>
+    </div>
+
+    <div class="panel-divider"></div>
+
+    <!-- Note box (hidden until needed) -->
+    <div class="note" id="noteBox" hidden></div>
+
+    <!-- Deploy tips -->
+    <div class="panel-section">
+      <h2>After Download</h2>
+      <div class="deploy-tips">
+        <div class="dt-item">
+          <span class="dt-icon">🌐</span>
+          <div>
+            <span class="dt-label">Netlify Drop</span>
+            <span class="dt-desc">Drag the folder to netlify.com/drop. Live in seconds.</span>
+          </div>
+        </div>
+        <div class="dt-item">
+          <span class="dt-icon">🐙</span>
+          <div>
+            <span class="dt-label">GitHub Pages</span>
+            <span class="dt-desc">Push to a repo, enable Pages in Settings.</span>
+          </div>
+        </div>
+        <div class="dt-item">
+          <span class="dt-icon">▲</span>
+          <div>
+            <span class="dt-label">Vercel</span>
+            <span class="dt-desc">Run <code style="font-size:11px;opacity:.8">vercel</code> in the folder, done.</span>
+          </div>
+        </div>
+        <div class="dt-item">
+          <span class="dt-icon">📁</span>
+          <div>
+            <span class="dt-label">Local View</span>
+            <span class="dt-desc">Just open index.html.  No server needed.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- IFRAME PREVIEW -->
+  <section class="preview">
+    <div class="frameWrap">
+      <!-- Loading overlay -->
+      <div class="frame-loader" id="frameLoader">
+        <div class="big-spin"></div>
+        <p>Loading template preview…</p>
+      </div>
+      <iframe id="previewFrame" title="Template Preview" loading="lazy"></iframe>
+    </div>
+  </section>
+</main>
+
+<script src="preview.js"></script>
+</body>
+</html>

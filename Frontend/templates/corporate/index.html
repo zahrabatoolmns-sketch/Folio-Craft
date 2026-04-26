@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — Corporate</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- BACKGROUND LAYERS -->
+  <div class="bg-layer">
+    <div class="bg-grid"></div>
+    <div class="bg-accent left-accent"></div>
+    <div class="bg-accent right-accent"></div>
+  </div>
+
+  <!-- TOP HEADER BAR -->
+  <div class="top-ribbon">
+    <span id="ribbonEmail">—</span>
+    <span class="ribbon-sep">|</span>
+    <span id="ribbonPhone">—</span>
+    <span class="ribbon-sep">|</span>
+    <span id="ribbonLocation">—</span>
+  </div>
+
+  <!-- MAIN NAV -->
+  <header class="main-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-monogram" id="brandMonogram">AB</div>
+        <div class="brand-text">
+          <div class="brand-name" id="brandName">Full Name</div>
+          <div class="brand-title" id="brandTitle">Professional Title</div>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <a href="#about">About</a>
+        <a href="#expertise">Expertise</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#career">Career</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO PANEL -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+
+      <!-- LEFT: TEXT -->
+      <div class="hero-text">
+        <div class="hero-label">Professional Portfolio</div>
+        <h1 class="hero-heading">
+          <span id="heroNameMain">Your Name</span>
+        </h1>
+        <div class="hero-rule"></div>
+        <p class="hero-bio" id="heroBioMain">—</p>
+        <div class="hero-actions">
+          <a href="#contact" class="cta-primary">Get In Touch</a>
+          <a href="#portfolio" class="cta-outline">View Work</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: CARD -->
+      <div class="hero-card">
+        <div class="profile-photo-wrap">
+          <img id="heroImg" src="" alt="" style="display:none"/>
+          <div class="photo-placeholder" id="photoPlaceholder">
+            <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+        </div>
+        <div class="card-stats">
+          <div class="stat">
+            <div class="stat-num" id="statSkills">0</div>
+            <div class="stat-label">Skills</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-num" id="statProjects">0</div>
+            <div class="stat-label">Projects</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-num" id="statExp">0</div>
+            <div class="stat-label">Roles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / DESCRIPTION -->
+  <section class="section about-section" id="about">
+    <div class="section-inner">
+      <div class="section-label-wrap">
+        <div class="section-number">01</div>
+        <div class="section-label">About</div>
+      </div>
+      <div class="about-content">
+        <div class="about-main">
+          <h2>Professional <em>Overview</em></h2>
+          <p class="body-copy" id="aboutDesc">—</p>
+        </div>
+        <div class="about-sidebar">
+          <div class="sidebar-block">
+            <div class="sb-title">Skills Synopsis</div>
+            <p id="aboutSkillsSummary">—</p>
+          </div>
+          <div class="sidebar-block" id="contactCard">
+            <div class="sb-title">Contact</div>
+            <div class="contact-line">
+              <span class="contact-key">Email</span>
+              <span class="contact-val" id="aboutEmail">—</span>
+            </div>
+            <div class="contact-line">
+              <span class="contact-key">Phone</span>
+              <span class="contact-val" id="aboutPhone">—</span>
+            </div>
+            <div class="contact-line">
+              <span class="contact-key">Location</span>
+              <span class="contact-val" id="aboutLocation">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS / EXPERTISE -->
+  <section class="section expertise-section" id="expertise">
+    <div class="section-inner">
+      <div class="section-label-wrap">
+        <div class="section-number">02</div>
+        <div class="section-label">Expertise</div>
+      </div>
+      <h2>Core <em>Competencies</em></h2>
+      <div class="expertise-table" id="expertiseTable"></div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO / PROJECTS -->
+  <section class="section portfolio-section" id="portfolio">
+    <div class="section-inner">
+      <div class="section-label-wrap">
+        <div class="section-number">03</div>
+        <div class="section-label">Portfolio</div>
+      </div>
+      <h2>Selected <em>Work</em></h2>
+      <div class="work-grid" id="workGrid"></div>
+    </div>
+  </section>
+
+  <!-- CAREER HISTORY -->
+  <section class="section career-section" id="career">
+    <div class="section-inner">
+      <div class="section-label-wrap">
+        <div class="section-number">04</div>
+        <div class="section-label">Career</div>
+      </div>
+      <div class="career-columns">
+        <div class="career-col">
+          <h2>Work <em>Experience</em></h2>
+          <div id="expTable" class="career-table"></div>
+        </div>
+        <div class="career-col">
+          <h2>Academic <em>Background</em></h2>
+          <div id="eduTable" class="career-table"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL / PRESENCE -->
+  <section class="section social-section" id="presence">
+    <div class="section-inner">
+      <div class="section-label-wrap">
+        <div class="section-number">05</div>
+        <div class="section-label">Online Presence</div>
+      </div>
+      <h2>Connect <em>With Me</em></h2>
+      <div class="social-row" id="socialRow"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact-section" id="contact">
+    <div class="section-inner">
+      <div class="section-label-wrap">
+        <div class="section-number">06</div>
+        <div class="section-label">Contact</div>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-intro">
+          <h2>Start a <em>Conversation</em></h2>
+          <p>Ready to discuss your next project? I welcome all professional inquiries and collaboration opportunities.</p>
+        </div>
+        <form class="contact-form" onsubmit="sendMessage(event)">
+          <div class="two-col">
+            <div class="form-field">
+              <label>Full Name *</label>
+              <input type="text" id="cName" placeholder="Jane Smith"/>
+            </div>
+            <div class="form-field">
+              <label>Email Address *</label>
+              <input type="email" id="cEmail" placeholder="jane@company.com"/>
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Subject</label>
+            <input type="text" id="cSubject" placeholder="Project Inquiry"/>
+          </div>
+          <div class="form-field">
+            <label>Message *</label>
+            <textarea id="cMessage" placeholder="Describe your project or inquiry..."></textarea>
+          </div>
+          <div class="form-footer">
+            <button type="submit" class="cta-primary">Send Message</button>
+            <div class="form-resp" id="formResp"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-monogram sm" id="footerMonogram">AB</div>
+        <span id="footerName">—</span>
+      </div>
+      <div class="footer-copy">© <span id="footerYear">2024</span> · Built with FolioCraft</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

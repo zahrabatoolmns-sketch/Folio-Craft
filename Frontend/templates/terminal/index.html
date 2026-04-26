@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="pageTitle">PORTFOLIO_SYS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- SCANLINES -->
+<div class="scanlines" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<!-- BACKGROUND -->
+<div class="bg">
+  <canvas id="bgCanvas"></canvas>
+  <div class="grid-bg"></div>
+  <div class="neon-blob blob-1"></div>
+  <div class="neon-blob blob-2"></div>
+  <div class="neon-blob blob-3"></div>
+</div>
+
+<!-- BOOT SCREEN (shows briefly) -->
+<div class="boot-overlay" id="bootOverlay">
+  <div class="boot-content">
+    <div class="boot-logo">SYS_INIT</div>
+    <div class="boot-log" id="bootLog"></div>
+    <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
+  </div>
+</div>
+
+<!-- GLITCH CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-cross" id="cursorCross"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-sys">
+    <span class="sys-blink">▶</span>
+    <span class="nav-id" id="navId">PORTFOLIO.EXE</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#hero">_HOME</a></li>
+    <li><a href="#about">_ABOUT</a></li>
+    <li><a href="#skills">_SKILLS</a></li>
+    <li><a href="#projects">_PROJECTS</a></li>
+    <li><a href="#experience">_JOURNEY</a></li>
+    <li><a href="#contact">_CONTACT</a></li>
+  </ul>
+  <div class="nav-status">
+    <span class="status-dot"></span>
+    <span class="status-txt">ONLINE</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <div class="hero-sys-tag">[ IDENTITY_MODULE v2.0 ]</div>
+    <div class="hero-greeting">INITIALIZING... <span class="cursor-blink">█</span></div>
+    <h1 class="hero-name glitch-text" id="name" data-text="YOUR NAME">YOUR NAME</h1>
+    <div class="hero-title-wrap">
+      <span class="hero-title-arrow">▷</span>
+      <h2 class="hero-title" id="title">PROFESSIONAL TITLE</h2>
+    </div>
+    <div class="hero-terminal">
+      <div class="terminal-header">
+        <span class="t-dot t-red"></span>
+        <span class="t-dot t-yellow"></span>
+        <span class="t-dot t-green"></span>
+        <span class="t-label">bio.txt</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">cat bio.txt</span></div>
+        <div class="t-line t-output" id="bio">Loading bio...</div>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">whoami</span></div>
+        <div class="t-line t-output" id="locationOut">—</div>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">echo $EMAIL</span></div>
+        <div class="t-line t-output" id="emailOut">—</div>
+        <div class="t-line t-cursor-line"><span class="t-prompt">$</span> <span class="cursor-blink">█</span></div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <button class="btn-neon" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">[ EXPLORE WORK ]</button>
+      <button class="btn-neon-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">[ INIT CONTACT ]</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="avatar-container">
+      <div class="avatar-scan"></div>
+      <div class="avatar-frame">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+        <div class="avatar-inner">
+          <img id="profileImage" src="" alt="Profile" onerror="this.style.display='none'"/>
+          <div class="avatar-ph" id="avatarPh">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="35" r="22" fill="rgba(0,255,136,0.2)" stroke="rgba(0,255,136,0.5)" stroke-width="1"/><ellipse cx="50" cy="88" rx="32" ry="20" fill="rgba(0,255,136,0.1)" stroke="rgba(0,255,136,0.3)" stroke-width="1"/></svg>
+          </div>
+        </div>
+        <div class="scan-line"></div>
+      </div>
+      <div class="avatar-data">
+        <div class="a-data-item"><span class="a-key">ID</span><span class="a-val" id="aId">—</span></div>
+        <div class="a-data-item"><span class="a-key">STATUS</span><span class="a-val">ACTIVE</span></div>
+        <div class="a-data-item"><span class="a-key">PROJECTS</span><span class="a-val" id="aProjects">0</span></div>
+        <div class="a-data-item"><span class="a-key">SKILLS</span><span class="a-val" id="aSkills">0</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">MODULE_02</div>
+      <h2 class="section-title">&gt; SYSTEM_OVERVIEW</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="code-block">
+          <div class="cb-header"><span class="cb-lang">PROFILE.JSON</span></div>
+          <div class="cb-body">
+            <div class="cb-line"><span class="cb-key">"description"</span>: <span class="cb-str" id="description">"..."</span></div>
+            <div class="cb-line"><span class="cb-key">"skills_summary"</span>: <span class="cb-str" id="skills_summary">"..."</span></div>
+            <div class="cb-line"><span class="cb-key">"availability"</span>: <span class="cb-bool">true</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="social-panel">
+          <div class="sp-header">[ NETWORK_LINKS ]</div>
+          <a class="sp-link" id="linkedinLink" href="#" target="_blank">
+            <span class="sp-arrow">→</span> LINKEDIN.ACCESS
+          </a>
+          <a class="sp-link" id="githubLink" href="#" target="_blank">
+            <span class="sp-arrow">→</span> GITHUB.REPOSITORY
+          </a>
+          <a class="sp-link" id="instagramLink" href="#" target="_blank">
+            <span class="sp-arrow">→</span> INSTAGRAM.FEED
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section section-alt" id="skills">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">MODULE_03</div>
+      <h2 class="section-title">&gt; CAPABILITY_SCAN</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid" id="skillsGrid"></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">MODULE_04</div>
+      <h2 class="section-title">&gt; PROJECT_ARCHIVE</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section section-alt" id="experience">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">MODULE_05</div>
+      <h2 class="section-title">&gt; MISSION_LOG</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline-grid">
+      <div class="tl-col">
+        <div class="tl-col-header">[ WORK_HISTORY ]</div>
+        <div id="expList"></div>
+      </div>
+      <div class="tl-col">
+        <div class="tl-col-header">[ EDU_RECORDS ]</div>
+        <div id="eduList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-inner contact-inner">
+    <div class="section-header">
+      <div class="section-tag">MODULE_06</div>
+      <h2 class="section-title">&gt; ESTABLISH_CONNECTION</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-terminal">
+      <div class="ct-header">
+        <span class="t-dot t-red"></span>
+        <span class="t-dot t-yellow"></span>
+        <span class="t-dot t-green"></span>
+        <span class="t-label">contact.sh</span>
+      </div>
+      <div class="ct-body">
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">./connect.sh --email</span></div>
+        <a class="ct-link" id="cEmailLink" href="#"><span class="t-output" id="cEmail">—</span> <span class="ct-arrow">↗</span></a>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">./connect.sh --linkedin</span></div>
+        <a class="ct-link" id="cLinkedin" href="#" target="_blank"><span class="t-output">OPEN_LINKEDIN</span> <span class="ct-arrow">↗</span></a>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">./connect.sh --github</span></div>
+        <a class="ct-link" id="cGithub" href="#" target="_blank"><span class="t-output">OPEN_GITHUB</span> <span class="ct-arrow">↗</span></a>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="cursor-blink">█</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-left">
+    <span class="sys-blink">▶</span>
+    <span id="footerName">PORTFOLIO</span>
+    <span class="footer-ver">v1.0.0</span>
+  </div>
+  <div class="footer-mid">SYS_STATUS: <span class="status-ok">OPERATIONAL</span></div>
+  <div class="footer-right">ALL_RIGHTS_RESERVED © 2025</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

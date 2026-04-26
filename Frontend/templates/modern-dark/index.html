@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="pageTitle">Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-canvas">
+  <canvas id="bgCanvas"></canvas>
+  <div class="bg-mesh"></div>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+  <div class="bg-orb orb-c"></div>
+  <div class="noise"></div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-logo" id="navName">Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire Me</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-badge">✦ Available for work</div>
+  <div class="hero-content">
+    <p class="hero-greeting">Hello, I'm</p>
+    <h1 class="hero-name" id="name">Your Name</h1>
+    <h2 class="hero-title" id="title">Professional Title</h2>
+    <p class="hero-bio" id="bio">Your short bio goes here. Tell the world what makes you unique.</p>
+    <div class="hero-meta">
+      <span class="meta-item" id="location"> Location</span>
+      <span class="meta-item" id="email"> email@example.com</span>
+    </div>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View My Work</button>
+      <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+    </div>
+  </div>
+  <div class="hero-avatar-wrap">
+    <div class="avatar-ring ring-1"></div>
+    <div class="avatar-ring ring-2"></div>
+    <div class="avatar-ring ring-3"></div>
+    <div class="avatar-img" id="profileImageWrap">
+      <img id="profileImage" src="" alt="Profile" onerror="this.style.display='none'"/>
+      <div class="avatar-placeholder" id="avatarPlaceholder">
+        <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="30" r="18" fill="rgba(99,102,241,0.5)"/><ellipse cx="40" cy="72" rx="28" ry="20" fill="rgba(99,102,241,0.3)"/></svg>
+      </div>
+    </div>
+    <div class="avatar-glow"></div>
+    <!-- floating tags -->
+    <div class="float-tag tag-1"> Creative</div>
+    <div class="float-tag tag-2"> Fast</div>
+    <div class="float-tag tag-3"> Precise</div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-label">01 / ABOUT</div>
+    <h2 class="section-title">Who I Am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p id="description">Detailed description about yourself goes here.</p>
+        <p id="skills_summary" class="about-skills-text">Your skills summary goes here.</p>
+        <div class="about-links" id="aboutLinks">
+          <a class="social-link" id="linkedinLink" href="#" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a class="social-link" id="githubLink" href="#" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            GitHub
+          </a>
+          <a class="social-link" id="instagramLink" href="#" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-num" id="projectCount">0+</div>
+          <div class="stat-label">Projects Done</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="skillCount">0+</div>
+          <div class="stat-label">Skills Mastered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="expCount">0+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="eduCount">0</div>
+          <div class="stat-label">Certifications</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section section-alt" id="skills">
+  <div class="section-inner">
+    <div class="section-label">02 / SKILLS</div>
+    <h2 class="section-title">What I Do</h2>
+    <div class="skills-grid" id="skillsGrid">
+      <!-- injected -->
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-inner">
+    <div class="section-label">03 / PROJECTS</div>
+    <h2 class="section-title">My Work</h2>
+    <div class="projects-grid" id="projectsGrid">
+      <!-- injected -->
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section section-alt" id="experience">
+  <div class="section-inner">
+    <div class="section-label">04 / JOURNEY</div>
+    <h2 class="section-title">Experience & Education</h2>
+    <div class="timeline-wrap">
+      <div class="timeline-col">
+        <h3 class="timeline-heading">Work Experience</h3>
+        <div class="timeline" id="experienceTimeline"></div>
+      </div>
+      <div class="timeline-col">
+        <h3 class="timeline-heading">Education</h3>
+        <div class="timeline" id="educationTimeline"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-inner contact-inner">
+    <div class="section-label">05 / CONTACT</div>
+    <h2 class="section-title">Let's Connect</h2>
+    <p class="contact-sub">Have a project in mind? Let's build something great together.</p>
+    <div class="contact-cards">
+      <a class="contact-card" id="emailCard" href="#">
+        <div class="cc-icon"></div>
+        <div class="cc-label">Email</div>
+        <div class="cc-val" id="contactEmail">—</div>
+      </a>
+      <a class="contact-card" id="linkedinCard" href="#">
+        <div class="cc-icon"></div>
+        <div class="cc-label">LinkedIn</div>
+        <div class="cc-val">Connect with me</div>
+      </a>
+      <a class="contact-card" id="githubCard" href="#">
+        <div class="cc-icon"></div>
+        <div class="cc-label">GitHub</div>
+        <div class="cc-val">See my code</div>
+      </a>
+    </div>
+    <div class="contact-glow"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p id="footerName">Portfolio</p>
+  <p class="footer-copy">Built with passion. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

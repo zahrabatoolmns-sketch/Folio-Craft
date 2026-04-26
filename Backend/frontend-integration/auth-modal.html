@@ -1,0 +1,426 @@
+<!--
+  ══════════════════════════════════════════════════
+  frontend-integration/auth-modal.html
+  
+  Yeh code apne index.html mein </body> se pehle paste karo
+  aur auth.css ko apni stylesheet mein add karo
+  ══════════════════════════════════════════════════
+-->
+
+<!-- ── AUTH MODAL ── -->
+<div class="auth-overlay" id="authOverlay" style="display:none">
+  <div class="auth-modal" id="authModal">
+
+    <!-- Close button -->
+    <button class="auth-close" id="authClose" aria-label="Close">✕</button>
+
+    <!-- Logo -->
+    <div class="auth-logo">
+      <svg class="logo-mark-sm" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="46" class="ring ring--outer"/>
+        <circle cx="60" cy="60" r="34" class="ring ring--inner"/>
+        <circle cx="60" cy="60" r="13" class="core"/>
+      </svg>
+      <span>FolioCraft</span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login"    id="loginTab">Login</button>
+      <button class="auth-tab"        data-tab="register" id="registerTab">Register</button>
+    </div>
+
+    <!-- Error/Success message -->
+    <div class="auth-message" id="authMessage" style="display:none"></div>
+
+    <!-- ── LOGIN FORM ── -->
+    <form class="auth-form active" id="loginForm">
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="abc@email.com" required/>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required/>
+      </div>
+      <button type="submit" class="auth-submit" id="loginSubmit">
+        <span class="auth-btn-text">Login karein</span>
+        <span class="auth-btn-loader" style="display:none">⏳</span>
+      </button>
+    </form>
+
+    <!-- ── REGISTER FORM ── -->
+    <form class="auth-form" id="registerForm" style="display:none">
+      <div class="auth-field">
+        <label>Aapka Naam</label>
+        <input type="text" id="regName" placeholder="Full Name" required/>
+      </div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="regEmail" placeholder="abc@email.com" required/>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="regPassword" placeholder="Min 6 characters" required minlength="6"/>
+      </div>
+      <button type="submit" class="auth-submit" id="registerSubmit">
+        <span class="auth-btn-text">Create Account</span>
+        <span class="auth-btn-loader" style="display:none">⏳</span>
+      </button>
+    </form>
+
+  </div>
+</div>
+
+<!-- ── NAV USER SECTION (nav mein add karo) ── -->
+<!--
+  Apni .nav mein theme-btn se pehle yeh paste karo:
+  
+  <div class="nav-user" id="navUser">
+    <!-- Agar logged out -->
+    <button class="nav-login-btn" id="navLoginBtn">Login / Register</button>
+    <!-- Agar logged in (JS se toggle hoga) -->
+    <div class="nav-user-info" id="navUserInfo" style="display:none">
+      <span class="nav-user-name" id="navUserName">User</span>
+      <button class="nav-logout-btn" id="navLogoutBtn">Logout</button>
+    </div>
+  </div>
+-->
+
+<style>
+/* ── AUTH MODAL STYLES ── */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+.auth-overlay[style*="display:none"] { display: none !important; }
+
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+.auth-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--border-hi, rgba(0,0,0,0.1));
+  border-radius: 24px;
+  padding: 36px 32px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+  animation: slideUp 0.3s cubic-bezier(0.22,0.61,0.36,1);
+}
+
+@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+.auth-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border, rgba(0,0,0,0.1));
+  background: transparent;
+  color: var(--text-2, #666);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.auth-close:hover { background: var(--a-dim, rgba(0,0,0,0.05)); color: var(--text, #000); }
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--a, #5b4de8), var(--b, #0ba89a));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.logo-mark-sm { width: 32px; height: 32px; overflow: visible; }
+.logo-mark-sm .ring { fill: none; stroke-width: 2; stroke-dasharray: 6 10; }
+.logo-mark-sm .ring--outer { stroke: var(--a, #5b4de8); animation: spinCW 28s linear infinite; }
+.logo-mark-sm .ring--inner { stroke: var(--b, #0ba89a); animation: spinCCW 36s linear infinite; }
+.logo-mark-sm .core { fill: var(--a, #5b4de8); }
+@keyframes spinCW  { to{transform:rotate(360deg)}  }
+@keyframes spinCCW { to{transform:rotate(-360deg)} }
+
+.auth-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--border, rgba(0,0,0,0.06));
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+.auth-tab {
+  flex: 1;
+  padding: 9px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: var(--text-2, #666);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.auth-tab.active {
+  background: var(--bg-card, #fff);
+  color: var(--text, #000);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.auth-message {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.auth-message.error   { background: rgba(220,38,38,0.08); color: #dc2626; border: 1px solid rgba(220,38,38,0.2); }
+.auth-message.success { background: rgba(34,197,94,0.08);  color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.auth-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2, #666);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.auth-field input {
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 1px solid var(--border, rgba(0,0,0,0.1));
+  background: var(--bg-card, #fff);
+  color: var(--text, #000);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.auth-field input:focus {
+  outline: none;
+  border-color: var(--a, #5b4de8);
+  box-shadow: 0 0 0 3px var(--a-dim, rgba(91,77,232,0.1));
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, var(--a, #5b4de8), var(--b, #0ba89a));
+  color: #fff;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 18px rgba(91,77,232,0.3);
+  margin-top: 8px;
+}
+.auth-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(91,77,232,0.4); }
+.auth-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+/* ── Nav User Styles ── */
+.nav-login-btn {
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--border-hi, rgba(0,0,0,0.15));
+  background: var(--bg-card, #fff);
+  color: var(--text, #000);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-login-btn:hover { border-color: var(--a, #5b4de8); color: var(--a, #5b4de8); }
+
+.nav-user-info { display: flex; align-items: center; gap: 12px; }
+.nav-user-name { font-size: 13px; font-weight: 600; color: var(--text, #000); }
+.nav-logout-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-hi, rgba(0,0,0,0.15));
+  background: transparent;
+  color: var(--text-2, #666);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-logout-btn:hover { border-color: #dc2626; color: #dc2626; }
+</style>
+
+<script>
+// ══════════════════════════════════════════
+//   AUTH MODAL LOGIC
+//   api.js load hone ke baad yeh chalega
+// ══════════════════════════════════════════
+
+(function() {
+
+  // ── Elements ──
+  const overlay       = document.getElementById('authOverlay');
+  const closeBtn      = document.getElementById('authClose');
+  const loginTab      = document.getElementById('loginTab');
+  const registerTab   = document.getElementById('registerTab');
+  const loginForm     = document.getElementById('loginForm');
+  const registerForm  = document.getElementById('registerForm');
+  const msgBox        = document.getElementById('authMessage');
+
+  // ── Nav elements ──
+  const navLoginBtn  = document.getElementById('navLoginBtn');
+  const navUserInfo  = document.getElementById('navUserInfo');
+  const navUserName  = document.getElementById('navUserName');
+  const navLogoutBtn = document.getElementById('navLogoutBtn');
+
+  // ── Show/Hide modal ──
+  function showModal(tab = 'login') {
+    overlay.style.display = '';
+    switchTab(tab);
+    clearMessage();
+  }
+
+  function hideModal() {
+    overlay.style.display = 'none';
+  }
+
+  // ── Tab Switch ──
+  function switchTab(tab) {
+    loginTab.classList.toggle('active', tab === 'login');
+    registerTab.classList.toggle('active', tab === 'register');
+    loginForm.style.display    = tab === 'login'    ? 'block' : 'none';
+    registerForm.style.display = tab === 'register' ? 'block' : 'none';
+    clearMessage();
+  }
+
+  // ── Messages ──
+  function showMessage(msg, type = 'error') {
+    msgBox.textContent  = msg;
+    msgBox.className    = `auth-message ${type}`;
+    msgBox.style.display = 'block';
+  }
+  function clearMessage() {
+    msgBox.style.display = 'none';
+    msgBox.textContent   = '';
+  }
+
+  // ── Update Nav ──
+  function updateNav() {
+    if (!window.FolioAPI) return;
+    const user = window.FolioAPI.getCurrentUser();
+    if (user && navUserInfo && navLoginBtn) {
+      navLoginBtn.style.display  = 'none';
+      navUserInfo.style.display  = 'flex';
+      if (navUserName) navUserName.textContent = user.name?.split(' ')[0] || 'User';
+    } else if (navLoginBtn) {
+      navLoginBtn.style.display  = '';
+      if (navUserInfo) navUserInfo.style.display = 'none';
+    }
+  }
+
+  // ── Overlay click to close ──
+  overlay?.addEventListener('click', (e) => {
+    if (e.target === overlay) hideModal();
+  });
+
+  closeBtn?.addEventListener('click', hideModal);
+
+  loginTab?.addEventListener('click', () => switchTab('login'));
+  registerTab?.addEventListener('click', () => switchTab('register'));
+
+  navLoginBtn?.addEventListener('click', () => showModal('login'));
+  navLogoutBtn?.addEventListener('click', () => {
+    window.FolioAPI?.logout();
+    updateNav();
+  });
+
+  // ── LOGIN ──
+  loginForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn    = document.getElementById('loginSubmit');
+    const email  = document.getElementById('loginEmail').value;
+    const pass   = document.getElementById('loginPassword').value;
+
+    btn.disabled = true;
+    btn.querySelector('.auth-btn-loader').style.display = 'inline';
+    btn.querySelector('.auth-btn-text').textContent = 'Login is happening...';
+    clearMessage();
+
+    try {
+      await window.FolioAPI.login(email, pass);
+      showMessage('Logged in, Redirecting...', 'success');
+      updateNav();
+      setTimeout(() => {
+        hideModal();
+        // Wizard pe redirect karo
+        if (!window.location.pathname.includes('wizard')) {
+          window.location.href = 'wizard.html';
+        } else {
+          window.location.reload();
+        }
+      }, 1000);
+    } catch (err) {
+      showMessage(err.message);
+      btn.disabled = false;
+      btn.querySelector('.auth-btn-loader').style.display = 'none';
+      btn.querySelector('.auth-btn-text').textContent = 'Login karein';
+    }
+  });
+
+  // ── REGISTER ──
+  registerForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn   = document.getElementById('registerSubmit');
+    const name  = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+    const pass  = document.getElementById('regPassword').value;
+
+    btn.disabled = true;
+    btn.querySelector('.auth-btn-loader').style.display = 'inline';
+    btn.querySelector('.auth-btn-text').textContent = 'Creating an Account...';
+    clearMessage();
+
+    try {
+      await window.FolioAPI.register(name, email, pass);
+      showMessage('Account created! Welcome to FolioCraft! 🎉', 'success');
+      updateNav();
+      setTimeout(() => {
+        hideModal();
+        window.location.href = 'wizard.html';
+      }, 1200);
+    } catch (err) {
+      showMessage(err.message);
+      btn.disabled = false;
+      btn.querySelector('.auth-btn-loader').style.display = 'none';
+      btn.querySelector('.auth-btn-text').textContent = 'Account banao';
+    }
+  });
+
+  // ── Init: Nav update ──
+  document.addEventListener('DOMContentLoaded', updateNav);
+
+  // ── Global function - kahin bhi call kar sako ──
+  window.showAuthModal = showModal;
+  window.hideAuthModal = hideModal;
+
+})();
+</script>

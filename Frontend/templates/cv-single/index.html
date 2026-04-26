@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ░░ AMBIENT BACKGROUND ░░ -->
+<div class="ambient">
+  <div class="amb-circle c1"></div>
+  <div class="amb-circle c2"></div>
+  <div class="amb-circle c3"></div>
+  <div class="amb-texture"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TOP NAV — slim pill
+═══════════════════════════════════════════ -->
+<nav class="topnav">
+  <span class="tn-name" id="tnName">Portfolio</span>
+  <div class="tn-links">
+    <a href="#sidebar">Profile</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Work</a>
+    <a href="#experience">Career</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="tn-cta">Hire Me</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     MAIN CV SHELL
+═══════════════════════════════════════════ -->
+<main class="cv-shell">
+
+  <!-- ─── LEFT SIDEBAR ─── -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Avatar -->
+    <div class="sb-avatar">
+      <div class="sba-ring"></div>
+      <img id="sbAvatar" src="" alt="Profile" onerror="this.style.display='none'"/>
+      <div class="sba-ph" id="sbAvatarPh">
+        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="28" r="16" fill="currentColor" opacity=".4"/>
+          <path d="M10 74c0-16.569 13.431-30 30-30s30 13.431 30 30" stroke="currentColor" stroke-width="2" opacity=".4"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Name + Title -->
+    <div class="sb-identity">
+      <h1 class="sb-name" id="sbName">Your Name</h1>
+      <p class="sb-title" id="sbTitle">Professional Title</p>
+    </div>
+
+    <!-- Status badge -->
+    <div class="sb-badge">
+      <span class="sbb-dot"></span>
+      <span>Available for Work</span>
+    </div>
+
+    <!-- ─── CONTACT INFO ─── -->
+    <div class="sb-section">
+      <div class="sb-sec-head">Contact</div>
+      <ul class="sb-info-list">
+        <li id="sbiEmail" class="sbil-item">
+          <span class="sbil-icon">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" stroke="currentColor" stroke-width="1.5"/><path d="M2 5l8 6 8-6" stroke="currentColor" stroke-width="1.5"/></svg>
+          </span>
+          <span class="sbil-val" id="sbEmail">—</span>
+        </li>
+        <li id="sbiPhone" class="sbil-item">
+          <span class="sbil-icon">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M3 5a2 2 0 012-2h2.5l1 3.5-1.5 1a12 12 0 005.5 5.5l1-1.5L17 12.5V15a2 2 0 01-2 2A13 13 0 013 5z" stroke="currentColor" stroke-width="1.5"/></svg>
+          </span>
+          <span class="sbil-val" id="sbPhone">—</span>
+        </li>
+        <li id="sbiLocation" class="sbil-item">
+          <span class="sbil-icon">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M10 11a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.5"/><path d="M10 2a7 7 0 017 7c0 4.5-7 11-7 11S3 13.5 3 9a7 7 0 017-7z" stroke="currentColor" stroke-width="1.5"/></svg>
+          </span>
+          <span class="sbil-val" id="sbLocation">—</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ─── SOCIAL LINKS ─── -->
+    <div class="sb-section">
+      <div class="sb-sec-head">Online</div>
+      <ul class="sb-social-list">
+        <li><a id="sbLinkedin" href="#" target="_blank" class="ssl-link">
+          <span class="ssl-label">LinkedIn</span>
+          <span class="ssl-arrow">↗</span>
+        </a></li>
+        <li><a id="sbGithub" href="#" target="_blank" class="ssl-link">
+          <span class="ssl-label">GitHub</span>
+          <span class="ssl-arrow">↗</span>
+        </a></li>
+        <li><a id="sbInstagram" href="#" target="_blank" class="ssl-link">
+          <span class="ssl-label">Instagram</span>
+          <span class="ssl-arrow">↗</span>
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- ─── TOP SKILLS (sidebar pills) ─── -->
+    <div class="sb-section">
+      <div class="sb-sec-head">Top Skills</div>
+      <div class="sb-skill-pills" id="sbSkillPills"></div>
+    </div>
+
+    <!-- ─── EDUCATION (sidebar) ─── -->
+    <div class="sb-section" id="sbEduSection">
+      <div class="sb-sec-head">Education</div>
+      <div id="sbEduList"></div>
+    </div>
+
+  </aside>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <div class="cv-main">
+
+    <!-- ── ABOUT ── -->
+    <section class="cv-section" id="about">
+      <div class="cvs-header">
+        <span class="cvs-num">01</span>
+        <h2 class="cvs-title">Professional Summary</h2>
+        <span class="cvs-rule"></span>
+      </div>
+      <div class="about-block">
+        <p id="cvAboutDesc" class="about-para"></p>
+        <blockquote id="cvAboutSummary" class="about-quote"></blockquote>
+      </div>
+
+      <!-- Quick stats row -->
+      <div class="quick-stats">
+        <div class="qs-item">
+          <span class="qs-n" id="qsProj">0</span>
+          <span class="qs-l">Projects</span>
+        </div>
+        <div class="qs-sep"></div>
+        <div class="qs-item">
+          <span class="qs-n" id="qsSkill">0</span>
+          <span class="qs-l">Technologies</span>
+        </div>
+        <div class="qs-sep"></div>
+        <div class="qs-item">
+          <span class="qs-n" id="qsExp">0</span>
+          <span class="qs-l">Positions Held</span>
+        </div>
+        <div class="qs-sep"></div>
+        <div class="qs-item">
+          <span class="qs-n" id="qsEdu">0</span>
+          <span class="qs-l">Credentials</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SKILLS ── -->
+    <section class="cv-section" id="skills">
+      <div class="cvs-header">
+        <span class="cvs-num">02</span>
+        <h2 class="cvs-title">Skills & Expertise</h2>
+        <span class="cvs-rule"></span>
+      </div>
+      <div class="skills-cv-grid" id="skillsCvGrid"></div>
+    </section>
+
+    <!-- ── PROJECTS ── -->
+    <section class="cv-section" id="projects">
+      <div class="cvs-header">
+        <span class="cvs-num">03</span>
+        <h2 class="cvs-title">Featured Projects</h2>
+        <span class="cvs-rule"></span>
+      </div>
+      <div class="projects-cv-list" id="projectsCvList"></div>
+    </section>
+
+    <!-- ── EXPERIENCE ── -->
+    <section class="cv-section" id="experience">
+      <div class="cvs-header">
+        <span class="cvs-num">04</span>
+        <h2 class="cvs-title">Work Experience</h2>
+        <span class="cvs-rule"></span>
+      </div>
+      <div class="timeline-cv" id="timelineCv"></div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section class="cv-section" id="contact">
+      <div class="cvs-header">
+        <span class="cvs-num">05</span>
+        <h2 class="cvs-title">Get In Touch</h2>
+        <span class="cvs-rule"></span>
+      </div>
+      <div class="contact-cv-wrap">
+        <div class="ccv-intro">
+          <p class="about-para">I'm always open to new opportunities, exciting projects, and meaningful collaborations. Feel free to reach out!</p>
+          <div class="ccv-links">
+            <div class="ccvl-row"><span class="ccvl-k">Email</span><span id="ccvEmail" class="ccvl-v">—</span></div>
+            <div class="ccvl-row"><span class="ccvl-k">Phone</span><span id="ccvPhone" class="ccvl-v">—</span></div>
+            <div class="ccvl-row"><span class="ccvl-k">Location</span><span id="ccvLocation" class="ccvl-v">—</span></div>
+          </div>
+          <div class="ccv-social">
+            <a id="ccvLi" href="#" target="_blank" class="ccvs-btn">LinkedIn ↗</a>
+            <a id="ccvGh" href="#" target="_blank" class="ccvs-btn">GitHub ↗</a>
+            <a id="ccvIg" href="#" target="_blank" class="ccvs-btn">Instagram ↗</a>
+          </div>
+        </div>
+        <form class="form-cv" onsubmit="return false">
+          <div class="fcv-row">
+            <div class="fcv-field">
+              <label>Full Name</label>
+              <input type="text" placeholder="Your name"/>
+            </div>
+            <div class="fcv-field">
+              <label>Email Address</label>
+              <input type="email" placeholder="your@email.com"/>
+            </div>
+          </div>
+          <div class="fcv-field">
+            <label>Subject</label>
+            <input type="text" placeholder="How can I help?"/>
+          </div>
+          <div class="fcv-field">
+            <label>Message</label>
+            <textarea placeholder="Your message..."></textarea>
+          </div>
+          <button type="submit" class="btn-cv">Send Message →</button>
+        </form>
+      </div>
+    </section>
+
+  </div><!-- /.cv-main -->
+</main><!-- /.cv-shell -->
+
+<footer class="cv-footer">
+  <span id="footerName">Portfolio</span> &nbsp;·&nbsp; All rights reserved
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

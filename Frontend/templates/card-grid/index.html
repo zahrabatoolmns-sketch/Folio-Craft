@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Satoshi:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<!-- ─── NAV ─── -->
+<nav class="nav" id="nav">
+  <a class="nav-logo" href="#hero">
+    <span class="nl-dot"></span>
+    <span id="navName">Portfolio</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-hire">Available for work →</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-glow g1"></div>
+  <div class="hero-glow g2"></div>
+  <div class="hero-glow g3"></div>
+
+  <!-- Left: Text -->
+  <div class="hero-text">
+    <div class="hero-chip">
+      <span class="chip-dot"></span>
+      <span id="heroLocation">Open to Work</span>
+    </div>
+
+    <h1 class="hero-heading">
+      <span class="h-line" id="heroLine1">Hello, I'm</span>
+      <span class="h-name" id="heroName">Your Name</span>
+    </h1>
+
+    <p class="hero-role" id="heroTitle">Professional Title</p>
+    <p class="hero-bio" id="heroBio">A passionate professional crafting meaningful digital experiences.</p>
+
+    <div class="hero-meta-row">
+      <span class="hm-tag" id="heroEmailTag">📧 email</span>
+      <span class="hm-tag" id="heroPhoneTag">📞 phone</span>
+    </div>
+
+    <div class="hero-cta-row">
+      <a href="#projects" class="btn-main">View Projects<span class="btn-arrow">↗</span></a>
+      <a href="#contact" class="btn-line">Let's Talk</a>
+    </div>
+
+    <div class="hero-socials">
+      <a id="hLinkedin" href="#" target="_blank" class="soc-pill">LinkedIn</a>
+      <a id="hGithub" href="#" target="_blank" class="soc-pill">GitHub</a>
+      <a id="hInstagram" href="#" target="_blank" class="soc-pill">Instagram</a>
+    </div>
+  </div>
+
+  <!-- Right: Avatar card -->
+  <div class="hero-card-wrap">
+    <div class="hero-card" id="heroCard">
+      <div class="hc-shine"></div>
+      <div class="hc-avatar">
+        <img id="heroAvatar" src="" alt="Profile" onerror="this.style.display='none'"/>
+        <div class="hc-ph" id="avatarPh">
+          <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="28" r="16" fill="currentColor" opacity=".35"/><path d="M10 72c0-16.569 13.431-30 30-30s30 13.431 30 30" stroke="currentColor" stroke-width="2" opacity=".35"/></svg>
+        </div>
+      </div>
+      <div class="hc-info">
+        <span class="hci-name" id="hcName">Your Name</span>
+        <span class="hci-role" id="hcRole">Title</span>
+      </div>
+      <div class="hc-stats">
+        <div class="hcs"><span class="hcs-n" id="hcsProj">0</span><span class="hcs-l">Projects</span></div>
+        <div class="hcs-sep"></div>
+        <div class="hcs"><span class="hcs-n" id="hcsSkills">0</span><span class="hcs-l">Skills</span></div>
+        <div class="hcs-sep"></div>
+        <div class="hcs"><span class="hcs-n" id="hcsExp">0</span><span class="hcs-l">Exp</span></div>
+      </div>
+      <div class="hc-tags" id="hcTags"></div>
+    </div>
+
+    <!-- Floating micro-cards -->
+    <div class="float-card fc-1">
+      <span class="fc-icon"></span>
+      <span class="fc-txt">Available Now</span>
+    </div>
+    <div class="float-card fc-2" id="fcLocation">
+      <span class="fc-icon"></span>
+      <span class="fc-txt">Location</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section class="section about-section" id="about">
+  <div class="container">
+    <div class="sec-eyebrow">About Me</div>
+    <div class="about-bento">
+
+      <!-- Main description card -->
+      <div class="bento-card bc-main reveal">
+        <div class="bc-label">Who I Am</div>
+        <p id="aboutDescription" class="bc-text"></p>
+        <div class="bc-divider"></div>
+        <p id="aboutSkillsSummary" class="bc-subtext"></p>
+      </div>
+
+      <!-- Contact info card -->
+      <div class="bento-card bc-contact reveal">
+        <div class="bc-label">Contact Info</div>
+        <div class="ci-list">
+          <div class="ci-item"><span class="ci-icon">📧</span><span id="ciEmail" class="ci-val">—</span></div>
+          <div class="ci-item"><span class="ci-icon">📞</span><span id="ciPhone" class="ci-val">—</span></div>
+          <div class="ci-item"><span class="ci-icon">📍</span><span id="ciLocation" class="ci-val">—</span></div>
+        </div>
+        <div class="ci-social">
+          <a id="aLi" href="#" target="_blank">LinkedIn ↗</a>
+          <a id="aGh" href="#" target="_blank">GitHub ↗</a>
+          <a id="aIg" href="#" target="_blank">Instagram ↗</a>
+        </div>
+      </div>
+
+      <!-- Stats card -->
+      <div class="bento-card bc-stats reveal">
+        <div class="bc-label">At a Glance</div>
+        <div class="stats-grid">
+          <div class="sg-item"><span class="sg-n" id="sgProjects">0</span><span class="sg-l">Projects</span></div>
+          <div class="sg-item"><span class="sg-n" id="sgSkills">0</span><span class="sg-l">Skills</span></div>
+          <div class="sg-item"><span class="sg-n" id="sgExp">0</span><span class="sg-l">Experience</span></div>
+          <div class="sg-item"><span class="sg-n" id="sgEdu">0</span><span class="sg-l">Education</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ─── -->
+<section class="section skills-section" id="skills">
+  <div class="container">
+    <div class="sec-eyebrow">Expertise</div>
+    <h2 class="sec-heading">Skills & <em>Technologies</em></h2>
+    <div class="skills-card-grid" id="skillsCardGrid"></div>
+  </div>
+</section>
+
+<!-- ─── PROJECTS ─── -->
+<section class="section projects-section" id="projects">
+  <div class="container">
+    <div class="sec-eyebrow">Portfolio</div>
+    <h2 class="sec-heading">Featured <em>Projects</em></h2>
+    <div class="projects-masonry" id="projectsMasonry"></div>
+  </div>
+</section>
+
+<!-- ─── EXPERIENCE ─── -->
+<section class="section exp-section" id="experience">
+  <div class="container">
+    <div class="sec-eyebrow">Career</div>
+    <h2 class="sec-heading">Experience & <em>Education</em></h2>
+    <div class="exp-edu-grid">
+      <div class="ee-col">
+        <div class="ee-col-head">
+          <span class="eech-icon"></span>
+          <span>Work Experience</span>
+        </div>
+        <div id="expCards"></div>
+      </div>
+      <div class="ee-col">
+        <div class="ee-col-head">
+          <span class="eech-icon"></span>
+          <span>Education</span>
+        </div>
+        <div id="eduCards"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section class="section contact-section" id="contact">
+  <div class="container">
+    <div class="contact-bento">
+
+      <!-- Left: CTA -->
+      <div class="contact-left">
+        <div class="sec-eyebrow">Get In Touch</div>
+        <h2 class="sec-heading white">Let's Build<br/><em>Something</em><br/>Together</h2>
+        <div class="cl-details">
+          <div class="cld-row"><span class="cld-k">Email</span><span id="ctEmail" class="cld-v">—</span></div>
+          <div class="cld-row"><span class="cld-k">Phone</span><span id="ctPhone" class="cld-v">—</span></div>
+          <div class="cld-row"><span class="cld-k">Location</span><span id="ctLocation" class="cld-v">—</span></div>
+        </div>
+        <div class="cl-social">
+          <a id="ctLi" href="#" target="_blank" class="cls-btn">LinkedIn</a>
+          <a id="ctGh" href="#" target="_blank" class="cls-btn">GitHub</a>
+          <a id="ctIg" href="#" target="_blank" class="cls-btn">Instagram</a>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="contact-form-card">
+        <form onsubmit="return false">
+          <div class="cf-grid">
+            <div class="cf-field">
+              <label>Your Name</label>
+              <input type="text" placeholder="John Doe"/>
+            </div>
+            <div class="cf-field">
+              <label>Your Email</label>
+              <input type="email" placeholder="john@example.com"/>
+            </div>
+          </div>
+          <div class="cf-field">
+            <label>Subject</label>
+            <input type="text" placeholder="Project Collaboration"/>
+          </div>
+          <div class="cf-field">
+            <label>Message</label>
+            <textarea placeholder="Tell me about your project..."></textarea>
+          </div>
+          <button type="submit" class="btn-main full">Send Message <span class="btn-arrow">→</span></button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-name" id="footerName">Portfolio</span>
+    <span class="footer-sep">·</span>
+    <span class="footer-copy">Crafted with passion</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

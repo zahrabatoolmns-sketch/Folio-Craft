@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FolioCraft</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="wizard.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" defer></script>
+</head>
+
+<body class="light">
+
+  <!-- ======== BACKGROUND ======== -->
+  <div class="bg" aria-hidden="true">
+    <canvas id="particleCanvas"></canvas>
+    <div class="bg-orb bg-orb--a"></div>
+    <div class="bg-orb bg-orb--b"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-noise"></div>
+    <div class="fs fs--1"></div>
+    <div class="fs fs--2"></div>
+    <div class="fs fs--3"></div>
+    <div class="fs fs--l1"></div>
+    <div class="fs fs--l2"></div>
+    <div class="fs fs--r1"></div>
+    <div class="fs fs--r2"></div>
+    <div class="fs fs--r3"></div>
+  </div>
+
+  <!-- ======== NAV ======== -->
+  <header class="nav" role="banner">
+    <a href="index.html" class="logo" aria-label="FolioCraft — back to home">
+      <svg class="logo-mark" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="46" class="ring ring--outer"/>
+        <circle cx="60" cy="60" r="34" class="ring ring--inner"/>
+        <circle cx="60" cy="60" r="13" class="core"/>
+        <circle cx="60" cy="18" r="3.5" class="node"/>
+        <circle cx="102" cy="60" r="3.5" class="node"/>
+        <circle cx="60" cy="102" r="3.5" class="node"/>
+        <circle cx="18" cy="60" r="3.5" class="node"/>
+      </svg>
+      <span class="logo-name">FolioCraft</span>
+    </a>
+
+    <button class="theme-btn" id="themeBtn" aria-label="Switch theme">
+      <svg class="t-icon t-icon--sun" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1"  x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="t-icon t-icon--moon" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ======== WIZARD CONTAINER ======== -->
+  <div class="wizard-wrap">
+
+    <!-- header -->
+    <div class="wiz-head">
+      <!-- Portfolio Selector -->
+<div class="portfolio-selector" id="portfolioSelector" style="display:none">
+  <div class="ps-header">
+    <span>Select your Portfolio:</span>
+    <button class="btn-add-portfolio" id="addPortfolioBtn">+ New Portfolio</button>
+  </div>
+  <div class="ps-list" id="portfolioList"></div>
+</div>
+      <h1>Build your portfolio</h1>
+      <p>Five short steps and you're done - takes less than 5 minutes.</p>
+    </div>
+
+    <!-- progress bar -->
+    <div class="prog-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+      <div class="prog-fill" id="progressFill"></div>
+    </div>
+
+    <!-- stepper -->
+    <nav class="stepper" aria-label="Wizard steps">
+      <div class="step-dot active" aria-label="Step 1">1</div>
+      <div class="step-dot" aria-label="Step 2">2</div>
+      <div class="step-dot" aria-label="Step 3">3</div>
+      <div class="step-dot" aria-label="Step 4">4</div>
+      <div class="step-dot" aria-label="Step 5">5</div>
+    </nav>
+
+    <!-- ======== FORM ======== -->
+    <form id="portfolioForm" novalidate autocomplete="off">
+
+      <!-- ── STEP 1 : Personal Info ── -->
+      <div class="wizard-step active">
+        <h3 class="step-label">Personal Information</h3>
+
+        <div class="field-row two">
+          <label class="field">
+            <span>Full Name <em class="req">*</em></span>
+            <input type="text" name="fullname" placeholder="Zarina brooks" required/>
+          </label>
+          <label class="field">
+            <span>Professional Title <em class="req">*</em></span>
+            <input type="text" name="title" placeholder="Full Stack Developer" required/>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Short Bio</span>
+          <textarea name="bio" rows="3" placeholder="A one-liner about yourself…"></textarea>
+        </label>
+
+        <label class="field">
+          <span>Profile Photo</span>
+          <div class="file-zone" id="profileZone">
+            <input type="file" name="profile" accept="image/*" class="file-hidden" id="profileFile"/>
+            <span class="file-ui">
+              <span class="file-icon">🖼</span>
+              <span class="file-name" id="profileName">Click or drag a photo here</span>
+              <span class="file-hint">PNG · JPG · up to 5 MB</span>
+            </span>
+            <img src="" id="profilePreview" class="file-preview" alt="" hidden/>
+          </div>
+        </label>
+
+        <div class="field-row two">
+          <label class="field">
+            <span>Location</span>
+            <input type="text" name="location" placeholder="New York, USA"/>
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="zarina@example.com"/>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Phone</span>
+          <input type="tel" name="phone" placeholder="+1 555 000 0000"/>
+        </label>
+
+        <h3 class="step-label" style="margin-top:32px">About You</h3>
+
+        <label class="field">
+          <span>Detailed Description</span>
+          <textarea name="description" rows="4" placeholder="Tell visitors more about your background, passions, and what makes you different…"></textarea>
+        </label>
+
+        <label class="field">
+          <span>Skills Summary</span>
+          <textarea name="skills_summary" rows="2" placeholder="e.g. React, Node.js, Python, Figma, AWS…"></textarea>
+        </label>
+
+        <div class="wiz-nav">
+          <span></span>
+          <button type="button" class="next-btn btn-primary">Next →</button>
+        </div>
+      </div>
+
+      <!-- ── STEP 2 : Skills & Projects ── -->
+      <div class="wizard-step">
+        <h3 class="step-label">Skills</h3>
+
+        <div class="add-block">
+          <div class="field-row three">
+            <label class="field">
+              <span>Skill name</span>
+              <input type="text" id="skillName" placeholder="e.g. React"/>
+            </label>
+            <label class="field">
+              <span>Level %</span>
+              <input type="number" id="skillLevel" placeholder="85" min="0" max="100"/>
+            </label>
+            <label class="field">
+              <span>Category</span>
+              <select id="skillCategory">
+                <option value="Frontend">Frontend</option>
+                <option value="Backend">Backend</option>
+                <option value="Design">Design</option>
+                <option value="DevOps">DevOps</option>
+                <option value="Mobile">Mobile</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+          </div>
+          <button type="button" class="btn-add" id="addSkillBtn">+ Add skill</button>
+        </div>
+
+        <div class="items-wrap" id="skillsList" aria-live="polite"></div>
+
+        <!-- projects -->
+        <h3 class="step-label" style="margin-top:36px">Projects</h3>
+
+        <label class="field">
+          <span>Project Title</span>
+          <input type="text" id="projectTitle" placeholder="My Awesome App"/>
+        </label>
+
+        <label class="field">
+          <span>Description</span>
+          <textarea id="projectDescription" rows="3" placeholder="What does it do? Why did you build it?"></textarea>
+        </label>
+
+        <div class="field-row two">
+          <label class="field">
+            <span>Tech stack <small>(comma separated)</small></span>
+            <input type="text" id="projectTech" placeholder="React, Node.js, MongoDB"/>
+          </label>
+          <label class="field">
+            <span>Screenshot</span>
+            <input type="file" id="projectImage" accept="image/*"/>
+          </label>
+        </div>
+
+        <div class="field-row two">
+          <label class="field">
+            <span>GitHub URL</span>
+            <input type="url" id="projectGithub" placeholder="https://github.com/you/project"/>
+          </label>
+          <label class="field">
+            <span>Live URL</span>
+            <input type="url" id="projectLive" placeholder="https://myapp.vercel.app"/>
+          </label>
+        </div>
+
+        <button type="button" class="btn-add" id="addProjectBtn">+ Add project</button>
+        <div class="items-grid" id="projectsList" aria-live="polite"></div>
+
+        <div class="wiz-nav">
+          <button type="button" class="prev-btn btn-ghost">← Back</button>
+          <button type="button" class="next-btn btn-primary">Next →</button>
+        </div>
+      </div>
+
+      <!-- ── STEP 3 : Experience & Education ── -->
+      <div class="wizard-step">
+        <h3 class="step-label">Work Experience</h3>
+
+        <div class="field-row two">
+          <label class="field">
+            <span>Job Title</span>
+            <input type="text" id="jobTitle" placeholder="Senior Developer"/>
+          </label>
+          <label class="field">
+            <span>Company</span>
+            <input type="text" id="companyName" placeholder="Acme Corp"/>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Description</span>
+          <textarea id="jobDesc" rows="3" placeholder="Key responsibilities and achievements…"></textarea>
+        </label>
+
+        <button type="button" class="btn-add" id="addExperienceBtn">+ Add experience</button>
+        <div class="items-grid" id="experienceList" aria-live="polite"></div>
+
+        <h3 class="step-label" style="margin-top:36px">Education</h3>
+
+        <div class="field-row three">
+          <label class="field">
+            <span>Degree</span>
+            <input type="text" id="degree" placeholder="B.Sc. Computer Science"/>
+          </label>
+          <label class="field">
+            <span>Institute</span>
+            <input type="text" id="institute" placeholder="MIT"/>
+          </label>
+          <label class="field">
+            <span>Field</span>
+            <input type="text" id="field" placeholder="Software Engineering"/>
+          </label>
+        </div>
+
+        <button type="button" class="btn-add" id="addEducationBtn">+ Add education</button>
+        <div class="items-grid" id="educationList" aria-live="polite"></div>
+
+        <div class="wiz-nav">
+          <button type="button" class="prev-btn btn-ghost">← Back</button>
+          <button type="button" class="next-btn btn-primary">Next →</button>
+        </div>
+      </div>
+
+      <!-- ── STEP 4 : Social & Contact ── -->
+      <div class="wizard-step">
+        <h3 class="step-label">Social Links</h3>
+
+        <label class="field field--icon">
+          <span>LinkedIn</span>
+          <span class="field-prefix">in</span>
+          <input type="url" name="linkedin" placeholder="https://linkedin.com/in/yourname"/>
+        </label>
+
+        <label class="field field--icon">
+          <span>GitHub</span>
+          <span class="field-prefix">gh</span>
+          <input type="url" name="github_social" placeholder="https://github.com/yourname"/>
+        </label>
+
+        <label class="field field--icon">
+          <span>Instagram</span>
+          <span class="field-prefix">ig</span>
+          <input type="url" name="instagram" placeholder="https://instagram.com/yourname"/>
+        </label>
+
+        <h3 class="step-label" style="margin-top:32px">Contact form preview</h3>
+        <p class="step-hint">This is what visitors will see on your portfolio's contact section.</p>
+
+        <div class="contact-preview" aria-hidden="true">
+          <div class="field-row two">
+            <label class="field"><span>Name</span><input type="text" disabled placeholder="Visitor name"/></label>
+            <label class="field"><span>Email</span><input type="email" disabled placeholder="visitor@email.com"/></label>
+          </div>
+          <label class="field"><span>Subject</span><input type="text" disabled placeholder="Subject line"/></label>
+          <label class="field"><span>Message</span><textarea rows="3" disabled placeholder="Their message…"></textarea></label>
+        </div>
+
+        <div class="wiz-nav">
+          <button type="button" class="prev-btn btn-ghost">← Back</button>
+          <button type="button" class="next-btn btn-primary">Next →</button>
+        </div>
+      </div>
+
+      <!-- ── STEP 5 : Template ── -->
+      <div class="wizard-step" id="templateStep">
+
+        <div class="tpl-head">
+          <h2>Pick your template</h2>
+          <p>Choose the design that feels most like you.</p>
+        </div>
+
+        <div class="template-grid" id="templateGrid" role="radiogroup" aria-label="Template options">
+
+          <div class="tpl-card" data-template="modern-dark" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb dark-preview"></div>
+            <h3>Modern Dark</h3>
+            <p>Glass dark theme with gradient accents</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+          <div class="tpl-card" data-template="minimal-white" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb white-preview"></div>
+            <h3>Minimal White</h3>
+            <p>Clean, elegant professional layout</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+          <div class="tpl-card" data-template="creative-gradient" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb gradient-preview"></div>
+            <h3>Creative Gradient</h3>
+            <p>Colorful and modern creative design</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+          <div class="tpl-card" data-template="terminal" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb console-preview"></div>
+            <h3>Terminal</h3>
+            <p>Developer console, hacker style</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+          <div class="tpl-card" data-template="corporate" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb corporate-preview"></div>
+            <h3>Corporate</h3>
+            <p>Professional business portfolio</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+          <div class="tpl-card" data-template="split-layout" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb split-preview"></div>
+            <h3>Split Layout</h3>
+            <p>Modern left–right divided structure</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+          <div class="tpl-card" data-template="card-grid" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb card-preview"></div>
+            <h3>Card Grid</h3>
+            <p>Project-focused grid portfolio</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+          <div class="tpl-card" data-template="cv-single" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb cv-preview"></div>
+            <h3>CV Single Page</h3>
+            <p>Résumé-style professional layout</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+          <div class="tpl-card" data-template="neumorphism" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb neumorphism-preview"></div>
+            <h3>Neumorphism</h3>
+            <p>Soft UI neumorphic design</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+          <div class="tpl-card" data-template="cyber-neon" role="radio" tabindex="0" aria-checked="false">
+            <div class="tpl-thumb neon-preview"></div>
+            <h3>Cyber Neon</h3>
+            <p>Futuristic glowing cyber style</p>
+            <div class="tpl-badge">✓ Selected</div>
+          </div>
+
+        </div>
+
+        <div class="wiz-nav">
+          <button type="button" class="prev-btn btn-ghost">← Back</button>
+          <button type="button" id="finishBtn" class="btn-primary">Generate portfolio</button>
+        </div>
+
+      </div>
+
+    </form>
+  </div><!-- /wizard-wrap -->
+
+  <!-- toast container -->
+  <div id="toastArea" aria-live="assertive" aria-atomic="true"></div>
+
+  <script src="api.js"></script>
+  <script src="wizard.js"></script>
+</body>
+</html>

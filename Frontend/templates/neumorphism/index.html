@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — Neumorphism</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- AMBIENT BACKGROUND ORBS -->
+  <div class="ambient">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+  </div>
+
+  <!-- SIDEBAR NAV -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo" id="sidebarInitials">?</div>
+    <nav class="sidebar-nav">
+      <a href="#hero"       class="snav-link active" data-label="Home">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </a>
+      <a href="#about"      class="snav-link" data-label="About">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </a>
+      <a href="#skills"     class="snav-link" data-label="Skills">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </a>
+      <a href="#projects"   class="snav-link" data-label="Projects">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </a>
+      <a href="#experience" class="snav-link" data-label="Career">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+      </a>
+      <a href="#contact"    class="snav-link" data-label="Contact">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="theme-dot"></div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- ══ HERO ══ -->
+    <section class="page-section hero-section" id="hero">
+      <div class="hero-layout">
+
+        <!-- Avatar -->
+        <div class="avatar-stage">
+          <div class="avatar-nm" id="avatarWrap">
+            <img id="heroImg" src="" alt="" style="display:none"/>
+            <div class="avatar-ph" id="avatarPh">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+          </div>
+          <div class="availability-badge">
+            <span class="avail-dot"></span>
+            <span>Available</span>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="hero-text-block">
+          <div class="hero-greeting">Hello, I'm</div>
+          <h1 class="hero-name" id="heroName">Your Name</h1>
+          <div class="hero-title-nm" id="heroTitle">Creative Developer</div>
+          <p class="hero-bio-nm" id="heroBio">—</p>
+
+          <div class="meta-chips">
+            <div class="meta-chip" id="heroEmail">
+              <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+              <span>—</span>
+            </div>
+            <div class="meta-chip" id="heroPhone">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .94h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <span>—</span>
+            </div>
+            <div class="meta-chip" id="heroLocation">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>—</span>
+            </div>
+          </div>
+
+          <div class="hero-actions-nm">
+            <a href="#projects" class="btn-nm-primary">View Work</a>
+            <a href="#contact"  class="btn-nm-soft">Contact Me</a>
+          </div>
+        </div>
+
+        <!-- Stat Bubbles -->
+        <div class="stat-cluster">
+          <div class="stat-bubble" id="statProj">
+            <div class="stat-n">0</div>
+            <div class="stat-l">Projects</div>
+          </div>
+          <div class="stat-bubble" id="statSkill">
+            <div class="stat-n">0</div>
+            <div class="stat-l">Skills</div>
+          </div>
+          <div class="stat-bubble sm" id="statExp">
+            <div class="stat-n">0</div>
+            <div class="stat-l">Roles</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ ABOUT ══ -->
+    <section class="page-section" id="about">
+      <div class="section-head-nm">
+        <span class="sec-tag">01</span>
+        <h2>About <span class="accent-word">Me</span></h2>
+      </div>
+      <div class="about-grid-nm">
+        <div class="nm-card about-card-main">
+          <div class="card-inner-label">Description</div>
+          <p id="aboutDesc">—</p>
+        </div>
+        <div class="nm-card about-card-side">
+          <div class="card-inner-label">Skills Synopsis</div>
+          <p id="aboutSkillsSummary">—</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SKILLS ══ -->
+    <section class="page-section" id="skills">
+      <div class="section-head-nm">
+        <span class="sec-tag">02</span>
+        <h2>Core <span class="accent-word">Skills</span></h2>
+      </div>
+      <div class="skills-nm-grid" id="skillsGrid"></div>
+    </section>
+
+    <!-- ══ PROJECTS ══ -->
+    <section class="page-section" id="projects">
+      <div class="section-head-nm">
+        <span class="sec-tag">03</span>
+        <h2>Featured <span class="accent-word">Work</span></h2>
+      </div>
+      <div class="projects-nm-grid" id="projectsGrid"></div>
+    </section>
+
+    <!-- ══ EXPERIENCE ══ -->
+    <section class="page-section" id="experience">
+      <div class="section-head-nm">
+        <span class="sec-tag">04</span>
+        <h2>Work <span class="accent-word">Experience</span></h2>
+      </div>
+      <div class="exp-nm-list" id="expList"></div>
+    </section>
+
+    <!-- ══ EDUCATION ══ -->
+    <section class="page-section" id="education">
+      <div class="section-head-nm">
+        <span class="sec-tag">05</span>
+        <h2>Academic <span class="accent-word">Background</span></h2>
+      </div>
+      <div class="edu-nm-grid" id="eduGrid"></div>
+    </section>
+
+    <!-- ══ SOCIAL ══ -->
+    <section class="page-section" id="social">
+      <div class="section-head-nm">
+        <span class="sec-tag">06</span>
+        <h2>Find Me <span class="accent-word">Online</span></h2>
+      </div>
+      <div class="social-nm-row" id="socialRow"></div>
+    </section>
+
+    <!-- ══ CONTACT ══ -->
+    <section class="page-section" id="contact">
+      <div class="section-head-nm">
+        <span class="sec-tag">07</span>
+        <h2>Get In <span class="accent-word">Touch</span></h2>
+      </div>
+      <div class="contact-nm-layout">
+        <div class="nm-card contact-info-card">
+          <div class="card-inner-label">Let's Talk</div>
+          <p>Have a project or opportunity? I'd love to hear from you.</p>
+          <div class="contact-detail-list">
+            <div class="cdl-item"><span class="cdl-key">Email</span><span class="cdl-val" id="cInfoEmail">—</span></div>
+            <div class="cdl-item"><span class="cdl-key">Phone</span><span class="cdl-val" id="cInfoPhone">—</span></div>
+            <div class="cdl-item"><span class="cdl-key">Location</span><span class="cdl-val" id="cInfoLocation">—</span></div>
+          </div>
+        </div>
+        <div class="nm-card contact-form-card">
+          <div class="card-inner-label">Send a Message</div>
+          <form onsubmit="submitNm(event)">
+            <div class="nm-input-group">
+              <label>Name</label>
+              <div class="nm-input-wrap"><input type="text" id="cName" placeholder="Your full name"/></div>
+            </div>
+            <div class="nm-input-group">
+              <label>Email</label>
+              <div class="nm-input-wrap"><input type="email" id="cEmail" placeholder="your@email.com"/></div>
+            </div>
+            <div class="nm-input-group">
+              <label>Subject</label>
+              <div class="nm-input-wrap"><input type="text" id="cSubject" placeholder="Project Inquiry"/></div>
+            </div>
+            <div class="nm-input-group">
+              <label>Message</label>
+              <div class="nm-input-wrap"><textarea id="cMessage" placeholder="Tell me about your project..."></textarea></div>
+            </div>
+            <button type="submit" class="btn-nm-primary full-w">Send Message</button>
+            <div class="form-resp-nm" id="formResp"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="nm-footer">
+      <div class="footer-nm-inner">
+        <span id="footerName">—</span>
+        <span class="footer-dot">•</span>
+        <span>Crafted with FolioCraft</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

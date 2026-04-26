@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — Cyber Neon</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot"  id="cursorDot"></div>
+
+  <!-- BACKGROUND LAYERS -->
+  <canvas id="gridCanvas" class="grid-canvas"></canvas>
+  <div class="scanline-layer"></div>
+  <div class="vignette"></div>
+
+  <!-- GLITCH LINES (decorative) -->
+  <div class="glitch-line gl1"></div>
+  <div class="glitch-line gl2"></div>
+
+  <!-- ═══ NAV ═══ -->
+  <nav class="cyber-nav">
+    <div class="nav-brand">
+      <div class="brand-bracket">[</div>
+      <span class="brand-text" id="navBrand">PORTFOLIO</span>
+      <div class="brand-bracket">]</div>
+      <div class="brand-blink">_</div>
+    </div>
+    <div class="nav-links">
+      <a href="#hero"       class="cn-link"><span class="nl-num">01</span><span>HOME</span></a>
+      <a href="#about"      class="cn-link"><span class="nl-num">02</span><span>ABOUT</span></a>
+      <a href="#skills"     class="cn-link"><span class="nl-num">03</span><span>SKILLS</span></a>
+      <a href="#projects"   class="cn-link"><span class="nl-num">04</span><span>WORK</span></a>
+      <a href="#experience" class="cn-link"><span class="nl-num">05</span><span>CAREER</span></a>
+      <a href="#contact"    class="cn-link"><span class="nl-num">06</span><span>CONTACT</span></a>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="cn-section hero-cn" id="hero">
+
+    <!-- Decorative corner frames -->
+    <div class="corner-frame top-left">
+      <div class="cf-h"></div><div class="cf-v"></div>
+    </div>
+    <div class="corner-frame top-right">
+      <div class="cf-h"></div><div class="cf-v"></div>
+    </div>
+    <div class="corner-frame bot-left">
+      <div class="cf-h"></div><div class="cf-v"></div>
+    </div>
+    <div class="corner-frame bot-right">
+      <div class="cf-h"></div><div class="cf-v"></div>
+    </div>
+
+    <div class="hero-cn-inner">
+
+      <!-- HOLOGRAM AVATAR -->
+      <div class="holo-wrap">
+        <div class="holo-ring hr1"></div>
+        <div class="holo-ring hr2"></div>
+        <div class="holo-ring hr3"></div>
+        <div class="holo-scan"></div>
+        <div class="holo-avatar" id="holoAvatar">
+          <img id="heroImg" src="" alt="" style="display:none"/>
+          <div class="holo-ph" id="holoPh">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+        </div>
+        <div class="holo-base"></div>
+        <!-- Status panel -->
+        <div class="status-panel">
+          <div class="sp-row"><span class="sp-k">STATUS</span><span class="sp-v online">ONLINE</span></div>
+          <div class="sp-row"><span class="sp-k">MODE</span><span class="sp-v">ACTIVE</span></div>
+        </div>
+      </div>
+
+      <!-- HERO TEXT -->
+      <div class="hero-cn-text">
+        <div class="hero-sys-tag">// IDENTITY.SYS LOADED</div>
+        <div class="hero-name-wrap">
+          <h1 class="cn-name" id="heroName">
+            <span class="glitch-text" data-text="YOUR NAME">YOUR NAME</span>
+          </h1>
+        </div>
+        <div class="cn-title-bar">
+          <div class="ctb-line"></div>
+          <div class="cn-title" id="heroTitle">DEVELOPER</div>
+          <div class="ctb-line"></div>
+        </div>
+        <p class="cn-bio" id="heroBio">—</p>
+
+        <!-- Data readout -->
+        <div class="data-readout">
+          <div class="dr-row" id="drEmail">
+            <span class="dr-label">EMAIL.DAT</span>
+            <span class="dr-value">—</span>
+          </div>
+          <div class="dr-row" id="drPhone">
+            <span class="dr-label">PHONE.DAT</span>
+            <span class="dr-value">—</span>
+          </div>
+          <div class="dr-row" id="drLocation">
+            <span class="dr-label">LOCATION</span>
+            <span class="dr-value">—</span>
+          </div>
+        </div>
+
+        <div class="hero-cn-actions">
+          <a href="#projects" class="btn-cyber">
+            <span class="btn-cyber-bg"></span>
+            <span class="btn-cyber-text">EXPLORE WORK</span>
+            <div class="btn-cyber-corner tl"></div>
+            <div class="btn-cyber-corner br"></div>
+          </a>
+          <a href="#contact" class="btn-cyber-ghost">INIT CONTACT</a>
+        </div>
+
+        <!-- METRIC ROW -->
+        <div class="metric-row">
+          <div class="metric-cell" id="mcSkills">
+            <div class="mc-val">00</div>
+            <div class="mc-label">SKILLS</div>
+          </div>
+          <div class="metric-sep">|</div>
+          <div class="metric-cell" id="mcProjects">
+            <div class="mc-val">00</div>
+            <div class="mc-label">PROJECTS</div>
+          </div>
+          <div class="metric-sep">|</div>
+          <div class="metric-cell" id="mcRoles">
+            <div class="mc-val">00</div>
+            <div class="mc-label">ROLES</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section class="cn-section" id="about">
+    <div class="sec-head-cn">
+      <div class="sh-bracket">
+        <span class="sh-num">02</span>
+        <div class="sh-lines"><div class="shl1"></div><div class="shl2"></div></div>
+      </div>
+      <h2>ABOUT <span class="neon-word">PROFILE</span></h2>
+    </div>
+    <div class="about-cn-grid">
+      <div class="cyber-panel main-panel">
+        <div class="panel-header-bar"><span>description.txt</span><div class="phb-dots"><span></span><span></span><span></span></div></div>
+        <p id="aboutDesc">—</p>
+      </div>
+      <div class="cyber-panel side-panel">
+        <div class="panel-header-bar"><span>skills_summary.txt</span><div class="phb-dots"><span></span><span></span><span></span></div></div>
+        <p id="aboutSkillsSummary">—</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SKILLS ═══ -->
+  <section class="cn-section" id="skills">
+    <div class="sec-head-cn">
+      <div class="sh-bracket"><span class="sh-num">03</span><div class="sh-lines"><div class="shl1"></div><div class="shl2"></div></div></div>
+      <h2>SKILL <span class="neon-word">MATRIX</span></h2>
+    </div>
+    <div class="skills-cn-grid" id="skillsGrid"></div>
+  </section>
+
+  <!-- ═══ PROJECTS ═══ -->
+  <section class="cn-section" id="projects">
+    <div class="sec-head-cn">
+      <div class="sh-bracket"><span class="sh-num">04</span><div class="sh-lines"><div class="shl1"></div><div class="shl2"></div></div></div>
+      <h2>PROJECT <span class="neon-word">ARCHIVE</span></h2>
+    </div>
+    <div class="projects-cn-grid" id="projectsGrid"></div>
+  </section>
+
+  <!-- ═══ EXPERIENCE ═══ -->
+  <section class="cn-section" id="experience">
+    <div class="sec-head-cn">
+      <div class="sh-bracket"><span class="sh-num">05</span><div class="sh-lines"><div class="shl1"></div><div class="shl2"></div></div></div>
+      <h2>CAREER <span class="neon-word">LOG</span></h2>
+    </div>
+    <div class="exp-cn-list" id="expList"></div>
+  </section>
+
+  <!-- ═══ EDUCATION ═══ -->
+  <section class="cn-section" id="education">
+    <div class="sec-head-cn">
+      <div class="sh-bracket"><span class="sh-num">05B</span><div class="sh-lines"><div class="shl1"></div><div class="shl2"></div></div></div>
+      <h2>ACADEMIC <span class="neon-word">RECORDS</span></h2>
+    </div>
+    <div class="edu-cn-grid" id="eduGrid"></div>
+  </section>
+
+  <!-- ═══ SOCIAL ═══ -->
+  <section class="cn-section" id="social">
+    <div class="sec-head-cn">
+      <div class="sh-bracket"><span class="sh-num">05C</span><div class="sh-lines"><div class="shl1"></div><div class="shl2"></div></div></div>
+      <h2>NETWORK <span class="neon-word">LINKS</span></h2>
+    </div>
+    <div class="social-cn-row" id="socialRow"></div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section class="cn-section" id="contact">
+    <div class="sec-head-cn">
+      <div class="sh-bracket"><span class="sh-num">06</span><div class="sh-lines"><div class="shl1"></div><div class="shl2"></div></div></div>
+      <h2>INITIATE <span class="neon-word">CONTACT</span></h2>
+    </div>
+    <div class="contact-cn-layout">
+      <div class="cyber-panel contact-info-cn">
+        <div class="panel-header-bar"><span>connection_info.dat</span><div class="phb-dots"><span></span><span></span><span></span></div></div>
+        <p>Transmit your signal. I will respond within 24 hours.</p>
+        <div class="contact-data-grid">
+          <div class="cdg-row"><span class="cdg-k">EMAIL</span><span class="cdg-v" id="cInfoEmail">—</span></div>
+          <div class="cdg-row"><span class="cdg-k">PHONE</span><span class="cdg-v" id="cInfoPhone">—</span></div>
+          <div class="cdg-row"><span class="cdg-k">LOCATION</span><span class="cdg-v" id="cInfoLocation">—</span></div>
+        </div>
+      </div>
+      <div class="cyber-panel contact-form-cn">
+        <div class="panel-header-bar"><span>send_message.exe</span><div class="phb-dots"><span></span><span></span><span></span></div></div>
+        <form onsubmit="submitCyber(event)">
+          <div class="cn-field-row">
+            <div class="cn-field">
+              <label class="cn-label">SENDER_NAME</label>
+              <div class="cn-input-wrap"><input type="text" id="cName" placeholder="Enter your name"/></div>
+            </div>
+            <div class="cn-field">
+              <label class="cn-label">EMAIL_ADDR</label>
+              <div class="cn-input-wrap"><input type="email" id="cEmail" placeholder="your@address.com"/></div>
+            </div>
+          </div>
+          <div class="cn-field">
+            <label class="cn-label">SUBJECT_LINE</label>
+            <div class="cn-input-wrap"><input type="text" id="cSubject" placeholder="Transmission subject"/></div>
+          </div>
+          <div class="cn-field">
+            <label class="cn-label">MESSAGE_BODY</label>
+            <div class="cn-input-wrap"><textarea id="cMessage" placeholder="Compose your message..."></textarea></div>
+          </div>
+          <button type="submit" class="btn-cyber full-w">
+            <span class="btn-cyber-bg"></span>
+            <span class="btn-cyber-text">TRANSMIT MESSAGE</span>
+            <div class="btn-cyber-corner tl"></div>
+            <div class="btn-cyber-corner br"></div>
+          </button>
+          <div class="form-resp-cn" id="formResp"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="cn-footer">
+    <div class="cn-footer-inner">
+      <div class="footer-sys">SYS: FOLIO_CRAFT_v2.0</div>
+      <div class="footer-name" id="footerName">—</div>
+      <div class="footer-status"><span class="fst-dot"></span>ALL SYSTEMS OPERATIONAL</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="pageTitle">Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,500;1,9..144,700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- LEFT SIDEBAR — FIXED IDENTITY PANEL -->
+<aside class="sidebar" id="sidebar">
+
+  <!-- texture overlay -->
+  <div class="sb-texture" aria-hidden="true"></div>
+  <div class="sb-gradient" aria-hidden="true"></div>
+
+  <!-- top mark -->
+  <div class="sb-top-mark">
+    <span class="mark-year" id="markYear">2025</span>
+    <span class="mark-sep">·</span>
+    <span class="mark-word">Portfolio</span>
+  </div>
+
+  <!-- avatar -->
+  <div class="sb-avatar-wrap">
+    <div class="sb-avatar" id="sbAvatarWrap">
+      <img id="sidebarProfileImage" src="" alt="Profile" style="display:none"/>
+      <div class="sb-avatar-ph" id="sbAvatarPh">
+        <svg viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="36" r="22" fill="rgba(212,185,130,0.25)" stroke="rgba(212,185,130,0.5)" stroke-width="1.5"/>
+          <ellipse cx="50" cy="88" rx="34" ry="21" fill="rgba(212,185,130,0.12)" stroke="rgba(212,185,130,0.3)" stroke-width="1.5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="sb-avatar-ring"></div>
+    <div class="sb-status">
+      <span class="status-pulse"></span>
+      <span class="status-label">Open to work</span>
+    </div>
+  </div>
+
+  <!-- identity -->
+  <div class="sb-identity">
+    <h1 class="sb-name" id="sidebarName">Your Name</h1>
+    <p class="sb-title" id="sidebarTitle">Professional Title</p>
+  </div>
+
+  <!-- divider -->
+  <div class="sb-divider">
+    <span class="divider-line"></span>
+    <span class="divider-diamond">◆</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <!-- quick info -->
+  <ul class="sb-info">
+    <li class="sb-info-item" id="sbLocationItem">
+      <span class="sbi-icon">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.51 1.5 3.5 3.51 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.49-2.01-4.5-4.5-4.5zm0 6a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="currentColor"/></svg>
+      </span>
+      <span class="sbi-val" id="sbLocation">—</span>
+    </li>
+    <li class="sb-info-item" id="sbEmailItem">
+      <span class="sbi-icon">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4zm1 .75L8 8.75l5-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </span>
+      <span class="sbi-val" id="sbEmail">—</span>
+    </li>
+    <li class="sb-info-item" id="sbPhoneItem">
+      <span class="sbi-icon">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 2h3l1 3-1.5 1a8.001 8.001 0 003 3L10.5 7.5l3 1V12a1 1 0 01-1 1C6.5 13 3 7.5 3 3.5A1 1 0 013.5 2z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </span>
+      <span class="sbi-val" id="sbPhone">—</span>
+    </li>
+  </ul>
+
+  <!-- nav links -->
+  <nav class="sb-nav" aria-label="Sections">
+    <a class="sb-nav-link active" href="#about"      data-section="about">
+      <span class="snl-num">01</span>
+      <span class="snl-label">About</span>
+      <span class="snl-bar"></span>
+    </a>
+    <a class="sb-nav-link" href="#skills"     data-section="skills">
+      <span class="snl-num">02</span>
+      <span class="snl-label">Skills</span>
+      <span class="snl-bar"></span>
+    </a>
+    <a class="sb-nav-link" href="#projects"   data-section="projects">
+      <span class="snl-num">03</span>
+      <span class="snl-label">Projects</span>
+      <span class="snl-bar"></span>
+    </a>
+    <a class="sb-nav-link" href="#experience" data-section="experience">
+      <span class="snl-num">04</span>
+      <span class="snl-label">Experience</span>
+      <span class="snl-bar"></span>
+    </a>
+    <a class="sb-nav-link" href="#education"  data-section="education">
+      <span class="snl-num">05</span>
+      <span class="snl-label">Education</span>
+      <span class="snl-bar"></span>
+    </a>
+    <a class="sb-nav-link" href="#contact"    data-section="contact">
+      <span class="snl-num">06</span>
+      <span class="snl-label">Contact</span>
+      <span class="snl-bar"></span>
+    </a>
+  </nav>
+
+  <!-- socials -->
+  <div class="sb-socials">
+    <a class="sb-social-btn" id="sbLinkedin" href="#" target="_blank" title="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a class="sb-social-btn" id="sbGithub" href="#" target="_blank" title="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+    </a>
+    <a class="sb-social-btn" id="sbInstagram" href="#" target="_blank" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+    </a>
+  </div>
+
+  <!-- hire cta -->
+  <a class="sb-hire-btn" href="#contact">
+    Hire Me
+    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </a>
+
+  <!-- bottom label -->
+  <div class="sb-bottom-label">
+    <span id="sbBottomName">Portfolio</span>
+  </div>
+
+</aside>
+
+<!-- mobile nav toggle -->
+<button class="mob-toggle" id="mobToggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- ▓▓▓▓▓  RIGHT MAIN — SCROLLABLE CONTENT  ▓▓▓▓▓ -->
+<main class="main-content" id="mainContent">
+
+  <!-- ── ABOUT ── -->
+  <section class="content-section" id="about" data-section="about">
+    <div class="cs-inner">
+
+      <header class="cs-header">
+        <div class="cs-tag">01 / About</div>
+        <h2 class="cs-heading">Who I Am</h2>
+        <div class="cs-heading-line"></div>
+      </header>
+
+      <!-- hero-style intro with big name repeat -->
+      <div class="about-hero">
+        <div class="about-hero-bg-name" id="bgName" aria-hidden="true">NAME</div>
+        <div class="about-hero-content">
+          <p class="about-lead" id="aboutDescription">
+            Detailed description about yourself goes here. Tell the world your story.
+          </p>
+          <p class="about-sub" id="aboutSkillsSummary"></p>
+        </div>
+      </div>
+
+      <!-- stat row -->
+      <div class="stat-strip">
+        <div class="stat-item">
+          <span class="stat-n" id="statProjects">0</span>
+          <span class="stat-l">Projects<br/>Completed</span>
+        </div>
+        <div class="stat-vline"></div>
+        <div class="stat-item">
+          <span class="stat-n" id="statSkills">0</span>
+          <span class="stat-l">Skills<br/>Mastered</span>
+        </div>
+        <div class="stat-vline"></div>
+        <div class="stat-item">
+          <span class="stat-n" id="statExp">0</span>
+          <span class="stat-l">Work<br/>Experiences</span>
+        </div>
+        <div class="stat-vline"></div>
+        <div class="stat-item">
+          <span class="stat-n" id="statEdu">0</span>
+          <span class="stat-l">Education<br/>Records</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section class="content-section section-alt" id="skills" data-section="skills">
+    <div class="cs-inner">
+
+      <header class="cs-header">
+        <div class="cs-tag">02 / Skills</div>
+        <h2 class="cs-heading">Expertise</h2>
+        <div class="cs-heading-line"></div>
+      </header>
+
+      <!-- category group display -->
+      <div id="skillsByCategory"></div>
+
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section class="content-section" id="projects" data-section="projects">
+    <div class="cs-inner">
+
+      <header class="cs-header">
+        <div class="cs-tag">03 / Projects</div>
+        <h2 class="cs-heading">Selected Work</h2>
+        <div class="cs-heading-line"></div>
+      </header>
+
+      <div class="projects-list" id="projectsList"></div>
+
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ── -->
+  <section class="content-section section-alt" id="experience" data-section="experience">
+    <div class="cs-inner">
+
+      <header class="cs-header">
+        <div class="cs-tag">04 / Experience</div>
+        <h2 class="cs-heading">Work History</h2>
+        <div class="cs-heading-line"></div>
+      </header>
+
+      <div class="timeline" id="experienceTimeline"></div>
+
+    </div>
+  </section>
+
+  <!-- ── EDUCATION ── -->
+  <section class="content-section" id="education" data-section="education">
+    <div class="cs-inner">
+
+      <header class="cs-header">
+        <div class="cs-tag">05 / Education</div>
+        <h2 class="cs-heading">Academic Journey</h2>
+        <div class="cs-heading-line"></div>
+      </header>
+
+      <div class="edu-grid" id="educationGrid"></div>
+
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section class="content-section section-alt" id="contact" data-section="contact">
+    <div class="cs-inner">
+
+      <header class="cs-header">
+        <div class="cs-tag">06 / Contact</div>
+        <h2 class="cs-heading">Get In Touch</h2>
+        <div class="cs-heading-line"></div>
+      </header>
+
+      <div class="contact-wrap">
+
+        <p class="contact-intro">
+          Have a project in mind or just want to say hello?<br/>
+          I'd love to hear from you.
+        </p>
+
+        <!-- contact cards -->
+        <div class="contact-cards">
+
+          <a class="contact-card" id="ctEmail" href="#">
+            <div class="cc-left">
+              <div class="cc-icon">
+                <svg viewBox="0 0 20 20" fill="none"><path d="M3 5a1 1 0 011-1h12a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V5zm2 1.5L10 11l5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="cc-label">Email</div>
+                <div class="cc-val" id="ctEmailVal">—</div>
+              </div>
+            </div>
+            <div class="cc-arrow">↗</div>
+          </a>
+
+          <a class="contact-card" id="ctLinkedin" href="#" target="_blank">
+            <div class="cc-left">
+              <div class="cc-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              </div>
+              <div>
+                <div class="cc-label">LinkedIn</div>
+                <div class="cc-val">Connect with me</div>
+              </div>
+            </div>
+            <div class="cc-arrow">↗</div>
+          </a>
+
+          <a class="contact-card" id="ctGithub" href="#" target="_blank">
+            <div class="cc-left">
+              <div class="cc-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              </div>
+              <div>
+                <div class="cc-label">GitHub</div>
+                <div class="cc-val">Browse my code</div>
+              </div>
+            </div>
+            <div class="cc-arrow">↗</div>
+          </a>
+
+          <a class="contact-card" id="ctInstagram" href="#" target="_blank">
+            <div class="cc-left">
+              <div class="cc-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div>
+                <div class="cc-label">Instagram</div>
+                <div class="cc-val">Follow my work</div>
+              </div>
+            </div>
+            <div class="cc-arrow">↗</div>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- FOOTER inside contact -->
+    <footer class="site-footer">
+      <span id="footerName">Portfolio</span>
+      <span class="footer-dot">◆</span>
+      <span class="footer-copy">All rights reserved © <span id="footerYear">2025</span></span>
+    </footer>
+
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

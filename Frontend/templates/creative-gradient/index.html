@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="pageTitle">Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- CURSOR FOLLOWER -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- BACKGROUND LAYERS -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="mesh-gradient"></div>
+    <canvas id="noiseCanvas"></canvas>
+    <div class="grain-overlay"></div>
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+    <div class="aurora aurora-3"></div>
+    <div class="aurora aurora-4"></div>
+    <div class="floating-orb orb-a"></div>
+    <div class="floating-orb orb-b"></div>
+    <div class="floating-orb orb-c"></div>
+    <div class="scanlines"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#hero">
+        <span class="nav-logo-bracket">{</span>
+        <span class="nav-logo-name" id="navLogoName">Portfolio</span>
+        <span class="nav-logo-bracket">}</span>
+      </a>
+      <div class="nav-links">
+        <a href="#about"      class="nav-link">About</a>
+        <a href="#skills"     class="nav-link">Skills</a>
+        <a href="#projects"   class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#education"  class="nav-link">Education</a>
+        <a href="#contact"    class="nav-link">Contact</a>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about"      class="m-link">About</a>
+      <a href="#skills"     class="m-link">Skills</a>
+      <a href="#projects"   class="m-link">Projects</a>
+      <a href="#experience" class="m-link">Experience</a>
+      <a href="#education"  class="m-link">Education</a>
+      <a href="#contact"    class="m-link">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-inner container">
+
+      <div class="hero-text">
+        <div class="hero-eyebrow reveal">
+          <span class="eyebrow-dot"></span>
+          <span id="heroLocation">Available for work</span>
+        </div>
+
+        <h1 class="hero-name reveal" id="heroName">Your Name</h1>
+        <h2 class="hero-title reveal" id="heroTitle">Professional Title</h2>
+
+        <p class="hero-bio reveal" id="heroBio">
+          A short bio will appear here.
+        </p>
+
+        <div class="hero-actions reveal">
+          <a href="#projects" class="cta-primary">View Work <span class="arrow">→</span></a>
+          <a href="#contact"  class="cta-ghost">Get In Touch</a>
+        </div>
+
+        <div class="hero-socials reveal" id="heroSocials"></div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="avatar-wrapper">
+          <div class="avatar-ring ring-outer"></div>
+          <div class="avatar-ring ring-mid"></div>
+          <div class="avatar-img-wrap">
+            <img id="heroAvatar" src="" alt="Profile" />
+            <div class="avatar-placeholder" id="avatarPlaceholder">
+              <svg viewBox="0 0 80 80" fill="none">
+                <circle cx="40" cy="32" r="16" stroke="currentColor" stroke-width="2"/>
+                <path d="M8 72c0-17.7 14.3-32 32-32s32 14.3 32 32" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
+          <div class="floating-badge badge-1" id="floatBadge1">
+            <span class="badge-icon">✦</span>
+            <span id="badgeSkillCount">0 Skills</span>
+          </div>
+          <div class="floating-badge badge-2" id="floatBadge2">
+            <span class="badge-icon">◈</span>
+            <span id="badgeProjectCount">0 Projects</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span>scroll</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="section-label reveal"><span>01</span> About</div>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <h2 class="section-heading">Who I Am</h2>
+          <p class="about-desc" id="aboutDesc">Detailed description goes here.</p>
+          <p class="about-skills-summary" id="aboutSkillsSummary"></p>
+
+          <div class="about-meta reveal" id="aboutMeta"></div>
+        </div>
+
+        <div class="about-stats reveal" id="aboutStats"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section skills-section" id="skills">
+    <div class="container">
+      <div class="section-label reveal"><span>02</span> Skills</div>
+      <h2 class="section-heading reveal">What I Work With</h2>
+      <div class="skills-grid" id="skillsGrid"></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section projects-section" id="projects">
+    <div class="container">
+      <div class="section-label reveal"><span>03</span> Projects</div>
+      <h2 class="section-heading reveal">Selected Work</h2>
+      <div class="projects-grid" id="projectsGrid"></div>
+      <div class="empty-state" id="projectsEmpty" style="display:none">
+        <p>No projects added yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section experience-section" id="experience">
+    <div class="container">
+      <div class="section-label reveal"><span>04</span> Experience</div>
+      <h2 class="section-heading reveal">Work History</h2>
+      <div class="timeline" id="experienceTimeline"></div>
+      <div class="empty-state" id="expEmpty" style="display:none">
+        <p>No experience added yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section education-section" id="education">
+    <div class="container">
+      <div class="section-label reveal"><span>05</span> Education</div>
+      <h2 class="section-heading reveal">Academic Journey</h2>
+      <div class="edu-grid" id="educationGrid"></div>
+      <div class="empty-state" id="eduEmpty" style="display:none">
+        <p>No education added yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="section-label reveal"><span>06</span> Contact</div>
+
+      <div class="contact-wrap">
+        <div class="contact-left reveal">
+          <h2 class="section-heading">Let's Build<br/><em>Something Great</em></h2>
+          <div class="contact-info" id="contactInfo"></div>
+          <div class="contact-socials" id="contactSocials"></div>
+        </div>
+
+        <div class="contact-right reveal">
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="cfName" placeholder="Your name" required />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="cfEmail" placeholder="your@email.com" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Subject</label>
+              <input type="text" id="cfSubject" placeholder="What's this about?" />
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea id="cfMessage" rows="5" placeholder="Tell me about your project…" required></textarea>
+            </div>
+            <button type="submit" class="cta-primary full-width">
+              Send Message <span class="arrow">→</span>
+            </button>
+            <div class="form-success" id="formSuccess" style="display:none">
+              ✦ Message sent! I'll get back to you soon.
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="footer-name" id="footerName">Portfolio</span>
+      <span class="footer-copy">Crafted with <span class="heart">♥</span> · FolioCraft</span>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
