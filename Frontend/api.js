@@ -1,13 +1,8 @@
-// ══════════════════════════════════════════════════════════════
-//   frontend/api.js
-//   Yeh file apne project folder mein rakhna
-//   wizard.js aur preview.js mein yeh import karna hai
-// ══════════════════════════════════════════════════════════════
 
 'use strict';
 
 // ── Backend URL - Apna Vercel URL yahan dalein ──
-    const API_URL = 'https://folio-craft-2rp181g57-zahrabatoolmns-sketchs-projects.vercel.app';
+    const API_URL = 'https://folio-craft-lp84zy19w-zahrabatoolmns-sketchs-projects.vercel.app';
 // ── Token Helper ──
 const getToken  = ()        => localStorage.getItem('fc_token');
 const setToken  = (token)   => localStorage.setItem('fc_token', token);
