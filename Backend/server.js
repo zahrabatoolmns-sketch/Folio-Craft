@@ -6,9 +6,6 @@ const cors       = require('cors');
 const helmet     = require('helmet');
 const rateLimit  = require('express-rate-limit');
 const connectDB  = require('./config/database');
-const passport   = require('./config/passport');
-const session    = require('express-session');
-
 // Routes
 const authRoutes      = require('./routes/auth');
 const portfolioRoutes = require('./routes/portfolio');
