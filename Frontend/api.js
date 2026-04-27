@@ -196,7 +196,11 @@ async function deletePortfolio(id) {
   });
   return data;
 }
-
+// Google Login
+function loginWithGoogle() {
+  const backendUrl = API_URL.replace('/api', '');
+  window.location.href = backendUrl + '/api/auth/google';
+}
 // ── Export ──
 window.FolioAPI = {
   // Auth
@@ -205,6 +209,7 @@ window.FolioAPI = {
   logout,
   isLoggedIn,
   getCurrentUser,
+  loginWithGoogle,
 
   // Portfolio
   loadPortfolio,

@@ -172,4 +172,39 @@ router.delete('/delete-account', protect, async (req, res) => {
   }
 });
 
+// ─────────────────────────────────────
+// Google Login Routes
+// ─────────────────────────────────────
+const passport = require('../config/passport');
+
+// Google pe redirect karo
+router.get('/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email']
+  })
+);
+
+// Google callback
+router.get('/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login-failed' }),
+  async (req, res) => {
+    try {
+      const token    = generateToken(req.user._id);
+      const user     = req.user.toSafeObject();
+      const userData = encodeURIComponent(JSON.stringify(user));
+
+      // Frontend pe redirect karo token ke saath
+      const frontendUrl = process.env.FRONTEND_URL === '*'
+        ? 'http://localhost:5500'
+        : process.env.FRONTEND_URL;
+
+      res.redirect(
+        `${frontendUrl}/wizard.html?token=${token}&user=${userData}`
+      );
+
+    } catch (err) {
+      res.redirect('/login-failed');
+    }
+  }
+);
 module.exports = router;

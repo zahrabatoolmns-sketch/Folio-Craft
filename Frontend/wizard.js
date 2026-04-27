@@ -1,5 +1,22 @@
 
 'use strict';
+// Google Login Token Handle
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const token  = params.get('token');
+  const user   = params.get('user');
+
+  if (token && user) {
+    try {
+      localStorage.setItem('fc_token', token);
+      localStorage.setItem('fc_user', user);
+      // URL clean karo
+      window.history.replaceState({}, '', 'wizard.html');
+    } catch(e) {
+      console.warn('Token save error:', e);
+    }
+  }
+})();
 
 /*
    0.  PARTICLES  (background) */

@@ -48,10 +48,9 @@ const userSchema = new mongoose.Schema({
   },
 
   // ── Plan ──
-  plan: {
+  googleId: {
     type: String,
-    enum: ['free', 'pro'],
-    default: 'free'
+    sparse: true
   },
 
   // ── Timestamps ──

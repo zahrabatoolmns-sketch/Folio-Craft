@@ -154,6 +154,14 @@ document.getElementById('getStartedBtn').addEventListener('click', () => {
     }
   }
 
+  // Google Login Button
+const googleBtn = document.getElementById('googleLoginBtn');
+googleBtn?.addEventListener('click', function() {
+  if (window.FolioAPI) {
+    window.FolioAPI.loginWithGoogle();
+  }
+});
+
   // ── Button Events ──
   navLoginBtn.addEventListener('click', showModal);
   closeBtn.addEventListener('click', hideModal);

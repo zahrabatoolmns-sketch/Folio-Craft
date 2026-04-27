@@ -6,6 +6,8 @@ const cors       = require('cors');
 const helmet     = require('helmet');
 const rateLimit  = require('express-rate-limit');
 const connectDB  = require('./config/database');
+const passport   = require('./config/passport');
+const session    = require('express-session');
 
 // Routes
 const authRoutes      = require('./routes/auth');
@@ -53,6 +55,15 @@ const authLimiter = rateLimit({
 app.use('/api/', generalLimiter);
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
+
+app.use(session({
+  secret:            process.env.SESSION_SECRET || 'foliocraft-secret',
+  resave:            false,
+  saveUninitialized: false,
+  cookie: { secure: process.env.NODE_ENV === 'production' }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // ── Body Parser ──
 app.use(express.json({ limit: '10mb' }));        // Base64 images ke liye bada limit
