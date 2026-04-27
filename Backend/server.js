@@ -1,7 +1,4 @@
-// ══════════════════════════════════════════════════
-//   FolioCraft Backend — server.js
-//   Main Entry Point
-// ══════════════════════════════════════════════════
+
 
 require('dotenv').config();
 const express    = require('express');
@@ -25,13 +22,15 @@ connectDB();
 app.use(helmet());
 
 // ── CORS ──
+// ── CORS ──
 app.use(cors({
   origin: [
-    process.env.FRONTEND_URL,
+    'https://folio-craft-6frg.vercel.app',
+    'https://folio-craft-two.vercel.app',
     'http://localhost:3000',
-    'http://localhost:5500',    // Live Server
+    'http://localhost:5500',
     'http://127.0.0.1:5500',
-    /\.vercel\.app$/,           // Koi bhi Vercel subdomain
+    /\.vercel\.app$/,
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
