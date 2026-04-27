@@ -1,9 +1,6 @@
-// ══════════════════════════════════════════
-//   models/Portfolio.js - Portfolio Schema
-// ══════════════════════════════════════════
 
 const mongoose = require('mongoose');
-const { nanoid } = require('nanoid');
+const crypto = require('crypto');
 
 // ── Skill Sub-Schema ──
 const skillSchema = new mongoose.Schema({
@@ -58,7 +55,7 @@ const portfolioSchema = new mongoose.Schema({
   shareId: {
     type: String,
     unique: true,
-    default: () => nanoid(10)     // jaise: "aB3kP9mNqR"
+    default: () => crypto.randomBytes(5).toString('hex')    // jaise: "aB3kP9mNqR"
   },
 
   // ── Personal Info (Step 1) ──
