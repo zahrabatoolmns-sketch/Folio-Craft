@@ -17,20 +17,20 @@ const userSchema = new mongoose.Schema({
 
   email: {
     type: String,
-    required: [true, 'Email zaruri hai'],
+    required: [true, 'Email not required'],
     unique: true,
     lowercase: true,
     trim: true,
-    match: [/^\S+@\S+\.\S+$/, 'Sahi email address daalo']
+    match: [/^\S+@\S+\.\S+$/, 'Add correct email address']
   },
 
   password: {
     type: String,
-    required: [true, 'Password zaruri hai'],
-    minlength: [6, 'Password minimum 6 characters ka hona chahiye'],
-    select: false     // Default mein password return na ho
+    required: false,
+    minlength: [6, 'Password length should be minimum 6'],
+    select: false
   },
-
+  
   // ── Account Status ──
   isVerified: {
     type: Boolean,
@@ -47,10 +47,16 @@ const userSchema = new mongoose.Schema({
     default: 0
   },
 
-  // ── Plan ──
+ // ── Google Auth ──
   googleId: {
     type: String,
-    sparse: true
+    sparse: true,
+    default: null
+  },
+
+  avatar: {
+    type: String,
+    default: null
   },
 
   // ── Timestamps ──

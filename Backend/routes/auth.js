@@ -173,38 +173,80 @@ router.delete('/delete-account', protect, async (req, res) => {
 });
 
 // ─────────────────────────────────────
-// Google Login Routes
+// Google Login Routes — Serverless Fix
 // ─────────────────────────────────────
-const passport = require('../config/passport');
 
-// Google pe redirect karo
-router.get('/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email']
-  })
-);
+// Step 1 — Google pe redirect karo
+router.get('/google', (req, res) => {
+  const googleAuthURL = `https://accounts.google.com/o/oauth2/v2/auth?` +
+    `client_id=${process.env.GOOGLE_CLIENT_ID}&` +
+    `redirect_uri=${encodeURIComponent(process.env.GOOGLE_CALLBACK_URL)}&` +
+    `response_type=code&` +
+    `scope=openid%20email%20profile`;
 
-// Google callback
-router.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login-failed' }),
-  async (req, res) => {
-    try {
-      const token    = generateToken(req.user._id);
-      const user     = req.user.toSafeObject();
-      const userData = encodeURIComponent(JSON.stringify(user));
+  res.redirect(googleAuthURL);
+});
 
-      // Frontend pe redirect karo token ke saath
-      const frontendUrl = process.env.FRONTEND_URL === '*'
-        ? 'http://localhost:5500'
-        : process.env.FRONTEND_URL;
+// Step 2 — Google callback
+router.get('/google/callback', async (req, res) => {
+  try {
+    const { code } = req.query;
+    if (!code) return res.redirect(`${process.env.FRONTEND_URL}?error=no_code`);
 
-      res.redirect(
-        `${frontendUrl}/wizard.html?token=${token}&user=${userData}`
-      );
+    // Google se access token lo
+    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code,
+        client_id:     process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        redirect_uri:  process.env.GOOGLE_CALLBACK_URL,
+        grant_type:    'authorization_code'
+      })
+    });
 
-    } catch (err) {
-      res.redirect('/login-failed');
+    const tokenData = await tokenRes.json();
+    if (!tokenData.access_token) {
+      return res.redirect(`${process.env.FRONTEND_URL}?error=token_failed`);
     }
+
+    // Google se user info lo
+    const userRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+      headers: { Authorization: `Bearer ${tokenData.access_token}` }
+    });
+    const googleUser = await userRes.json();
+
+    // Database mein dhundo ya banao
+    let user = await User.findOne({ email: googleUser.email });
+
+    if (!user) {
+      user = await User.create({
+        name:     googleUser.name,
+        email:    googleUser.email,
+        avatar:   googleUser.picture,
+        password: 'google_' + googleUser.id,
+        googleId: googleUser.id
+      });
+
+      // Naye user ke liye portfolio banao
+      await Portfolio.create({
+        user:     user._id,
+        fullname: googleUser.name,
+        email:    googleUser.email
+      });
+    }
+
+    // JWT token banao
+    const jwt = require('jsonwebtoken');
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
+    // Frontend pe redirect karo
+    res.redirect(`${process.env.FRONTEND_URL}/index.html?token=${token}&name=${encodeURIComponent(user.name)}`);
+
+  } catch (err) {
+    console.error('Google auth error:', err);
+    res.redirect(`${process.env.FRONTEND_URL}?error=server_error`);
   }
-);
+});
 module.exports = router;
