@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 
 // ── Password Reset Email ──
 async function sendPasswordResetEmail(toEmail, resetToken, userName) {
-  const resetUrl = `${process.env.FRONTEND_URL}/reset-password.html?token=${resetToken}`;
+  const resetUrl = `https://folio-craft-6frg.vercel.app/reset-password.html?token=${resetToken}`;
 
   await transporter.sendMail({
     from:    process.env.EMAIL_FROM,
