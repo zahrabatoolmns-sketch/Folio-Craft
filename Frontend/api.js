@@ -198,8 +198,7 @@ async function deletePortfolio(id) {
 }
 // Google Login
 function loginWithGoogle() {
-  const backendUrl = API_URL.replace('/api', '');
-  window.location.href = backendUrl + '/api/auth/google';
+  window.location.href = 'https://folio-craft-two.vercel.app/api/auth/google';
 }
 // ── Export ──
 window.FolioAPI = {
