@@ -297,7 +297,7 @@ document.getElementById('forgotBtn')?.addEventListener('click', function() {
   btn.textContent = 'Sending...';
   btn.disabled    = true;
 
-  fetch(window.FolioAPI._apiUrl + '/auth/forgot-password', {
+  fetch('https://folio-craft-two.vercel.app/api/auth/forgot-password', {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify({ email })
