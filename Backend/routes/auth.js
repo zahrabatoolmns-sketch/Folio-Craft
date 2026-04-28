@@ -6,46 +6,45 @@ const express         = require('express');
 const router          = express.Router();
 const User            = require('../models/User');
 const Portfolio       = require('../models/Portfolio');
+const crypto          = require('crypto');
 const { protect, generateToken } = require('../middleware/auth');
+const { sendPasswordResetEmail } = require('../config/email');
+
+const FRONTEND_URL = 'https://folio-craft-6frg.vercel.app';
 
 // ─────────────────────────────────────────────
-// POST /api/auth/register - Naya account banao
+// POST /api/auth/register
 // ─────────────────────────────────────────────
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Validation
     if (!name || !email || !password) {
-      return res.status(400).json({ error: 'Naam, email aur password zaruri hain.' });
+      return res.status(400).json({ error: 'Name, email and password are required.' });
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ error: 'Password minimum 6 characters ka hona chahiye.' });
+      return res.status(400).json({ error: 'Password must be at least 6 characters.' });
     }
 
-    // Email already registered?
     const existingUser = await User.findOne({ email: email.toLowerCase() });
     if (existingUser) {
-      return res.status(400).json({ error: 'Yeh email pehle se registered hai. Login karein.' });
+      return res.status(400).json({ error: 'This email is already registered. Please login.' });
     }
 
-    // User banao
     const user = await User.create({ name, email, password });
 
-    // Ek empty portfolio bhi banao is user ke liye
     await Portfolio.create({
       user: user._id,
       fullname: name,
       email: email
     });
 
-    // Token generate karo
     const token = generateToken(user._id);
 
     res.status(201).json({
       success: true,
-      message: 'Account ban gaya! Welcome to FolioCraft.',
+      message: 'Account created! Welcome to FolioCraft.',
       token,
       user: user.toSafeObject()
     });
@@ -53,34 +52,32 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     console.error('Register Error:', error);
     if (error.code === 11000) {
-      return res.status(400).json({ error: 'Yeh email already use ho rahi hai.' });
+      return res.status(400).json({ error: 'This email is already in use.' });
     }
-    res.status(500).json({ error: 'Registration mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Registration failed. Please try again.' });
   }
 });
 
 // ─────────────────────────────────────────────
-// POST /api/auth/login - Login karo
+// POST /api/auth/login
 // ─────────────────────────────────────────────
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email aur password dono chahiye.' });
+      return res.status(400).json({ error: 'Email and password are required.' });
     }
 
-    // User dhundo (password bhi include karo compare ke liye)
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
 
     if (!user) {
-      return res.status(401).json({ error: 'Email ya password galat hai.' });
+      return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
-    // Password check karo
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Email ya password galat hai.' });
+      return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
     const token = generateToken(user._id);
@@ -94,20 +91,19 @@ router.post('/login', async (req, res) => {
 
   } catch (error) {
     console.error('Login Error:', error);
-    res.status(500).json({ error: 'Login mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Login failed. Please try again.' });
   }
 });
 
 // ─────────────────────────────────────────────
-// GET /api/auth/me - Apna profile dekho
+// GET /api/auth/me
 // ─────────────────────────────────────────────
 router.get('/me', protect, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
 
-    // Is user ki portfolio bhi lo
     const portfolio = await Portfolio.findOne({ user: req.user._id })
-      .select('-views');    // Analytics data exclude karo
+      .select('-views');
 
     res.json({
       success: true,
@@ -117,66 +113,62 @@ router.get('/me', protect, async (req, res) => {
 
   } catch (error) {
     console.error('Get Me Error:', error);
-    res.status(500).json({ error: 'Profile laane mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Failed to load profile.' });
   }
 });
 
 // ─────────────────────────────────────────────
-// PUT /api/auth/change-password - Password change
+// PUT /api/auth/change-password
 // ─────────────────────────────────────────────
 router.put('/change-password', protect, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
 
     if (!currentPassword || !newPassword) {
-      return res.status(400).json({ error: 'Purana aur naya password dono chahiye.' });
+      return res.status(400).json({ error: 'Current and new password are required.' });
     }
 
     if (newPassword.length < 6) {
-      return res.status(400).json({ error: 'Naya password minimum 6 characters ka hona chahiye.' });
+      return res.status(400).json({ error: 'New password must be at least 6 characters.' });
     }
 
     const user = await User.findById(req.user._id).select('+password');
 
     const isMatch = await user.comparePassword(currentPassword);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Purana password galat hai.' });
+      return res.status(401).json({ error: 'Current password is incorrect.' });
     }
 
     user.password = newPassword;
     await user.save();
 
-    res.json({ success: true, message: 'Password successfully change ho gaya!' });
+    res.json({ success: true, message: 'Password changed successfully!' });
 
   } catch (error) {
     console.error('Change Password Error:', error);
-    res.status(500).json({ error: 'Password change mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Failed to change password.' });
   }
 });
 
 // ─────────────────────────────────────────────
-// DELETE /api/auth/delete-account - Account delete
+// DELETE /api/auth/delete-account
 // ─────────────────────────────────────────────
 router.delete('/delete-account', protect, async (req, res) => {
   try {
-    // Portfolio bhi delete karo
     await Portfolio.deleteMany({ user: req.user._id });
-    // User delete karo
     await User.findByIdAndDelete(req.user._id);
 
-    res.json({ success: true, message: 'Account successfully delete ho gaya.' });
+    res.json({ success: true, message: 'Account deleted successfully.' });
 
   } catch (error) {
     console.error('Delete Account Error:', error);
-    res.status(500).json({ error: 'Account delete karne mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Failed to delete account.' });
   }
 });
 
-// ─────────────────────────────────────
-// Google Login Routes — Serverless Fix
-// ─────────────────────────────────────
-
-// Step 1 — Google pe redirect karo
+// ─────────────────────────────────────────────
+// GET /api/auth/google
+// ─────────────────────────────────────────────
 router.get('/google', (req, res) => {
   const googleAuthURL = `https://accounts.google.com/o/oauth2/v2/auth?` +
     `client_id=${process.env.GOOGLE_CLIENT_ID}&` +
@@ -187,13 +179,14 @@ router.get('/google', (req, res) => {
   res.redirect(googleAuthURL);
 });
 
-// Step 2 — Google callback
+// ─────────────────────────────────────────────
+// GET /api/auth/google/callback
+// ─────────────────────────────────────────────
 router.get('/google/callback', async (req, res) => {
   try {
     const { code } = req.query;
-    if (!code) return res.redirect(`${process.env.FRONTEND_URL}?error=no_code`);
+    if (!code) return res.redirect(`${FRONTEND_URL}?error=no_code`);
 
-    // Google se access token lo
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -208,16 +201,14 @@ router.get('/google/callback', async (req, res) => {
 
     const tokenData = await tokenRes.json();
     if (!tokenData.access_token) {
-      return res.redirect(`${process.env.FRONTEND_URL}?error=token_failed`);
+      return res.redirect(`${FRONTEND_URL}?error=token_failed`);
     }
 
-    // Google se user info lo
     const userRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
       headers: { Authorization: `Bearer ${tokenData.access_token}` }
     });
     const googleUser = await userRes.json();
 
-    // Database mein dhundo ya banao
     let user = await User.findOne({ email: googleUser.email });
 
     if (!user) {
@@ -229,7 +220,6 @@ router.get('/google/callback', async (req, res) => {
         googleId: googleUser.id
       });
 
-      // Naye user ke liye portfolio banao
       await Portfolio.create({
         user:     user._id,
         fullname: googleUser.name,
@@ -237,20 +227,16 @@ router.get('/google/callback', async (req, res) => {
       });
     }
 
-    // JWT token banao
     const jwt = require('jsonwebtoken');
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-    // Frontend pe redirect karo
-    res.redirect(`${process.env.FRONTEND_URL}/index.html?token=${token}&name=${encodeURIComponent(user.name)}`);
+    res.redirect(`${FRONTEND_URL}/index.html?token=${token}&name=${encodeURIComponent(user.name)}`);
 
   } catch (err) {
     console.error('Google auth error:', err);
-    res.redirect(`${process.env.FRONTEND_URL}?error=server_error`);
+    res.redirect(`${FRONTEND_URL}?error=server_error`);
   }
 });
-const crypto = require('crypto');
-const { sendPasswordResetEmail } = require('../config/email');
 
 // ─────────────────────────────────────────────
 // POST /api/auth/forgot-password
@@ -260,38 +246,35 @@ router.post('/forgot-password', async (req, res) => {
     const { email } = req.body;
 
     if (!email) {
-      return res.status(400).json({ error: 'Email zaruri hai.' });
+      return res.status(400).json({ error: 'Email is required.' });
     }
 
     const user = await User.findOne({ email: email.toLowerCase() });
 
-    // Security: user mile ya na mile — same response
     if (!user) {
       return res.json({
         success: true,
-        message: 'Agar email registered hai to reset link bhej diya gaya.'
+        message: 'If this email is registered, a reset link has been sent.'
       });
     }
 
-    // Reset token banao
-    const resetToken   = crypto.randomBytes(32).toString('hex');
-    const tokenExpiry  = Date.now() + 60 * 60 * 1000; // 1 ghanta
+    const resetToken  = crypto.randomBytes(32).toString('hex');
+    const tokenExpiry = Date.now() + 60 * 60 * 1000;
 
     user.resetPasswordToken   = resetToken;
     user.resetPasswordExpires = tokenExpiry;
     await user.save();
 
-    // Email bhejo
     await sendPasswordResetEmail(user.email, resetToken, user.name);
 
     res.json({
       success: true,
-      message: 'Password reset link tumhari email pe bhej diya gaya!'
+      message: 'Password reset link has been sent to your email.'
     });
 
   } catch (error) {
     console.error('Forgot Password Error:', error);
-    res.status(500).json({ error: 'Email bhejne mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Failed to send reset email. Please try again.' });
   }
 });
 
@@ -303,14 +286,13 @@ router.post('/reset-password', async (req, res) => {
     const { token, newPassword } = req.body;
 
     if (!token || !newPassword) {
-      return res.status(400).json({ error: 'Token aur naya password chahiye.' });
+      return res.status(400).json({ error: 'Token and new password are required.' });
     }
 
     if (newPassword.length < 6) {
-      return res.status(400).json({ error: 'Password minimum 6 characters ka hona chahiye.' });
+      return res.status(400).json({ error: 'Password must be at least 6 characters.' });
     }
 
-    // Token se user dhundo
     const user = await User.findOne({
       resetPasswordToken:   token,
       resetPasswordExpires: { $gt: Date.now() }
@@ -318,11 +300,10 @@ router.post('/reset-password', async (req, res) => {
 
     if (!user) {
       return res.status(400).json({
-        error: 'Reset link expire ho gaya ya galat hai. Dobara try karo.'
+        error: 'Reset link has expired or is invalid. Please try again.'
       });
     }
 
-    // Password update karo
     user.password             = newPassword;
     user.resetPasswordToken   = undefined;
     user.resetPasswordExpires = undefined;
@@ -330,12 +311,13 @@ router.post('/reset-password', async (req, res) => {
 
     res.json({
       success: true,
-      message: 'Password successfully change ho gaya! Ab login karo.'
+      message: 'Password reset successfully! You can now login.'
     });
 
   } catch (error) {
     console.error('Reset Password Error:', error);
-    res.status(500).json({ error: 'Password reset mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Failed to reset password. Please try again.' });
   }
 });
+
 module.exports = router;
