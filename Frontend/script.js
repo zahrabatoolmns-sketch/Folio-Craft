@@ -224,4 +224,95 @@ googleBtn?.addEventListener('click', function() {
   updateNav();
   window.showAuthModal = showModal;
 
+  // ── Show/Hide Password ──
+const eyeOpen = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+  <circle cx="12" cy="12" r="3"/>
+</svg>`;
+
+const eyeClosed = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
+  <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
+  <line x1="1" y1="1" x2="23" y2="23"/>
+</svg>`;
+
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  const isHidden = input.type === 'password';
+  input.type    = isHidden ? 'text' : 'password';
+  btn.innerHTML = isHidden ? eyeClosed : eyeOpen;
+}
+
+document.getElementById('loginEyeBtn')?.addEventListener('click', function() {
+  togglePassword('loginPassword', this);
+});
+
+document.getElementById('regEyeBtn')?.addEventListener('click', function() {
+  togglePassword('regPassword', this);
+});
+
+// ── Password Strength (Register) ──
+document.getElementById('regPassword')?.addEventListener('input', function() {
+  const val  = this.value;
+  const wrap = document.getElementById('regStrengthWrap');
+  const fill = document.getElementById('regStrengthFill');
+  const text = document.getElementById('regStrengthText');
+
+  if (!val) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'flex';
+
+  let score = 0;
+  if (val.length >= 6)           score++;
+  if (val.length >= 10)          score++;
+  if (/[A-Z]/.test(val))         score++;
+  if (/[0-9]/.test(val))         score++;
+  if (/[^A-Za-z0-9]/.test(val))  score++;
+
+  const levels = [
+    { label: 'Very Weak',  color: '#ef4444', width: '20%'  },
+    { label: 'Weak',       color: '#f97316', width: '40%'  },
+    { label: 'Fair',       color: '#eab308', width: '60%'  },
+    { label: 'Good',       color: '#22c55e', width: '80%'  },
+    { label: 'Strong',     color: '#16a34a', width: '100%' },
+  ];
+
+  const level           = levels[Math.min(score, 4)];
+  fill.style.width      = level.width;
+  fill.style.background = level.color;
+  text.textContent      = level.label;
+  text.style.color      = level.color;
+});
+
+// ── Forgot Password ──
+document.getElementById('forgotBtn')?.addEventListener('click', function() {
+  const email = document.getElementById('loginEmail').value.trim();
+
+  if (!email) {
+    showMessage('Please enter your email first.', 'error');
+    return;
+  }
+
+  const btn = this;
+  btn.textContent = 'Sending...';
+  btn.disabled    = true;
+
+  fetch(window.FolioAPI._apiUrl + '/auth/forgot-password', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ email })
+  })
+  .then(r => r.json())
+  .then(data => {
+    showMessage('Password reset link has been sent to your email.', 'success');
+    btn.textContent = 'Forgot password?';
+    btn.disabled    = false;
+  })
+  .catch(() => {
+    showMessage('Failed to send email. Please try again.', 'error');
+    btn.textContent = 'Forgot password?';
+    btn.disabled    = false;
+  });
+});
+
 })();

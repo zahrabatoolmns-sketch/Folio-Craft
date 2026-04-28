@@ -61,7 +61,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
-    message: 'FolioCraft Backend chal raha hai!',
+    message: 'FolioCraft Backend is running!',
     timestamp: new Date().toISOString(),
     env: process.env.NODE_ENV
   });

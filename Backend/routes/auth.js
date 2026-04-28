@@ -249,4 +249,93 @@ router.get('/google/callback', async (req, res) => {
     res.redirect(`${process.env.FRONTEND_URL}?error=server_error`);
   }
 });
+const crypto = require('crypto');
+const { sendPasswordResetEmail } = require('../config/email');
+
+// ─────────────────────────────────────────────
+// POST /api/auth/forgot-password
+// ─────────────────────────────────────────────
+router.post('/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email zaruri hai.' });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    // Security: user mile ya na mile — same response
+    if (!user) {
+      return res.json({
+        success: true,
+        message: 'Agar email registered hai to reset link bhej diya gaya.'
+      });
+    }
+
+    // Reset token banao
+    const resetToken   = crypto.randomBytes(32).toString('hex');
+    const tokenExpiry  = Date.now() + 60 * 60 * 1000; // 1 ghanta
+
+    user.resetPasswordToken   = resetToken;
+    user.resetPasswordExpires = tokenExpiry;
+    await user.save();
+
+    // Email bhejo
+    await sendPasswordResetEmail(user.email, resetToken, user.name);
+
+    res.json({
+      success: true,
+      message: 'Password reset link tumhari email pe bhej diya gaya!'
+    });
+
+  } catch (error) {
+    console.error('Forgot Password Error:', error);
+    res.status(500).json({ error: 'Email bhejne mein kuch gadbad hui.' });
+  }
+});
+
+// ─────────────────────────────────────────────
+// POST /api/auth/reset-password
+// ─────────────────────────────────────────────
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return res.status(400).json({ error: 'Token aur naya password chahiye.' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'Password minimum 6 characters ka hona chahiye.' });
+    }
+
+    // Token se user dhundo
+    const user = await User.findOne({
+      resetPasswordToken:   token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        error: 'Reset link expire ho gaya ya galat hai. Dobara try karo.'
+      });
+    }
+
+    // Password update karo
+    user.password             = newPassword;
+    user.resetPasswordToken   = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Password successfully change ho gaya! Ab login karo.'
+    });
+
+  } catch (error) {
+    console.error('Reset Password Error:', error);
+    res.status(500).json({ error: 'Password reset mein kuch gadbad hui.' });
+  }
+});
 module.exports = router;
