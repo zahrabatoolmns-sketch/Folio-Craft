@@ -1,10 +1,3 @@
-/* ═══════════════════════════════════════════════════════════════
-   preview.js  —  FolioCraft  (FIXED VERSION)
-   ─ Checks if template is built before loading
-   ─ Detects file:// protocol and shows clear fix instructions
-   ─ postMessage for data injection (CSP-safe)
-   ─ Standalone ZIP with baked-in data
-═══════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
 

@@ -16,7 +16,7 @@ const connectDB = async () => {
 
     // Connection events
     mongoose.connection.on('disconnected', () => {
-      console.log('⚠️  MongoDB se connection toot gaya. Reconnect ho raha hai...');
+      console.log('⚠️ Connection to MongoDB lost. Reconnecting....');
     });
 
     mongoose.connection.on('error', (err) => {
@@ -25,7 +25,7 @@ const connectDB = async () => {
 
   } catch (error) {
     console.error('❌ MongoDB Connection Failed:', error.message);
-    console.error('💡 Check karo: MONGODB_URI sahi hai? MongoDB Atlas mein IP whitelisted hai?');
+    console.error('💡 Check: Is mongodb_variable ok? Is mongodb IP- whitelisted in Atlas?');
     process.exit(1);   // Server band kar do agar DB connect na ho
   }
 };

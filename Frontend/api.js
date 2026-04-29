@@ -37,7 +37,7 @@ async function apiFetch(endpoint, options = {}) {
 
   } catch (err) {
     if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
-      throw new Error('Server se connection nahi ho raha. Internet check karein.');
+      throw new Error('Cannot connect to server. Check your internet connection');
     }
     throw err;
   }
