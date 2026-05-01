@@ -1,7 +1,3 @@
-// ══════════════════════════════════════════
-//   models/User.js - User Database Schema
-// ══════════════════════════════════════════
-
 const mongoose = require('mongoose');
 const bcrypt   = require('bcryptjs');
 
@@ -10,9 +6,9 @@ const userSchema = new mongoose.Schema({
   // ── Basic Info ──
   name: {
     type: String,
-    required: [true, 'Naam zaruri hai'],
+    required: [true, 'Name is required.'],
     trim: true,
-    maxlength: [100, 'Naam 100 characters se zyada nahi ho sakta']
+    maxlength: [100, 'Name cannot exceed 100 characters']
   },
 
   email: {
@@ -62,9 +58,8 @@ const userSchema = new mongoose.Schema({
   // ── Timestamps ──
 }, { timestamps: true });
 
-// ── Password Hash - Save se pehle ──
+// ── Password Hash ── //
 userSchema.pre('save', async function(next) {
-  // Sirf tab hash karo jab password change hua ho
   if (!this.isModified('password')) return next();
 
   try {

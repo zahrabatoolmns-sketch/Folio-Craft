@@ -1,7 +1,3 @@
-// ══════════════════════════════════════════════════════
-//   routes/analytics.js - Portfolio Views & Stats
-// ══════════════════════════════════════════════════════
-
 const express   = require('express');
 const router    = express.Router();
 const Portfolio = require('../models/Portfolio');
@@ -9,9 +5,8 @@ const { protect } = require('../middleware/auth');
 
 router.use(protect);
 
-// ─────────────────────────────────────────────────────
 // GET /api/analytics/overview - Dashboard summary
-// ─────────────────────────────────────────────────────
+
 router.get('/overview', async (req, res) => {
   try {
     const portfolio = await Portfolio.findOne({ user: req.user._id });
@@ -100,13 +95,11 @@ router.get('/overview', async (req, res) => {
 
   } catch (error) {
     console.error('Analytics Error:', error);
-    res.status(500).json({ error: 'Analytics laane mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something wrong with fetching analytics.' });
   }
 });
 
-// ─────────────────────────────────────────────────────
 // DELETE /api/analytics/reset - Analytics reset karo
-// ─────────────────────────────────────────────────────
 router.delete('/reset', async (req, res) => {
   try {
     await Portfolio.findOneAndUpdate(
@@ -114,10 +107,10 @@ router.delete('/reset', async (req, res) => {
       { views: [], totalViews: 0 }
     );
 
-    res.json({ success: true, message: 'Analytics reset ho gaya.' });
+    res.json({ success: true, message: 'Analytics reset.' });
 
   } catch (error) {
-    res.status(500).json({ error: 'Analytics reset karne mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something went wrong with resetting analytics.' });
   }
 });
 

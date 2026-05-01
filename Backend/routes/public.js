@@ -1,14 +1,10 @@
-// ══════════════════════════════════════════════════════════
-//   routes/public.js - Public Portfolio View (no login needed)
-// ══════════════════════════════════════════════════════════
+// routes/public.js - Public Portfolio View (no login needed)
 
 const express   = require('express');
 const router    = express.Router();
 const Portfolio = require('../models/Portfolio');
 
-// ─────────────────────────────────────────────────────
 // GET /api/public/p/:shareId - Share link se portfolio dekho
-// ─────────────────────────────────────────────────────
 router.get('/p/:shareId', async (req, res) => {
   try {
     const { shareId } = req.params;
@@ -20,7 +16,7 @@ router.get('/p/:shareId', async (req, res) => {
 
     if (!portfolio) {
       return res.status(404).json({
-        error: 'Portfolio nahi mila ya publish nahi hua.'
+        error: 'Portfolio not found or published.'
       });
     }
 
@@ -34,13 +30,11 @@ router.get('/p/:shareId', async (req, res) => {
 
   } catch (error) {
     console.error('Public Portfolio Error:', error);
-    res.status(500).json({ error: 'Portfolio laane mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'something went wrong bringing portfolio.' });
   }
 });
 
-// ─────────────────────────────────────────────────────
 // GET /api/public/check/:shareId - Check karo portfolio exist karta hai
-// ─────────────────────────────────────────────────────
 router.get('/check/:shareId', async (req, res) => {
   try {
     const portfolio = await Portfolio.findOne({
@@ -59,7 +53,7 @@ router.get('/check/:shareId', async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({ error: 'Check karne mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'something went wrong to check.' });
   }
 });
 

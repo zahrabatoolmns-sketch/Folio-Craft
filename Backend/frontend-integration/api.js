@@ -1,8 +1,3 @@
-// ══════════════════════════════════════════════════════════════
-//   frontend/api.js
-//   Yeh file apne project folder mein rakhna
-//   wizard.js aur preview.js mein yeh import karna hai
-// ══════════════════════════════════════════════════════════════
 
 'use strict';
 

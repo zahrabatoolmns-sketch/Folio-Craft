@@ -1,6 +1,6 @@
-// ══════════════════════════════════════════════════
+
 //   routes/auth.js - Register, Login, Profile
-// ══════════════════════════════════════════════════
+
 
 const express         = require('express');
 const router          = express.Router();
@@ -12,9 +12,8 @@ const { sendPasswordResetEmail } = require('../config/email');
 
 const FRONTEND_URL = 'https://folio-craft-6frg.vercel.app';
 
-// ─────────────────────────────────────────────
 // POST /api/auth/register
-// ─────────────────────────────────────────────
+
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -58,9 +57,8 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
 // POST /api/auth/login
-// ─────────────────────────────────────────────
+
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -95,9 +93,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
 // GET /api/auth/me
-// ─────────────────────────────────────────────
 router.get('/me', protect, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -117,9 +113,8 @@ router.get('/me', protect, async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
 // PUT /api/auth/change-password
-// ─────────────────────────────────────────────
+
 router.put('/change-password', protect, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
@@ -150,9 +145,7 @@ router.put('/change-password', protect, async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
 // DELETE /api/auth/delete-account
-// ─────────────────────────────────────────────
 router.delete('/delete-account', protect, async (req, res) => {
   try {
     await Portfolio.deleteMany({ user: req.user._id });
@@ -166,9 +159,8 @@ router.delete('/delete-account', protect, async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
 // GET /api/auth/google
-// ─────────────────────────────────────────────
+
 router.get('/google', (req, res) => {
   const googleAuthURL = `https://accounts.google.com/o/oauth2/v2/auth?` +
     `client_id=${process.env.GOOGLE_CLIENT_ID}&` +
@@ -179,9 +171,8 @@ router.get('/google', (req, res) => {
   res.redirect(googleAuthURL);
 });
 
-// ─────────────────────────────────────────────
 // GET /api/auth/google/callback
-// ─────────────────────────────────────────────
+
 router.get('/google/callback', async (req, res) => {
   try {
     const { code } = req.query;
@@ -238,9 +229,7 @@ router.get('/google/callback', async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
 // POST /api/auth/forgot-password
-// ─────────────────────────────────────────────
 router.post('/forgot-password', async (req, res) => {
   try {
     const { email } = req.body;
@@ -278,9 +267,8 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
 // POST /api/auth/reset-password
-// ─────────────────────────────────────────────
+
 router.post('/reset-password', async (req, res) => {
   try {
     const { token, newPassword } = req.body;

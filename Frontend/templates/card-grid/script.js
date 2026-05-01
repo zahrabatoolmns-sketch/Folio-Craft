@@ -1,6 +1,5 @@
-/* ══════════════════════════════════
-   CARD-GRID  ·  script.js
-   ══════════════════════════════════ */
+/* 
+   CARD-GRID  ·  script.js */
 (function () {
   'use strict';
 

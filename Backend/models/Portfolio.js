@@ -16,7 +16,7 @@ const projectSchema = new mongoose.Schema({
   tech:         [{ type: String }],
   github:       { type: String },
   live:         { type: String },
-  image_base64: { type: String }   // Profile image base64
+  image_base64: { type: String }  
 }, { _id: true });
 
 // ── Experience Sub-Schema ──
@@ -55,14 +55,14 @@ const portfolioSchema = new mongoose.Schema({
   shareId: {
     type: String,
     unique: true,
-    default: () => crypto.randomBytes(5).toString('hex')    // jaise: "aB3kP9mNqR"
+    default: () => crypto.randomBytes(5).toString('hex')    
   },
 
   // ── Personal Info (Step 1) ──
   fullname:       { type: String, trim: true },
   title:          { type: String },
   bio:            { type: String },
-  profile_base64: { type: String },     // Avatar image
+  profile_base64: { type: String },     
   location:       { type: String },
   email:          { type: String },
   phone:          { type: String },
@@ -117,7 +117,6 @@ portfolioSchema.methods.recordView = async function(viewData = {}) {
   this.views.push(viewData);
   this.totalViews += 1;
 
-  // Max 1000 views store karo (purane delete karo)
   if (this.views.length > 1000) {
     this.views = this.views.slice(-1000);
   }
@@ -125,7 +124,7 @@ portfolioSchema.methods.recordView = async function(viewData = {}) {
   await this.save();
 };
 
-// ── Safe Portfolio Data (bari images ke bina analytics ke liye) ──
+// Safe Portfolio Data  //
 portfolioSchema.methods.toPublicObject = function() {
   const obj = this.toObject();
   // Analytics data share link pe na dikhao

@@ -1,39 +1,33 @@
-// ══════════════════════════════════════════
-//   middleware/auth.js - JWT Verification
-// ══════════════════════════════════════════
-
 const jwt  = require('jsonwebtoken');
 const User = require('../models/User');
 
 // ── Protected Route Middleware ──
 const protect = async (req, res, next) => {
   try {
-    // Token header se lo
+
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({
-        error: 'Login zaruri hai. Token nahi mila.'
+        error: 'Login required, token not found.'
       });
     }
 
     const token = authHeader.split(' ')[1];
 
-    // Token verify karo
     let decoded;
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (err) {
       if (err.name === 'TokenExpiredError') {
-        return res.status(401).json({ error: 'Session expire ho gaya. Dobara login karein.' });
+        return res.status(401).json({ error: 'Session has expired, please login again.' });
       }
-      return res.status(401).json({ error: 'Invalid token. Dobara login karein.' });
+      return res.status(401).json({ error: 'Invalid token. please login again.' });
     }
 
-    // User database se lo
     const user = await User.findById(decoded.id).select('-password');
     if (!user) {
-      return res.status(401).json({ error: 'User nahi mila.' });
+      return res.status(401).json({ error: 'User not found.' });
     }
 
     req.user = user;
@@ -41,11 +35,10 @@ const protect = async (req, res, next) => {
 
   } catch (error) {
     console.error('Auth Middleware Error:', error);
-    res.status(500).json({ error: 'Authentication mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something wrong with authentication.' });
   }
 };
 
-// ── Token Generate Helper ──
 const generateToken = (userId) => {
   return jwt.sign(
     { id: userId },

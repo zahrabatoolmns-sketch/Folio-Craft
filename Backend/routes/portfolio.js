@@ -5,9 +5,8 @@ const { protect } = require('../middleware/auth');
 
 router.use(protect);
 
-// ─────────────────────────────────────────────
 // GET /api/portfolio/all - Sare portfolios lo
-// ─────────────────────────────────────────────
+
 router.get('/all', async (req, res) => {
   try {
     const portfolios = await Portfolio.find({ user: req.user._id })
@@ -16,13 +15,12 @@ router.get('/all', async (req, res) => {
 
     res.json({ success: true, portfolios });
   } catch (error) {
-    res.status(500).json({ error: 'Portfolios laane mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something wrong with bringing portfolio.' });
   }
 });
 
-// ─────────────────────────────────────────────
 // POST /api/portfolio/create - Naya portfolio banao
-// ─────────────────────────────────────────────
+
 router.post('/create', async (req, res) => {
   try {
     const { portfolioName } = req.body;
@@ -31,7 +29,7 @@ router.post('/create', async (req, res) => {
     const count = await Portfolio.countDocuments({ user: req.user._id });
     if (count >= 3) {
       return res.status(400).json({
-        error: 'Free plan mein maximum 3 portfolios ban sakte hain.'
+        error: 'Maximum 3 portfolios can b generated in free plan.'
       });
     }
 
@@ -44,17 +42,15 @@ router.post('/create', async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'Naya portfolio ban gaya!',
+      message: 'New portfolio generated!',
       portfolio
     });
   } catch (error) {
-    res.status(500).json({ error: 'Portfolio banane mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something is wrong with generating portfolio.' });
   }
 });
 
-// ─────────────────────────────────────────────
 // GET /api/portfolio/:id - Ek portfolio lo
-// ─────────────────────────────────────────────
 router.get('/:id', async (req, res) => {
   try {
     const portfolio = await Portfolio.findOne({
@@ -63,18 +59,16 @@ router.get('/:id', async (req, res) => {
     }).select('-views');
 
     if (!portfolio) {
-      return res.status(404).json({ error: 'Portfolio nahi mila.' });
+      return res.status(404).json({ error: 'Portfolio not found.' });
     }
 
     res.json({ success: true, portfolio });
   } catch (error) {
-    res.status(500).json({ error: 'Portfolio laane mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something wrong with bringing portfolio.' });
   }
 });
 
-// ─────────────────────────────────────────────
 // GET /api/portfolio - Default portfolio lo
-// ─────────────────────────────────────────────
 router.get('/', async (req, res) => {
   try {
     let portfolio = await Portfolio.findOne({ user: req.user._id })
@@ -91,13 +85,11 @@ router.get('/', async (req, res) => {
 
     res.json({ success: true, portfolio });
   } catch (error) {
-    res.status(500).json({ error: 'Portfolio laane mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something wrong with bringing portfolio.' });
   }
 });
 
-// ─────────────────────────────────────────────
 // PUT /api/portfolio/:id - Portfolio update karo
-// ─────────────────────────────────────────────
 router.put('/:id', async (req, res) => {
   try {
     const portfolio = await Portfolio.findOne({
@@ -106,7 +98,7 @@ router.put('/:id', async (req, res) => {
     });
 
     if (!portfolio) {
-      return res.status(404).json({ error: 'Portfolio nahi mila.' });
+      return res.status(404).json({ error: 'Portfolio not found.' });
     }
 
     const fields = [
@@ -127,15 +119,13 @@ router.put('/:id', async (req, res) => {
 
     await portfolio.save();
 
-    res.json({ success: true, message: 'Portfolio save ho gaya!', portfolio });
+    res.json({ success: true, message: 'Portfolio saved!', portfolio });
   } catch (error) {
-    res.status(500).json({ error: 'Portfolio save karne mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something wrong with bringing portfolio.' });
   }
 });
 
-// ─────────────────────────────────────────────
 // PUT /api/portfolio - Default portfolio update
-// ─────────────────────────────────────────────
 router.put('/', async (req, res) => {
   try {
     let portfolio = await Portfolio.findOne({ user: req.user._id });
@@ -159,15 +149,13 @@ router.put('/', async (req, res) => {
 
     await portfolio.save();
 
-    res.json({ success: true, message: 'Portfolio save ho gaya!', portfolio });
+    res.json({ success: true, message: 'Portfolio saved!', portfolio });
   } catch (error) {
-    res.status(500).json({ error: 'Portfolio save karne mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something went wrong saving portfolio.' });
   }
 });
 
-// ─────────────────────────────────────────────
 // DELETE /api/portfolio/:id - Portfolio delete
-// ─────────────────────────────────────────────
 router.delete('/:id', async (req, res) => {
   try {
     const portfolio = await Portfolio.findOne({
@@ -176,20 +164,18 @@ router.delete('/:id', async (req, res) => {
     });
 
     if (!portfolio) {
-      return res.status(404).json({ error: 'Portfolio nahi mila.' });
+      return res.status(404).json({ error: 'Portfolio not found.' });
     }
 
     await Portfolio.findByIdAndDelete(req.params.id);
 
-    res.json({ success: true, message: 'Portfolio delete ho gaya.' });
+    res.json({ success: true, message: 'Portfolio deleted.' });
   } catch (error) {
-    res.status(500).json({ error: 'Portfolio delete karne mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Somehing went wrong with deleting portfolio .' });
   }
 });
 
-// ─────────────────────────────────────────────
 // POST /api/portfolio/:id/publish - Publish karo
-// ─────────────────────────────────────────────
 router.post('/:id/publish', async (req, res) => {
   try {
     const portfolio = await Portfolio.findOne({
@@ -198,12 +184,12 @@ router.post('/:id/publish', async (req, res) => {
     });
 
     if (!portfolio) {
-      return res.status(404).json({ error: 'Portfolio nahi mila.' });
+      return res.status(404).json({ error: 'Portfolio not found.' });
     }
 
     if (!portfolio.fullname) {
       return res.status(400).json({
-        error: 'Publish karne se pehle naam save karo.'
+        error: 'Save name before publishing.'
       });
     }
 
@@ -214,12 +200,12 @@ router.post('/:id/publish', async (req, res) => {
 
     res.json({
       success: true,
-      message: 'Portfolio publish ho gaya!',
+      message: 'Portfolio published!',
       shareUrl,
       shareId: portfolio.shareId
     });
   } catch (error) {
-    res.status(500).json({ error: 'Publish karne mein kuch gadbad hui.' });
+    res.status(500).json({ error: 'Something went wrong with publishing portfolio.' });
   }
 });
 
