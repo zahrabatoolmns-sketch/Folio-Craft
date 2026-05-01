@@ -74,9 +74,7 @@
   window.addEventListener('resize', () => { resize(); init(); });
 })();
 
-/* =====================================================
-   1.  THEME
-===================================================== */
+/* 1.  THEME */
 const THEME_KEY = 'fc_theme';
 
 function applyTheme(t) {
@@ -91,9 +89,7 @@ document.getElementById('themeBtn')?.addEventListener('click', window.toggleThem
 const savedTheme = localStorage.getItem(THEME_KEY);
 if (savedTheme === 'light' || savedTheme === 'dark') applyTheme(savedTheme);
 
-/* =====================================================
-   2.  DATA MODEL
-===================================================== */
+/* 2.  DATA MODEL */
 const STORE = 'portfolioData';
 
 function getPortfolio()  { try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch { return {}; } }
@@ -110,9 +106,7 @@ function ensureModel(d) {
 
 let model = ensureModel(getPortfolio());
 
-/* =====================================================
-   3.  UTILITIES
-===================================================== */
+/* 3.  UTILITIES */
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
@@ -140,9 +134,7 @@ function toast(msg, type = 'error') {
   setTimeout(() => el.remove(), 3200);
 }
 
-/* =====================================================
-   4.  WIZARD  —  STEP NAVIGATION
-===================================================== */
+/* 4.  WIZARD  —  STEP NAVIGATION */
 const steps   = Array.from(document.querySelectorAll('.wizard-step'));
 const dots    = Array.from(document.querySelectorAll('.step-dot'));
 const fillEl  = document.getElementById('progressFill');
@@ -192,9 +184,7 @@ document.querySelectorAll('.prev-btn').forEach(btn => {
   });
 });
 
-/* =====================================================
-   5.  PROFILE PHOTO PREVIEW
-===================================================== */
+/* 5.  PROFILE PHOTO PREVIEW */
 const profileFile    = document.getElementById('profileFile');
 const profilePreview = document.getElementById('profilePreview');
 const profileName    = document.getElementById('profileName');
@@ -208,9 +198,7 @@ profileFile?.addEventListener('change', () => {
   if (profileName) profileName.textContent = file.name;
 });
 
-/* =====================================================
-   6.  RENDER HELPERS
-===================================================== */
+/* 6.  RENDER HELPERS */
 function rmBtn(attr, idx) {
   return `<button class="rm-btn" data-rm="${attr}" data-idx="${idx}" aria-label="Remove">✕</button>`;
 }
@@ -302,9 +290,7 @@ function renderEducation() {
 /* initial render */
 renderSkills(); renderProjects(); renderExperience(); renderEducation();
 
-/* =====================================================
-   7.  ADD HANDLERS
-===================================================== */
+/* 7.  ADD HANDLERS */
 document.getElementById('addSkillBtn')?.addEventListener('click', () => {
   const name     = document.getElementById('skillName')?.value?.trim();
   const level    = Math.min(100, Math.max(0, Number(document.getElementById('skillLevel')?.value || 0)));
@@ -365,9 +351,7 @@ document.getElementById('addEducationBtn')?.addEventListener('click', () => {
   renderEducation();
 });
 
-/* =====================================================
-   8.  REMOVE  (event delegation)
-===================================================== */
+/* 8.  REMOVE  (event delegation) */
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-rm]');
   if (!btn) return;
@@ -380,9 +364,7 @@ document.addEventListener('click', e => {
   if (rm === 'edu')     { model.education.splice(i,1);  setPortfolio(model); renderEducation(); }
 });
 
-/* =====================================================
-   9.  TEMPLATE SELECTION
-===================================================== */
+/* 9.  TEMPLATE SELECTION */
 let selectedTemplate = model.selectedTemplate || 'modern-dark';
 
 function markTemplate() {
@@ -408,9 +390,7 @@ document.querySelectorAll('.tpl-card').forEach(card => {
 
 markTemplate();
 
-/* =====================================================
-   10.  FINISH  →  save & redirect
-===================================================== */
+/* 10.  FINISH  →  save & redirect */
 document.getElementById('finishBtn')?.addEventListener('click', async () => {
   const form = document.getElementById('portfolioForm');
   if (!form) return;

@@ -30,7 +30,7 @@
   let D;
   try { D = JSON.parse(raw); }
   catch {
-    showNote('⚠️ Corrupted data. Please redo the wizard.', 'error');
+    showNote(' Corrupted data. Please redo the wizard.', 'error');
     disableDownload('Invalid data');
     return;
   }
