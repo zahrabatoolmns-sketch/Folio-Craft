@@ -189,7 +189,7 @@ googleBtn?.addEventListener('click', function() {
       updateNav();
       setTimeout(function() {
         hideModal();
-        window.location.href = 'wizard.html';
+        window.location.href = 'dashboard.html';
       }, 1000);
     } catch(err) {
       showMessage(err.message);
@@ -212,7 +212,7 @@ googleBtn?.addEventListener('click', function() {
       updateNav();
       setTimeout(function() {
         hideModal();
-        window.location.href = 'wizard.html';
+        window.location.href = 'dashboard.html';
       }, 1200);
     } catch(err) {
       showMessage(err.message);

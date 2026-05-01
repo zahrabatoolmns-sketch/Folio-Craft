@@ -18,6 +18,52 @@
   }
 })();
 
+// ── Existing Portfolio Load (Edit mode) ──
+(async function() {
+  const currentId  = localStorage.getItem('currentPortfolioId');
+  const fcToken    = localStorage.getItem('fc_token');
+
+  if (!currentId || !fcToken) return;
+
+  try {
+    const res = await fetch(
+      `https://folio-craft-two.vercel.app/api/portfolio/${currentId}`,
+      { headers: { Authorization: `Bearer ${fcToken}` } }
+    );
+    const data = await res.json();
+
+    if (data.portfolio) {
+      localStorage.setItem('portfolioData', JSON.stringify(data.portfolio));
+
+      // Form fields fill karo
+      const form = document.getElementById('portfolioForm');
+      if (form) {
+        const p = data.portfolio;
+        const fields = [
+          'fullname','title','bio','location','email',
+          'phone','description','skills_summary',
+          'linkedin','github_social','instagram'
+        ];
+        fields.forEach(key => {
+          const input = form.querySelector(`[name="${key}"]`);
+          if (input && p[key]) input.value = p[key];
+        });
+      }
+
+      // Model update karo
+      Object.assign(model, data.portfolio);
+      model = ensureModel(model);
+
+      renderSkills();
+      renderProjects();
+      renderExperience();
+      renderEducation();
+    }
+  } catch(e) {
+    console.warn('Portfolio load error:', e.message);
+  }
+})();
+
 /*
    0.  PARTICLES  (background) */
 (function () {
@@ -395,14 +441,12 @@ document.getElementById('finishBtn')?.addEventListener('click', async () => {
   const form = document.getElementById('portfolioForm');
   if (!form) return;
 
-  // collect all named form fields
   const fd = new FormData(form);
   fd.forEach((val, key) => {
     if (val instanceof File) return;
     model[key] = typeof val === 'string' ? val.trim() : val;
   });
 
-  // normalize keys (same as original)
   model.fullname      = String(model.fullname      || model.fullName || model.name    || '').trim();
   model.title         = String(model.title         || model.profession || model.role  || '').trim();
   model.bio           = String(model.bio           || '').trim();
@@ -412,9 +456,7 @@ document.getElementById('finishBtn')?.addEventListener('click', async () => {
   model.github_social = String(model.github_social || '').trim();
   model.instagram     = String(model.instagram     || '').trim();
 
-  // profile image
-  const profileRaw = document.getElementById('profileFile')
-    || form.querySelector('input[name="profile"]');
+  const profileRaw     = document.getElementById('profileFile') || form.querySelector('input[name="profile"]');
   const profileFileObj = profileRaw?.files?.[0] || null;
   if (profileFileObj) {
     model.profile_base64 = await fileToBase64(profileFileObj);
@@ -422,33 +464,76 @@ document.getElementById('finishBtn')?.addEventListener('click', async () => {
     model.profile_base64 = model.profile_base64 || '';
   }
 
-  // ensure arrays
   model.skills     = Array.isArray(model.skills)     ? model.skills     : [];
   model.projects   = Array.isArray(model.projects)   ? model.projects   : [];
   model.experience = Array.isArray(model.experience) ? model.experience : [];
   model.education  = Array.isArray(model.education)  ? model.education  : [];
 
-  // template
   model.selectedTemplate = selectedTemplate || localStorage.getItem('selectedTemplate') || 'modern-dark';
 
-  // validate
   if (!model.fullname) { toast('Full Name is required (Step 1)'); showStep(0); return; }
   if (!model.title)    { toast('Professional Title is required (Step 1)'); showStep(0); return; }
 
   setPortfolio(model);
-  // Cloud save
-if (window.FolioAPI && window.FolioAPI.isLoggedIn()) {
-  try {
-    await window.FolioAPI.savePortfolio(portfolioData);
-    console.log('Cloud mein save ho gaya!');
-  } catch(e) {
-    console.warn('Cloud save:', e.message);
+
+  // ── Backend Save ──
+  const fcToken   = localStorage.getItem('fc_token');
+  const currentId = localStorage.getItem('currentPortfolioId');
+
+  if (fcToken) {
+    try {
+      if (currentId) {
+        await fetch(
+          `https://folio-craft-two.vercel.app/api/portfolio/${currentId}`,
+          {
+            method:  'PUT',
+            headers: {
+              'Content-Type':  'application/json',
+              'Authorization': `Bearer ${fcToken}`
+            },
+            body: JSON.stringify(model)
+          }
+        );
+      } else {
+        const createRes = await fetch(
+          'https://folio-craft-two.vercel.app/api/portfolio/create',
+          {
+            method:  'POST',
+            headers: {
+              'Content-Type':  'application/json',
+              'Authorization': `Bearer ${fcToken}`
+            },
+            body: JSON.stringify({
+              portfolioName: (model.fullname || 'My') + "'s Portfolio"
+            })
+          }
+        );
+        const createData = await createRes.json();
+
+        if (createData.portfolio?._id) {
+          localStorage.setItem('currentPortfolioId', createData.portfolio._id);
+
+          await fetch(
+            `https://folio-craft-two.vercel.app/api/portfolio/${createData.portfolio._id}`,
+            {
+              method:  'PUT',
+              headers: {
+                'Content-Type':  'application/json',
+                'Authorization': `Bearer ${fcToken}`
+              },
+              body: JSON.stringify(model)
+            }
+          );
+        }
+      }
+    } catch(e) {
+      console.warn('Backend save failed:', e.message);
+    }
   }
-}
-  toast('Saving your portfolio…', 'success');
+
+  toast('Saving your portfolio...', 'success');
   setTimeout(() => { window.location.href = './preview.html'; }, 800);
 });
-
 /* ---- MULTIPLE PORTFOLIOS ---- */
 (async function() {
   if (!window.FolioAPI || !window.FolioAPI.isLoggedIn()) return;
