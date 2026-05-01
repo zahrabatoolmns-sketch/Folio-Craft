@@ -18,9 +18,7 @@
   /* ─── Navigation ─── */
   backBtn?.addEventListener('click', () => { window.location.href = 'wizard.html'; });
 
-  /* ══════════════════════════════════════════
-     STEP 1 — Load & validate portfolio data
-  ══════════════════════════════════════════ */
+  /* STEP 1 — Load & validate portfolio data */
   const raw = localStorage.getItem('portfolioData');
 
   if (!raw) {
@@ -51,10 +49,8 @@
   if (pvProjects)    pvProjects.textContent = (D.projects || []).length + ' added';
   if (pvSkills)      pvSkills.textContent   = (D.skills   || []).length + ' added';
 
-  /* ══════════════════════════════════════════
-     STEP 2 — Templates that are BUILT
-     Add new template folder names here as you build them
-  ══════════════════════════════════════════ */
+  /*  STEP 2 — Templates that are BUILT
+     Add new template folder names here as you build them */
   const BUILT_TEMPLATES = [
     'modern-dark',
     'minimal-white',
@@ -67,12 +63,10 @@
     'terminal',
     'card-grid',
 ];
-  /* ══════════════════════════════════════════
-     STEP 3 — Guard: template not built yet
-  ══════════════════════════════════════════ */
+  /* STEP 3 — Guard: template not built yet */
   if (!BUILT_TEMPLATES.includes(template)) {
     showNote(
-      '⚠️ Template "' + template + '" is not built yet.\n\n' +
+      ' Template "' + template + '" is not built yet.\n\n' +
       'Available templates:\n' + BUILT_TEMPLATES.map(t => '  • ' + t).join('\n') + '\n\n' +
       'Please go back and select one of the available templates.',
       'error'
@@ -81,7 +75,7 @@
 
     if (frame) {
       frame.srcdoc = makeIframePage(
-        '🚧 Template Not Ready',
+        ' Template Not Ready',
         'The <strong>' + template + '</strong> template is not built yet.',
         'Available: ' + BUILT_TEMPLATES.join(', ')
       );
@@ -90,14 +84,12 @@
     return;
   }
 
-  /* ══════════════════════════════════════════
-     STEP 4 — Detect file:// protocol
-  ══════════════════════════════════════════ */
+  /* STEP 4 — Detect file:// protocol */
   const isFileProtocol = window.location.protocol === 'file:';
 
   if (isFileProtocol) {
     showNote(
-      '🚫 You are opening this via file:// (double-clicking the HTML file).\n\n' +
+      'You are opening this via file:// (double-clicking the HTML file).\n\n' +
       'This blocks iframes and fetch() for security — that\'s why you see 404 errors.\n\n' +
       'FIX — Use a local server:\n\n' +
       'Option 1 (VS Code):\n' +
@@ -114,7 +106,7 @@
 
     if (frame) {
       frame.srcdoc = makeIframePage(
-        '🚫 Local Server Required',
+        ' Local Server Required',
         'You opened this file directly (file:// protocol).',
         'Use VS Code Live Server or run: <code>npx serve .</code>'
       );
@@ -123,11 +115,9 @@
     return;
   }
 
-  /* ══════════════════════════════════════════
-     STEP 5 — Load template in iframe
-  ══════════════════════════════════════════ */
+  /* STEP 5 — Load template in iframe */
   if (!frame) {
-    showNote('⚠️ iframe#previewFrame not found in HTML.', 'error');
+    showNote(' iframe#previewFrame not found in HTML.', 'error');
     return;
   }
 
@@ -162,7 +152,7 @@
   frame.addEventListener('error', () => {
     if (frameLoader) frameLoader.classList.add('hidden');
     showNote(
-      '⚠️ 404: Template file not found at:\n' +
+      '404: Template file not found at:\n' +
       '  templates/' + template + '/index.html\n\n' +
       'Check that your folder structure is:\n' +
       '  preview.html          ← this file\n' +
@@ -176,16 +166,14 @@
 
     if (frame) {
       frame.srcdoc = makeIframePage(
-        '⚠️ 404 — File Not Found',
+        ' 404 - File Not Found',
         'Expected: <code>templates/' + template + '/index.html</code>',
         'Make sure the templates/ folder is next to preview.html'
       );
     }
   });
 
-  /* ══════════════════════════════════════════
-     ZIP DOWNLOAD
-  ══════════════════════════════════════════ */
+  /* ZIP DOWNLOAD */
   downloadBtn?.addEventListener('click', handleDownload);
 
   async function handleDownload() {
@@ -204,7 +192,7 @@
       ]);
 
       if (!htmlSrc) {
-        showNote('⚠️ Could not fetch template files. Make sure you are using a local server.', 'error');
+        showNote(' Could not fetch template files. Make sure you are using a local server.', 'error');
         setStatus('Build failed', 'error');
         resetBtn();
         return;
@@ -213,11 +201,14 @@
       const bakedJs   = bakeDataIntoScript(jsSrc || '', D);
       const finalHtml = buildStandaloneHtml(htmlSrc, cssSrc || '', bakedJs, name, title);
 
-      const zip    = new JSZip();
-      const folder = zip.folder(slug(name) + '-portfolio');
+     const zip    = new JSZip();
+     const folder = zip.folder(slug(name) + '-portfolio');
 
-      folder.file('index.html', finalHtml);
-      folder.file('README.txt', buildReadme(name, title, template));
+
+     folder.file('index.html', htmlSrc);
+     folder.file('style.css',  cssSrc || '');
+    folder.file('script.js',  bakedJs);
+    folder.file('README.txt', buildReadme(name, title, template));
 
       if (D.profile_base64) {
         folder.file(
@@ -245,7 +236,7 @@
       saveAs(blob, slug(name) + '-portfolio.zip');
 
       showNote(
-        '✅ ZIP downloaded!\n\n' +
+        'ZIP downloaded!\n\n' +
         '• Open index.html in any browser — no server needed.\n' +
         '• Drag folder to netlify.com/drop for instant hosting.\n' +
         '• All data & images are fully baked in.',
@@ -255,16 +246,14 @@
 
     } catch (err) {
       console.error('[ZIP error]', err);
-      showNote('⚠️ Build failed: ' + err.message, 'error');
+      showNote(' Build failed: ' + err.message, 'error');
       setStatus('Build failed', 'error');
     }
 
     resetBtn();
   }
 
-  /* ══════════════════════════════════════════
-     Utilities
-  ══════════════════════════════════════════ */
+  /* Utilities */
 
   function bakeDataIntoScript(originalJs, data) {
     const json = JSON.stringify(data)
@@ -372,7 +361,7 @@
     if (!downloadBtn) return;
     downloadBtn.disabled = false;
     const label = document.getElementById('downloadBtnLabel');
-    if (label) label.innerHTML = '⬇ Download ZIP';
+    if (label) label.innerHTML = ' Download ZIP';
   }
 
   function buildReadme(name, title, template) {
@@ -385,16 +374,15 @@
       '── HOW TO VIEW ──────────────────────────────',
       '  Open index.html in any browser. No server needed.',
       '', '── HOW TO DEPLOY ────────────────────────────', '',
-      '  🌐 Netlify Drop: netlify.com/drop → drag this folder',
-      '  🐙 GitHub Pages: Push → Settings → Pages → Deploy',
-      '  ▲  Vercel: npm i -g vercel && vercel',
+      '   Netlify Drop: netlify.com/drop → drag this folder',
+      '   GitHub Pages: Push → Settings → Pages → Deploy',
+      '  Vercel: npm i -g vercel && vercel',
       '', '─────────────────────────────────────────────',
       'Generated by FolioCraft',
     ].join('\n');
   }
-  // ══════════════════════════════
-// QR — CONTACT (vCard)
-// ══════════════════════════════
+  
+/* QR — CONTACT (vCard) */
 document.getElementById('qrContactBtn')?.addEventListener('click', function() {
   const btn = this;
 
@@ -417,18 +405,18 @@ document.getElementById('qrContactBtn')?.addEventListener('click', function() {
     'END:VCARD'
   ].filter(Boolean).join('\n');
 
-  generateAndDownloadQR(vcard, slug(name) + '-contact-qr.png', btn, '📇 QR Contact');
+  generateAndDownloadQR(vcard, slug(name) + '-contact-qr.png', btn, ' QR Contact');
 });
 
-// ══════════════════════════════
-// QR — WEBSITE URL
-// ══════════════════════════════
+
+/*  QR — WEBSITE URL */
+
 document.getElementById('qrWebsiteBtn')?.addEventListener('click', function() {
   const btn = this;
 
   // User se URL lo
   const url = prompt(
-    '🔗 Enter your portfolio website URL:\n\n' +
+    ' Enter your portfolio website URL:\n\n' +
     'Example:\n' +
     '  https://yourname.netlify.app\n' +
     '  https://yourname.github.io\n\n' +
@@ -444,15 +432,13 @@ document.getElementById('qrWebsiteBtn')?.addEventListener('click', function() {
   }
 
   const name = D.fullname || D.fullName || D.name || 'portfolio';
-  generateAndDownloadQR(finalUrl, slug(name) + '-website-qr.png', btn, '🔗 QR — Website');
+  generateAndDownloadQR(finalUrl, slug(name) + '-website-qr.png', btn, '🔗 QR Website');
 });
 
-// ══════════════════════════════
-// SHARED QR GENERATOR FUNCTION
-// ══════════════════════════════
+/* SHARED QR GENERATOR FUNCTION */
 function generateAndDownloadQR(data, filename, btn, originalText) {
   btn.disabled    = true;
-  btn.textContent = '⏳ Generating...';
+  btn.textContent = ' Generating...';
 
   const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/'
     + '?size=400x400'
