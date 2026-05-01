@@ -1,15 +1,15 @@
 'use strict';
+
 const THEME_KEY = 'fc_theme';
 
-// ── Theme — FIXED ──
+// ── Theme ──
 function applyTheme(t) {
   document.body.classList.remove('light', 'dark');
   document.body.classList.add(t);
   localStorage.setItem(THEME_KEY, t);
 }
 
-const savedTheme = localStorage.getItem(THEME_KEY);
-applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+applyTheme(localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light');
 
 document.getElementById('themeBtn')?.addEventListener('click', () => {
   applyTheme(document.body.classList.contains('dark') ? 'light' : 'dark');
@@ -22,9 +22,9 @@ if (!token) window.location.href = 'index.html';
 // ── User Info ──
 const user = JSON.parse(localStorage.getItem('fc_user') || '{}');
 if (user.name) {
-  document.getElementById('userName').textContent    = user.name.split(' ')[0];
-  document.getElementById('userName2').textContent   = user.name.split(' ')[0];
-  document.getElementById('userAvatar').textContent  = user.name.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent   = user.name.split(' ')[0];
+  document.getElementById('userName2').textContent  = user.name.split(' ')[0];
+  document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
 }
 
 // ── Mobile Sidebar ──
@@ -47,6 +47,12 @@ document.getElementById('logoutBtn')?.addEventListener('click', () => {
   window.location.href = 'index.html';
 });
 
+// ── New Portfolio ──
+function newPortfolio() {
+  localStorage.removeItem('currentPortfolioId');
+  localStorage.removeItem('portfolioData');
+}
+
 // ── API Helper ──
 async function apiFetch(endpoint, options = {}) {
   const res = await fetch(`${API_URL}${endpoint}`, {
@@ -63,18 +69,16 @@ async function apiFetch(endpoint, options = {}) {
 // ── Load Portfolios ──
 async function loadPortfolios() {
   try {
-    const data = await apiFetch('/portfolio/all');
+    const data       = await apiFetch('/portfolio/all');
     const portfolios = data.portfolios || [];
 
-    // Stats update
     document.getElementById('totalPortfolios').textContent = portfolios.length;
-    const published = portfolios.filter(p => p.isPublished).length;
-    document.getElementById('publishedCount').textContent  = published;
+    document.getElementById('publishedCount').textContent  =
+      portfolios.filter(p => p.isPublished).length;
 
-    // Last active
     if (portfolios.length > 0) {
-      const latest = portfolios.sort((a, b) =>
-        new Date(b.updatedAt) - new Date(a.updatedAt)
+      const latest = [...portfolios].sort(
+        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
       )[0];
       document.getElementById('lastActive').textContent =
         new Date(latest.updatedAt).toLocaleDateString('en-US', {
@@ -82,23 +86,22 @@ async function loadPortfolios() {
         });
     }
 
-    // Grid render
     const grid = document.getElementById('portfolioGrid');
     document.getElementById('loadingState')?.remove();
 
     if (portfolios.length === 0) {
       grid.innerHTML = `
         <div class="empty-state">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.2">
             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
             <polyline points="14,2 14,8 20,8"/>
+            <line x1="9" y1="13" x2="15" y2="13"/>
+            <line x1="9" y1="17" x2="13" y2="17"/>
           </svg>
           <h3>No portfolios yet</h3>
-          <p>Create your first portfolio to get started</p>
-          <a href="wizard.html" class="btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 5v14M5 12h14"/>
-            </svg>
+          <p>Build your first portfolio in under 5 minutes</p>
+          <a href="wizard.html" class="btn-primary" onclick="newPortfolio()">
             Create Portfolio
           </a>
         </div>`;
@@ -108,7 +111,9 @@ async function loadPortfolios() {
     grid.innerHTML = portfolios.map(p => `
       <div class="portfolio-card">
         <div class="portfolio-card-header">
-          <span class="portfolio-card-name">${p.portfolioName || 'My Portfolio'}</span>
+          <span class="portfolio-card-name">
+            ${p.portfolioName || 'My Portfolio'}
+          </span>
           <span class="portfolio-badge ${p.isPublished
             ? 'portfolio-badge--published'
             : 'portfolio-badge--draft'}">
@@ -116,16 +121,37 @@ async function loadPortfolios() {
           </span>
         </div>
         <div class="portfolio-card-meta">
-          <span>${p.fullname || '—'}</span>
-          <span>${p.title   || '—'}</span>
-          <span>Updated ${new Date(p.updatedAt).toLocaleDateString('en-US', {
-            month: 'short', day: 'numeric', year: 'numeric'
-          })}</span>
+          ${p.fullname ? `<span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            ${p.fullname}
+          </span>` : ''}
+          ${p.title ? `<span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2"/>
+              <path d="M16 7V5a2 2 0 00-4 0v2"/>
+            </svg>
+            ${p.title}
+          </span>` : ''}
+          <span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12,6 12,12 16,14"/>
+            </svg>
+            Updated ${new Date(p.updatedAt).toLocaleDateString('en-US', {
+              month: 'short', day: 'numeric', year: 'numeric'
+            })}
+          </span>
         </div>
         <div class="portfolio-card-actions">
           <a href="wizard.html" class="btn-action"
              onclick="selectPortfolio('${p._id}')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2">
               <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
               <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
@@ -134,7 +160,7 @@ async function loadPortfolios() {
           </a>
           <a href="preview.html" class="btn-action"
              onclick="selectPortfolio('${p._id}')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
               <circle cx="12" cy="12" r="3"/>
@@ -143,10 +169,11 @@ async function loadPortfolios() {
           </a>
           <button class="btn-action btn-action--danger"
                   onclick="deletePortfolio('${p._id}')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2">
               <polyline points="3,6 5,6 21,6"/>
               <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+              <path d="M10 11v6M14 11v6"/>
             </svg>
             Delete
           </button>
@@ -156,12 +183,19 @@ async function loadPortfolios() {
 
   } catch (err) {
     console.error('Load error:', err);
-    document.getElementById('loadingState').innerHTML =
-      '<p style="color:#dc2626">Failed to load. Please refresh.</p>';
+    const ls = document.getElementById('loadingState');
+    if (ls) ls.innerHTML = `
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none"
+           stroke="#dc2626" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <p style="color:#dc2626;font-size:13px;">Failed to load. Please refresh.</p>`;
   }
 }
 
-// ── Select Portfolio (Edit / Preview) ──
+// ── Select Portfolio ──
 function selectPortfolio(id) {
   localStorage.setItem('currentPortfolioId', id);
 }
@@ -172,7 +206,7 @@ async function deletePortfolio(id) {
 
   try {
     const res = await fetch(`${API_URL}/portfolio/${id}`, {
-      method: 'DELETE',
+      method:  'DELETE',
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -181,7 +215,7 @@ async function deletePortfolio(id) {
     } else {
       alert('Failed to delete. Please try again.');
     }
-  } catch (err) {
+  } catch {
     alert('Network error. Please try again.');
   }
 }
