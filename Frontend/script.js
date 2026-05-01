@@ -316,3 +316,31 @@ document.getElementById('forgotBtn')?.addEventListener('click', function() {
 });
 
 })();
+
+/* ---- FAQ ACCORDION ---- */
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const item   = this.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i) {
+      i.classList.remove('open');
+    });
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+/* ---- FOOTER ---- */
+document.getElementById('footerYear').textContent = new Date().getFullYear();
+document.getElementById('footerLoginBtn')?.addEventListener('click', function() {
+  window.showAuthModal && window.showAuthModal();
+});
+
+document.getElementById('footerDashboardBtn')?.addEventListener('click', function(e) {
+  e.preventDefault();
+  const token = localStorage.getItem('fc_token');
+  if (token) {
+    window.location.href = 'dashboard.html';
+  } else {
+    window.showAuthModal && window.showAuthModal();
+  }
+});

@@ -17,7 +17,7 @@ document.getElementById('themeBtn')?.addEventListener('click', () => {
 
 // ── Auth Check ──
 const token = localStorage.getItem('fc_token');
-if (!token) window.location.href = 'index.html';
+if (!token) window.location.replace('index.html');
 
 // ── User Info ──
 const user = JSON.parse(localStorage.getItem('fc_user') || '{}');

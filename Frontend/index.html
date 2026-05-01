@@ -24,7 +24,6 @@
     <div class="bg-grid"></div>
     <div class="bg-noise"></div>
 
-    <!-- floating shapes, same as original but refined -->
     <div class="fs fs--1"></div>
     <div class="fs fs--2"></div>
     <div class="fs fs--3"></div>
@@ -61,7 +60,6 @@
     </div>
 
     <button class="theme-btn" id="themeBtn" aria-label="Switch theme" title="Toggle light / dark">
-      <!-- sun -->
       <svg class="t-icon t-icon--sun" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true">
         <circle cx="12" cy="12" r="5"/>
         <line x1="12" y1="1"  x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/>
@@ -69,7 +67,6 @@
         <line x1="1"    y1="12"   x2="4"    y2="12"/><line x1="20"   y1="12"   x2="23"   y2="12"/>
         <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
       </svg>
-      <!-- moon -->
       <svg class="t-icon t-icon--moon" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
       </svg>
@@ -80,7 +77,6 @@
   <main>
     <section class="hero">
 
-      <!-- small label above heading -->
       <div class="hero-kicker" aria-hidden="true">
         <span class="kicker-dot"></span>
         <span>Portfolio Builder. No code needed</span>
@@ -107,7 +103,6 @@
         <span class="hero-nudge">Free &nbsp;·&nbsp; No account &nbsp;·&nbsp; Download & own</span>
       </div>
 
-      <!-- tiny stat row -->
       <ul class="stat-row" aria-label="Quick stats">
         <li><strong>10</strong><span>templates</span></li>
         <li class="stat-sep" aria-hidden="true"></li>
@@ -118,131 +113,571 @@
 
     </section>
 
-    <!--  MINI FEATURES  -->
+    <!-- ── WHY FOLIOCRAFT HEADING ── -->
+    <section class="why-section" aria-label="Why FolioCraft">
+      <div class="why-label">
+        <span class="why-dot"></span>
+        Why FolioCraft
+      </div>
+      <h2 class="why-title">Everything you need,<br>nothing you don't</h2>
+      <p class="why-sub"> Four powerful features that take you from zero to a live portfolio in minutes.</p>
+    </section>
+
+    <!--  FEATURES  -->
     <section class="features" aria-label="Features">
+
+      <!-- Card 1: Guided Wizard -->
       <article class="feat-card">
-        <div class="feat-icon" aria-hidden="true"></div>
+        <div class="feat-icon" aria-hidden="true">
+          <svg class="feat-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="36" cy="36" r="34" class="feat-bg feat-bg--violet"/>
+            <!-- step track -->
+            <rect x="16" y="34" width="40" height="3" rx="1.5" class="feat-track"/>
+            <!-- step 1: done -->
+            <circle cx="22" cy="35.5" r="7" class="feat-step--done"/>
+            <path d="M19.5 35.5 L21.5 37.5 L24.5 33" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- step 2: active -->
+            <circle cx="36" cy="35.5" r="7" fill="white" stroke-width="2" class="feat-step--active-ring"/>
+            <circle cx="36" cy="35.5" r="3" class="feat-step--active-dot"/>
+            <!-- step 3: upcoming -->
+            <circle cx="50" cy="35.5" r="7" fill="white" stroke-width="2" class="feat-step--upcoming-ring"/>
+            <circle cx="50" cy="35.5" r="2.5" class="feat-step--upcoming-dot"/>
+            <!-- label -->
+            <text x="36" y="57" text-anchor="middle" font-size="10" font-weight="500" font-family="'Instrument Sans', sans-serif" class="feat-label">5 guided steps</text>
+          </svg>
+        </div>
         <h2>Guided wizard</h2>
         <p>Five clean steps walk you through everything. Personal info, skills, projects, experience, done.</p>
       </article>
+<!-- Card 2: 10 Unique Designs -->
       <article class="feat-card">
-        <div class="feat-icon" aria-hidden="true"></div>
+        <div class="feat-icon" aria-hidden="true">
+          <svg class="feat-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="36" cy="36" r="34" class="feat-bg feat-bg--violet"/>
+            <!-- spinning palette dots — violet & teal only -->
+            <g class="pal-spin" style="transform-origin:36px 36px">
+              <circle cx="36" cy="14" r="5" fill="#5b4de8"/>
+              <circle cx="55" cy="25" r="4.5" fill="#0ba89a"/>
+              <circle cx="55" cy="47" r="4.5" fill="#5b4de8" opacity="0.6"/>
+              <circle cx="36" cy="58" r="5" fill="#0ba89a" opacity="0.7"/>
+              <circle cx="17" cy="47" r="4" fill="#5b4de8" opacity="0.4"/>
+              <circle cx="17" cy="25" r="4.5" fill="#0ba89a" opacity="0.5"/>
+            </g>
+            <!-- center card preview -->
+            <rect x="24" y="24" width="24" height="24" rx="5" fill="white" stroke="#cec8f6" stroke-width="1"/>
+            <rect x="26" y="26" width="20" height="6" rx="2" fill="#5b4de8" opacity="0.75"/>
+            <rect x="26" y="34" width="12" height="2.5" rx="1" fill="#cec8f6"/>
+            <rect x="26" y="38" width="16" height="2.5" rx="1" fill="#0ba89a" opacity="0.5"/>
+            <rect x="26" y="42" width="9" height="2.5" rx="1" fill="#cec8f6"/>
+          </svg>
+        </div>
         <h2>10 unique designs</h2>
         <p>From minimal white to cyber-neon. Pick whatever matches your personality.</p>
       </article>
+
+       <!-- Card 3: Secure Accounts -->
       <article class="feat-card">
-        <div class="feat-icon" aria-hidden="true"></div>
-        <h2>Download & deploy</h2>
+        <div class="feat-icon" aria-hidden="true">
+          <svg class="feat-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="36" cy="36" r="34" class="feat-bg feat-bg--violet"/>
+            <!-- rotating dashed ring -->
+            <circle cx="36" cy="36" r="26" fill="none" stroke="#5b4de8" stroke-width="1"
+                    stroke-dasharray="4 8" opacity="0.2" class="sec-ring"/>
+            <!-- shield outer -->
+            <path d="M36 16 L53 23 L53 38 C53 48 44.5 54 36 57 C27.5 54 19 48 19 38 L19 23 Z"
+                  fill="white" stroke="#cec8f6" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- shield inner -->
+            <path d="M36 20.5 L50 27 L50 38 C50 46 43 51 36 53.5 C29 51 22 46 22 38 L22 27 Z"
+                  fill="#eeedfe"/>
+            <!-- lock body -->
+            <rect x="28.5" y="34" width="15" height="12" rx="3.5" fill="#5b4de8" opacity="0.9"/>
+            <!-- lock shackle -->
+            <path d="M31 34 L31 29.5 C31 26.5 41 26.5 41 29.5 L41 34"
+                  fill="none" stroke="#5b4de8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- keyhole -->
+            <circle cx="36" cy="39.5" r="2.2" fill="white"/>
+            <rect x="34.9" y="41" width="2.2" height="3" rx="0.8" fill="white"/>
+            <!-- teal checkmark badge -->
+            <circle cx="50" cy="21" r="6.5" fill="#0ba89a"/>
+            <path d="M47.2 21 L49.2 23 L52.8 18.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- label -->
+            <text x="36" y="65" text-anchor="middle" font-size="9.5" font-weight="500" font-family="'Instrument Sans', sans-serif" class="feat-label">JWT · Google · Safe</text>
+          </svg>
+        </div>
+        <h2>Secure accounts</h2>
+        <p>JWT auth, password reset, Google login. Your data stays safe.</p>
+      </article>
+ 
+
+      <!-- Card 4: Download & Deploy -->
+      <article class="feat-card">
+        <div class="feat-icon" aria-hidden="true">
+          <svg class="feat-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="36" cy="36" r="34" class="feat-bg feat-bg--violet"/>
+            <!-- cloud body -->
+            <ellipse cx="36" cy="30" rx="16" ry="10" fill="white" stroke="#cec8f6" stroke-width="1.5"/>
+            <ellipse cx="24" cy="33" rx="9" ry="7" fill="white" stroke="#cec8f6" stroke-width="1.5"/>
+            <ellipse cx="48" cy="33" rx="9" ry="7" fill="white" stroke="#cec8f6" stroke-width="1.5"/>
+            <rect x="19" y="33" width="34" height="8" fill="white"/>
+            <!-- glow shadow -->
+            <ellipse cx="36" cy="48" rx="11" ry="3" fill="#5b4de8" opacity="0.12" class="dl-glow"/>
+            <!-- download arrow -->
+            <g class="dl-arrow">
+              <line x1="36" y1="37" x2="36" y2="46" stroke="#5b4de8" stroke-width="2.5" stroke-linecap="round"/>
+              <polyline points="30,42 36,48 42,42" stroke="#5b4de8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </g>
+            <!-- label -->
+            <text x="36" y="61" text-anchor="middle" font-size="9.5" font-weight="500" font-family="'Instrument Sans', sans-serif" class="feat-label">ZIP · GitHub · Netlify</text>
+          </svg>
+        </div>
+        <h2>Download &amp; deploy</h2>
         <p>Export a ready ZIP. Host it anywhere for free. GitHub Pages, Netlify, you name it.</p>
       </article>
+
+      <!-- Card 5: QR Code Generator -->
+<article class="feat-card">
+  <div class="feat-icon" aria-hidden="true">
+    <svg class="feat-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="36" cy="36" r="34" class="feat-bg feat-bg--violet"/>
+      <!-- QR outer box -->
+      <rect x="18" y="18" width="36" height="36" rx="4" fill="white" stroke="#cec8f6" stroke-width="1.5"/>
+      <!-- top-left block -->
+      <rect x="22" y="22" width="11" height="11" rx="2" fill="#5b4de8" opacity="0.85"/>
+      <rect x="24" y="24" width="7" height="7" rx="1" fill="white"/>
+      <rect x="26" y="26" width="3" height="3" rx="0.5" fill="#5b4de8"/>
+      <!-- top-right block -->
+      <rect x="39" y="22" width="11" height="11" rx="2" fill="#5b4de8" opacity="0.85"/>
+      <rect x="41" y="24" width="7" height="7" rx="1" fill="white"/>
+      <rect x="43" y="26" width="3" height="3" rx="0.5" fill="#5b4de8"/>
+      <!-- bottom-left block -->
+      <rect x="22" y="39" width="11" height="11" rx="2" fill="#5b4de8" opacity="0.85"/>
+      <rect x="24" y="41" width="7" height="7" rx="1" fill="white"/>
+      <rect x="26" y="43" width="3" height="3" rx="0.5" fill="#5b4de8"/>
+      <!-- data dots bottom-right -->
+      <rect x="39" y="39" width="3" height="3" rx="0.5" fill="#0ba89a"/>
+      <rect x="43" y="39" width="3" height="3" rx="0.5" fill="#5b4de8" opacity="0.6"/>
+      <rect x="47" y="39" width="3" height="3" rx="0.5" fill="#0ba89a" opacity="0.5"/>
+      <rect x="39" y="43" width="3" height="3" rx="0.5" fill="#5b4de8" opacity="0.4"/>
+      <rect x="43" y="43" width="3" height="3" rx="0.5" fill="#0ba89a"/>
+      <rect x="47" y="43" width="3" height="3" rx="0.5" fill="#5b4de8"/>
+      <rect x="39" y="47" width="3" height="3" rx="0.5" fill="#0ba89a" opacity="0.6"/>
+      <rect x="43" y="47" width="3" height="3" rx="0.5" fill="#5b4de8" opacity="0.5"/>
+      <rect x="47" y="47" width="3" height="3" rx="0.5" fill="#0ba89a" opacity="0.4"/>
+      <!-- teal badge -->
+      <circle cx="50" cy="21" r="6.5" fill="#0ba89a"/>
+      <path d="M47.2 21 L49.2 23 L52.8 18.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="36" y="65" text-anchor="middle" font-size="9.5" font-weight="500" font-family="'Instrument Sans', sans-serif" class="feat-label">Scan · Connect · Instant</text>
+    </svg>
+  </div>
+  <h2>QR code contact</h2>
+  <p>Auto-generate a QR code for your contact form. Anyone can scan and reach you instantly.</p>
+</article>
+
+      <!-- Card 6: Mobile Friendly -->
+<article class="feat-card">
+  <div class="feat-icon" aria-hidden="true">
+    <svg class="feat-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="36" cy="36" r="34" class="feat-bg feat-bg--violet"/>
+      <!-- phone frame -->
+      <rect x="26" y="18" width="20" height="34" rx="4" fill="white" stroke="#cec8f6" stroke-width="1.5"/>
+      <!-- screen -->
+      <rect x="29" y="22" width="14" height="24" rx="2" fill="#eeedfe"/>
+      <!-- fake content -->
+      <rect x="31" y="25" width="8" height="2.5" rx="1" fill="#5b4de8" opacity="0.7"/>
+      <rect x="31" y="29" width="10" height="2" rx="1" fill="#cec8f6"/>
+      <rect x="31" y="33" width="7" height="2" rx="1" fill="#cec8f6"/>
+      <rect x="31" y="37" width="9" height="2" rx="1" fill="#0ba89a" opacity="0.5"/>
+      <!-- home button -->
+      <circle cx="36" cy="49" r="2" fill="#cec8f6"/>
+      <!-- teal badge -->
+      <circle cx="50" cy="21" r="6.5" fill="#5b4de8"/>
+      <path d="M47 21 L49.5 23.5 L53 19" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="36" y="61" text-anchor="middle" font-size="9.5" font-weight="500" font-family="'Instrument Sans', sans-serif" class="feat-label">Mobile · Tablet · Desktop</text>
+    </svg>
+  </div>
+  <h2>Mobile friendly</h2>
+  <p>Every portfolio looks perfect on all screen sizes. Phone, tablet, or desktop — always sharp.</p>
+</article>
+
     </section>
+
+   <!-- ── HOW IT WORKS SECTION ── -->
+<section class="hiw-section" aria-label="How It Works">
+  <div class="why-label">
+    <span class="why-dot"></span>
+    How It Works
+  </div>
+  <h2 class="why-title">Four steps to your<br>dream portfolio</h2>
+
+  <div class="hiw-steps">
+
+    <!-- Step 1 -->
+    <div class="hiw-card">
+      <div class="hiw-badge">1</div>
+      <div class="hiw-arrow">
+        <svg viewBox="0 0 28 28" fill="none" width="28" height="28">
+          <circle cx="14" cy="14" r="13" fill="var(--bg-card)" stroke="var(--border-hi)" stroke-width="0.5"/>
+          <path d="M10 14h8M15 11l3 3-3 3" stroke="url(#ag1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="ag1" x1="10" y1="14" x2="18" y2="14" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#5b4de8"/><stop offset="1" stop-color="#0ba89a"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="hiw-icon">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+          <rect x="4" y="6" width="38" height="34" rx="6" fill="#eeedfe" stroke="#cec8f6" stroke-width="1"/>
+          <rect x="9" y="13" width="10" height="2.5" rx="1" fill="#9b8ff8"/>
+          <rect x="9" y="22" width="8" height="2.5" rx="1" fill="#9b8ff8"/>
+          <rect x="9" y="31" width="12" height="2.5" rx="1" fill="#9b8ff8"/>
+          <rect x="21" y="11" width="18" height="6" rx="3" fill="white" stroke="#cec8f6" stroke-width="0.8"/>
+          <rect x="21" y="20" width="18" height="6" rx="3" fill="white" stroke="#cec8f6" stroke-width="0.8"/>
+          <rect x="21" y="29" width="18" height="6" rx="3" fill="white" stroke="#5b4de8" stroke-width="1"/>
+          <rect x="30" y="31.5" width="1.5" height="3" rx="0.5" fill="#5b4de8" opacity="0.8">
+            <animate attributeName="opacity" values="0.8;0;0.8" dur="1s" repeatCount="indefinite"/>
+          </rect>
+        </svg>
+      </div>
+      <h3>Fill your info</h3>
+      <p>Name, skills, projects, experience - answer a few quick questions.</p>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="hiw-card">
+      <div class="hiw-badge">2</div>
+      <div class="hiw-arrow">
+        <svg viewBox="0 0 28 28" fill="none" width="28" height="28">
+          <circle cx="14" cy="14" r="13" fill="var(--bg-card)" stroke="var(--border-hi)" stroke-width="0.5"/>
+          <path d="M10 14h8M15 11l3 3-3 3" stroke="url(#ag2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="ag2" x1="10" y1="14" x2="18" y2="14" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#5b4de8"/><stop offset="1" stop-color="#0ba89a"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="hiw-icon">
+        <svg width="48" height="46" viewBox="0 0 48 46" fill="none">
+          <rect x="2" y="8" width="13" height="30" rx="4" fill="#f0effd" stroke="#cec8f6" stroke-width="0.8"/>
+          <rect x="4" y="11" width="9" height="4" rx="1.5" fill="#cec8f6"/>
+          <rect x="4" y="17" width="7" height="2" rx="1" fill="#ddd9fb"/>
+          <rect x="4" y="21" width="9" height="2" rx="1" fill="#ddd9fb"/>
+          <rect x="17" y="4" width="14" height="38" rx="4" fill="#eeedfe" stroke="#5b4de8" stroke-width="1.5"/>
+          <rect x="19" y="8" width="10" height="5" rx="2" fill="#5b4de8" opacity="0.75"/>
+          <rect x="19" y="15" width="7" height="2" rx="1" fill="#cec8f6"/>
+          <rect x="19" y="19" width="10" height="2" rx="1" fill="#cec8f6"/>
+          <rect x="19" y="27" width="10" height="2" rx="1" fill="#0ba89a" opacity="0.5"/>
+          <circle cx="31" cy="6" r="5" fill="#5b4de8"/>
+          <path d="M28.5 6 L30.2 7.8 L33.5 4.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="33" y="8" width="13" height="30" rx="4" fill="#f0f9f6" stroke="#9fe1cb" stroke-width="0.8"/>
+          <rect x="35" y="11" width="9" height="4" rx="1.5" fill="#9fe1cb"/>
+          <rect x="35" y="17" width="7" height="2" rx="1" fill="#c0e8d4"/>
+          <rect x="35" y="21" width="9" height="2" rx="1" fill="#c0e8d4"/>
+        </svg>
+      </div>
+      <h3>Pick a template</h3>
+      <p>Choose from 10 unique designs - minimal, bold, or cyber-neon.</p>
+    </div>
+ <!-- Step 3 -->
+    <div class="hiw-card">
+      <div class="hiw-badge">3</div>
+       <div class="hiw-arrow">
+        <svg viewBox="0 0 28 28" fill="none" width="28" height="28">
+          <circle cx="14" cy="14" r="13" fill="var(--bg-card)" stroke="var(--border-hi)" stroke-width="0.5"/>
+          <path d="M10 14h8M15 11l3 3-3 3" stroke="url(#ag3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="ag3" x1="10" y1="14" x2="18" y2="14" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#5b4de8"/><stop offset="1" stop-color="#0ba89a"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="hiw-icon">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+          <rect x="6" y="10" width="34" height="22" rx="4" fill="#eeedfe" stroke="#cec8f6" stroke-width="1"/>
+          <rect x="9" y="13" width="28" height="16" rx="2" fill="white" stroke="#cec8f6" stroke-width="0.8"/>
+          <rect x="11" y="15" width="8" height="3" rx="1" fill="#5b4de8" opacity="0.7"/>
+          <rect x="11" y="20" width="12" height="1.5" rx="0.5" fill="#cec8f6"/>
+          <rect x="11" y="23" width="10" height="1.5" rx="0.5" fill="#cec8f6"/>
+          <rect x="25" y="15" width="10" height="8" rx="1.5" fill="#eeedfe" stroke="#cec8f6" stroke-width="0.8"/>
+          <rect x="11" y="26" width="14" height="1.5" rx="0.5" fill="#0ba89a" opacity="0.5"/>
+          <rect x="20" y="32" width="6" height="4" rx="1" fill="#cec8f6"/>
+          <rect x="16" y="35" width="14" height="2" rx="1" fill="#cec8f6"/>
+          <circle cx="38" cy="13" r="6.5" fill="#0ba89a"/>
+          <path d="M34.5 13c0 0 1.5-2.5 3.5-2.5s3.5 2.5 3.5 2.5-1.5 2.5-3.5 2.5-3.5-2.5-3.5-2.5z" fill="white" opacity="0.9"/>
+          <circle cx="38" cy="13" r="1.5" fill="#0ba89a"/>
+        </svg>
+      </div>
+      <h3>Preview &amp; publish</h3>
+      <p>See your portfolio live before downloading. One click to download zip file.</p>
+    </div>
+    <!-- Step 4 -->
+    <div class="hiw-card">
+      <div class="hiw-badge">4</div>
+      <div class="hiw-icon">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+          <ellipse cx="23" cy="19" rx="12" ry="7.5" fill="#eeedfe" stroke="#cec8f6" stroke-width="1"/>
+          <ellipse cx="14" cy="22" rx="7" ry="5.5" fill="#eeedfe" stroke="#cec8f6" stroke-width="1"/>
+          <ellipse cx="32" cy="22" rx="7" ry="5.5" fill="#eeedfe" stroke="#cec8f6" stroke-width="1"/>
+          <rect x="11" y="22" width="24" height="6" fill="#eeedfe"/>
+          <ellipse cx="23" cy="35" rx="9" ry="2.5" fill="#5b4de8" opacity="0.15" class="dl-glow"/>
+          <g class="dl-arrow">
+            <line x1="23" y1="25" x2="23" y2="34" stroke="#5b4de8" stroke-width="2" stroke-linecap="round"/>
+            <polyline points="18,30 23,35 28,30" stroke="#5b4de8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </g>
+          <rect x="3" y="35" width="16" height="8" rx="3" fill="#5b4de8"/>
+          <text x="11" y="41.5" text-anchor="middle" font-size="6.5" font-weight="600" fill="white" font-family="system-ui,sans-serif">ZIP</text>
+        </svg>
+      </div>
+      <h3>Download &amp; share</h3>
+      <p>Export a ZIP. Deploy on GitHub Pages, Netlify, or anywhere - free.</p>
+    </div>
+
+   
+
+  </div>
+</section>
+
+<!-- ── FAQ SECTION ── -->
+<section class="faq-section" aria-label="FAQ">
+  <div class="why-label">
+    <span class="why-dot"></span>
+    FAQ
+  </div>
+  <h2 class="why-title">Common questions</h2>
+
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Can I use FolioCraft without signing up?
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes - the Free plan lets you build and download one portfolio with no account needed. Sign up only when you want cloud save, share links, or multiple portfolios.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How many templates are available?
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          FolioCraft currently offers 10 unique templates - from Minimal White and Modern Dark to Cyber Neon and Creative Gradient. Every template is fully responsive and free to use.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Do I own the portfolio I download?
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          100%. The downloaded ZIP is yours to host anywhere, modify, or share freely. No FolioCraft branding is added to your portfolio.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Can I edit my portfolio after downloading?
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Absolutely. The exported ZIP contains clean HTML, CSS and JS files. You can edit them in any code editor. Or come back to FolioCraft, update your info, and re-download anytime.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+  <button class="faq-question">
+    Can I preview my portfolio before downloading?
+    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-inner">
+      Yes - before downloading, you get a full live preview of your portfolio exactly as it will appear online. You can go back, make changes, and preview again as many times as you like.
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <a href="/" class="footer-logo-link">
+        <svg class="footer-logo-mark" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="46" class="ring ring--outer"/>
+          <circle cx="60" cy="60" r="34" class="ring ring--inner"/>
+          <circle cx="60" cy="60" r="13" class="core"/>
+          <circle cx="60" cy="18" r="3.5" class="node"/>
+          <circle cx="102" cy="60" r="3.5" class="node"/>
+          <circle cx="60" cy="102" r="3.5" class="node"/>
+          <circle cx="18" cy="60" r="3.5" class="node"/>
+        </svg>
+        <span class="footer-logo-name">FolioCraft</span>
+      </a>
+      <p class="footer-tagline">A tool for building<br/>professional portfolios - no code needed.</p>
+      <div class="footer-tech-stack">
+        <span class="tech-badge">Node.js</span>
+        <span class="tech-badge">MongoDB</span>
+        <span class="tech-badge">Express</span>
+        <span class="tech-badge">Vercel</span>
+      </div>
+    </div>
+
+    <div class="footer-links-group">
+      <h4>Product</h4>
+      <a href="wizard.html">Build Portfolio</a>
+      <a href="preview.html">Preview</a>
+      <a href="#" id="footerDashboardBtn">Dashboard</a>
+    </div>
+
+    <div class="footer-links-group">
+      <h4>Templates</h4>
+      <a href="wizard.html">Modern Dark</a>
+      <a href="wizard.html">Minimal White</a>
+      <a href="wizard.html">Cyber Neon</a>
+      <a href="wizard.html">View All </a>
+    </div>
+
+    <div class="footer-links-group">
+      <h4>Account</h4>
+      <a href="#" id="footerDashboardBtn">My Dashboard</a>
+      <a href="reset-password.html">Reset Password</a>
+      <a href="#" id="footerLoginBtn">Login / Sign up</a>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="footer-divider"></div>
+
+  <!-- Bottom bar -->
+   <div class="footer-bottom">
+    <span>&copy; <span id="footerYear"></span> FolioCraft. All rights reserved.</span>
+    <span class="footer-bottom-right">Built with ♥ for all type of users.</span>
+  </div>
+  </div>
+</footer>
   </main>
 
   <!-- ── AUTH MODAL ── -->
-<div class="auth-overlay" id="authOverlay" style="display:none">
-  <div class="auth-modal" id="authModal">
+  <div class="auth-overlay" id="authOverlay" style="display:none">
+    <div class="auth-modal" id="authModal">
 
-    <!-- Close button -->
-    <button class="auth-close" id="authClose" aria-label="Close">✕</button>
+      <button class="auth-close" id="authClose" aria-label="Close">✕</button>
 
-    <!-- Logo -->
-    <div class="auth-logo">
-      <svg class="logo-mark-sm" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r="46" class="ring ring--outer"/>
-        <circle cx="60" cy="60" r="34" class="ring ring--inner"/>
-        <circle cx="60" cy="60" r="13" class="core"/>
-      </svg>
-      <span>FolioCraft</span>
-    </div>
-
-    <!-- Tabs -->
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-tab="login"    id="loginTab">Login</button>
-      <button class="auth-tab"        data-tab="register" id="registerTab">Sign up</button>
-    </div>
-
-    <!-- Error/Success message -->
-    <div class="auth-message" id="authMessage" style="display:none"></div>
-
-    <!-- ── LOGIN FORM ── -->
-    <form class="auth-form active" id="loginForm">
-      <div class="auth-field">
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="Zarinabrooks@gmail.com" required/>
-      </div>
-      <div class="auth-field">
-  <label>Password</label>
-  <div class="password-input-wrap">
-    <input type="password" id="loginPassword" placeholder="••••••••" required/>
-    <button type="button" class="eye-btn" id="loginEyeBtn" aria-label="Show password">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
-    </button>
-  </div>
-</div>
-<div class="forgot-wrap">
-  <button type="button" class="forgot-btn" id="forgotBtn">
-    Forget Passwod?
-  </button>
-</div>
-<button type="submit" class="auth-submit" id="loginSubmit">
-  <span class="auth-btn-text">Login</span>
-  <span class="auth-btn-loader" style="display:none"></span>
-</button>
-    </form>
-
-    <!-- ── SIGN IN FORM ── -->
-    <form class="auth-form" id="registerForm" style="display:none">
-     <form class="auth-form" id="registerForm" style="display:none">
-  <div class="auth-field">
-    <label>Name</label>
-    <input type="text" id="regName" placeholder="Full Name" required/>
-  </div>
-  <div class="auth-field">
-    <label>Email</label>
-    <input type="email" id="regEmail" placeholder="Zarinabrooks@gmail.com" required/>
-  </div>
-  <div class="auth-field">
-    <label>Password</label>
-    <div class="password-input-wrap">
-      <input type="password" id="regPassword" placeholder="Min 6 characters" required minlength="6"/>
-      <button type="button" class="eye-btn" id="regEyeBtn" aria-label="Show password">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-          <circle cx="12" cy="12" r="3"/>
+      <div class="auth-logo">
+        <svg class="logo-mark-sm" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="46" class="ring ring--outer"/>
+          <circle cx="60" cy="60" r="34" class="ring ring--inner"/>
+          <circle cx="60" cy="60" r="13" class="core"/>
         </svg>
-      </button>
-    </div>
-    <div class="strength-wrap" id="regStrengthWrap" style="display:none">
-      <div class="strength-bar">
-        <div class="strength-fill" id="regStrengthFill"></div>
+        <span>FolioCraft</span>
       </div>
-      <span class="strength-text" id="regStrengthText"></span>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login"    id="loginTab">Login</button>
+        <button class="auth-tab"        data-tab="register" id="registerTab">Sign up</button>
+      </div>
+
+      <div class="auth-message" id="authMessage" style="display:none"></div>
+
+      <!-- LOGIN FORM -->
+      <form class="auth-form active" id="loginForm">
+        <div class="auth-field">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="Zarinabrooks@gmail.com" required/>
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <div class="password-input-wrap">
+            <input type="password" id="loginPassword" placeholder="••••••••" required/>
+            <button type="button" class="eye-btn" id="loginEyeBtn" aria-label="Show password">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="forgot-wrap">
+          <button type="button" class="forgot-btn" id="forgotBtn">Forgot password?</button>
+        </div>
+        <button type="submit" class="auth-submit" id="loginSubmit">
+          <span class="auth-btn-text">Login</span>
+          <span class="auth-btn-loader" style="display:none"></span>
+        </button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form class="auth-form" id="registerForm" style="display:none">
+        <div class="auth-field">
+          <label>Name</label>
+          <input type="text" id="regName" placeholder="Full Name" required/>
+        </div>
+        <div class="auth-field">
+          <label>Email</label>
+          <input type="email" id="regEmail" placeholder="Zarinabrooks@gmail.com" required/>
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <div class="password-input-wrap">
+            <input type="password" id="regPassword" placeholder="Min 6 characters" required minlength="6"/>
+            <button type="button" class="eye-btn" id="regEyeBtn" aria-label="Show password">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <div class="strength-wrap" id="regStrengthWrap" style="display:none">
+            <div class="strength-bar">
+              <div class="strength-fill" id="regStrengthFill"></div>
+            </div>
+            <span class="strength-text" id="regStrengthText"></span>
+          </div>
+        </div>
+        <button type="submit" class="auth-submit" id="registerSubmit">
+          <span class="auth-btn-text">Create Account</span>
+          <span class="auth-btn-loader" style="display:none"></span>
+        </button>
+        <div class="auth-divider"><span>or</span></div>
+        <button type="button" class="google-btn" id="googleLoginBtn">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          Sign up with Google
+        </button>
+      </form>
+
     </div>
   </div>
-  <button type="submit" class="auth-submit" id="registerSubmit">
-    <span class="auth-btn-text">Create Account</span>
-    <span class="auth-btn-loader" style="display:none"></span>
-  </button>
 
-  <div class="auth-divider">
-  <span>or</span>
-</div>
-<button type="button" class="google-btn" id="googleLoginBtn">
-  <svg viewBox="0 0 24 24" width="18" height="18">
-    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-  </svg>
-  Sign up with Google
-</button>
-    </form>
-
-  </div>
-</div>
   <script src="api.js"></script>
   <script src="script.js"></script>
 
