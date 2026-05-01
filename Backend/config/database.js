@@ -1,6 +1,4 @@
-// ══════════════════════════════════════════
-//   config/database.js - MongoDB Connection
-// ══════════════════════════════════════════
+/* config/database.js - MongoDB Connection */
 
 const mongoose = require('mongoose');
 
@@ -12,21 +10,21 @@ const connectDB = async () => {
   family: 4,
 });
 
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
 
     // Connection events
     mongoose.connection.on('disconnected', () => {
-      console.log('⚠️ Connection to MongoDB lost. Reconnecting....');
+      console.log('Connection to MongoDB lost. Reconnecting....');
     });
 
     mongoose.connection.on('error', (err) => {
-      console.error('❌ MongoDB Error:', err);
+      console.error(' MongoDB Error:', err);
     });
 
   } catch (error) {
-    console.error('❌ MongoDB Connection Failed:', error.message);
-    console.error('💡 Check: Is mongodb_variable ok? Is mongodb IP- whitelisted in Atlas?');
-    process.exit(1);   // Server band kar do agar DB connect na ho
+    console.error('MongoDB Connection Failed:', error.message);
+    console.error('Check: Is mongodb_variable ok? Is mongodb IP- whitelisted in Atlas?');
+    process.exit(1);  
   }
 };
 
