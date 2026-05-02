@@ -22,16 +22,28 @@ if (!token) window.location.replace('index.html');
 // ── User Info ──
 const user = JSON.parse(localStorage.getItem('fc_user') || '{}');
 if (user.name) {
-  const firstName = user.name.split(' ')[0];
-  document.getElementById('userName').textContent        = firstName;
-  document.getElementById('userName2').textContent       = firstName;
-  document.getElementById('userAvatar').textContent      = user.name.charAt(0).toUpperCase();
-  const sidebarAvatar = document.getElementById('sidebarAvatar');
-  const sidebarName   = document.getElementById('sidebarUserName');
-  if (sidebarAvatar) sidebarAvatar.textContent = user.name.charAt(0).toUpperCase();
-  if (sidebarName)   sidebarName.textContent   = firstName;
-}
+  const firstName    = user.name.split(' ')[0];
+  const avatarLetter = user.name.charAt(0).toUpperCase();
 
+  document.getElementById('userName').textContent  = firstName;
+  document.getElementById('userName2').textContent = firstName;
+
+  const sidebarName = document.getElementById('sidebarUserName');
+  if (sidebarName) sidebarName.textContent = firstName;
+
+  const avatarHTML = user.avatar
+    ? `<img src="${user.avatar}" 
+        style="width:100%;height:100%;border-radius:50%;object-fit:cover;" 
+        onerror="this.parentElement.textContent='${avatarLetter}'"
+        alt="avatar"/>`
+    : avatarLetter;
+
+  const mainAvatar    = document.getElementById('userAvatar');
+  const sidebarAvatar = document.getElementById('sidebarAvatar');
+
+  if (mainAvatar)    mainAvatar.innerHTML    = avatarHTML;
+  if (sidebarAvatar) sidebarAvatar.innerHTML = avatarHTML;
+}
 // ── Mobile Sidebar ──
 const sidebar        = document.getElementById('sidebar');
 const sidebarOverlay = document.getElementById('sidebarOverlay');

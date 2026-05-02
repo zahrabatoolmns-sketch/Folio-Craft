@@ -410,3 +410,25 @@ function showInputModal(label, placeholder = '') {
 
 window.showConfirmModal = showConfirmModal;
 window.showInputModal   = showInputModal;
+
+// Yeh code api.js mein add karo (file ke end mein, ya jahan token handle hota hai)
+(function handleGoogleCallback() {
+  const params = new URLSearchParams(window.location.search);
+  const token  = params.get('token');
+  const name   = params.get('name');
+  const avatar = params.get('avatar');
+
+  if (token && name) {
+    localStorage.setItem('fc_token', token);
+    localStorage.setItem('fc_user', JSON.stringify({
+      name:    decodeURIComponent(name),
+      avatar:  decodeURIComponent(avatar || '')
+    }));
+
+    // URL clean karo
+    window.history.replaceState({}, document.title, '/index.html');
+
+    // Dashboard pe bhejo
+    window.location.href = 'dashboard.html';
+  }
+})();
