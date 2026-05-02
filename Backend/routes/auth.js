@@ -201,23 +201,27 @@ router.get('/google/callback', async (req, res) => {
     });
     const googleUser = await userRes.json();
 
-    let user = await User.findOne({ email: googleUser.email });
+   let user = await User.findOne({ email: googleUser.email });
 
-    if (!user) {
-      user = await User.create({
-        name:     googleUser.name,
-        email:    googleUser.email,
-        avatar:   googleUser.picture,
-        password: 'google_' + googleUser.id,
-        googleId: googleUser.id
-      });
+if (!user) {
+  user = await User.create({
+    name:     googleUser.name,
+    email:    googleUser.email,
+    avatar:   googleUser.picture,
+    password: 'google_' + googleUser.id,
+    googleId: googleUser.id
+  });
 
-      await Portfolio.create({
-        user:     user._id,
-        fullname: googleUser.name,
-        email:    googleUser.email
-      });
-    }
+  await Portfolio.create({
+    user:     user._id,
+    fullname: googleUser.name,
+    email:    googleUser.email
+  });
+} else {
+  // Existing user ka avatar update karo
+  user.avatar = googleUser.picture;
+  await user.save();
+}
 
     const jwt = require('jsonwebtoken');
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
