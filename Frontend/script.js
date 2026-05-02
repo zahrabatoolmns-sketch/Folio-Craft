@@ -27,8 +27,15 @@ document.getElementById('getStartedBtn').addEventListener('click', () => {
   } else {
     const guestUsed = localStorage.getItem('fc_guest_used');
     if (guestUsed) {
-      showModal();
-      showMessage('Sign up and generate unlimited portfolios!', 'success');
+      window.showAuthModal && window.showAuthModal();
+      setTimeout(function() {
+        const msgBox = document.getElementById('authMessage');
+        if (msgBox) {
+          msgBox.textContent   = 'Sign up to save and manage unlimited portfolios!';
+          msgBox.className     = 'auth-message success';
+          msgBox.style.display = 'block';
+        }
+      }, 100);
     } else {
       localStorage.setItem('fc_guest_used', 'true');
       window.location.href = 'wizard.html';
