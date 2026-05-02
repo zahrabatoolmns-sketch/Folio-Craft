@@ -22,27 +22,31 @@ document.getElementById('themeBtn').addEventListener('click', toggleTheme);
 
 /* ---- CTA ---- */
 document.getElementById('getStartedBtn').addEventListener('click', () => {
-  if (window.FolioAPI && window.FolioAPI.isLoggedIn()) {
-    window.location.href = 'wizard.html';
+  const token = localStorage.getItem('fc_token');
+  
+  if (token) {
+    // Already logged in — dashboard pe bhejo
+    window.location.href = 'dashboard.html';
+    return;
+  }
+
+  // Guest logic
+  const guestUsed = localStorage.getItem('fc_guest_used');
+  if (guestUsed) {
+    window.showAuthModal && window.showAuthModal();
+    setTimeout(function() {
+      const msgBox = document.getElementById('authMessage');
+      if (msgBox) {
+        msgBox.textContent   = 'Sign up to save and manage unlimited portfolios!';
+        msgBox.className     = 'auth-message success';
+        msgBox.style.display = 'block';
+      }
+    }, 100);
   } else {
-    const guestUsed = localStorage.getItem('fc_guest_used');
-    if (guestUsed) {
-      window.showAuthModal && window.showAuthModal();
-      setTimeout(function() {
-        const msgBox = document.getElementById('authMessage');
-        if (msgBox) {
-          msgBox.textContent   = 'Sign up to save and manage unlimited portfolios!';
-          msgBox.className     = 'auth-message success';
-          msgBox.style.display = 'block';
-        }
-      }, 100);
-    } else {
-      localStorage.setItem('fc_guest_used', 'true');
-      window.location.href = 'wizard.html';
-    }
+    localStorage.setItem('fc_guest_used', 'true');
+    window.location.href = 'wizard.html';
   }
 });
-
 /* ---- PARTICLES ---- */
 (function () {
   const canvas = document.getElementById('particleCanvas');
