@@ -22,7 +22,18 @@ document.getElementById('themeBtn').addEventListener('click', toggleTheme);
 
 /* ---- CTA ---- */
 document.getElementById('getStartedBtn').addEventListener('click', () => {
-  window.location.href = 'wizard.html';
+  if (window.FolioAPI && window.FolioAPI.isLoggedIn()) {
+    window.location.href = 'wizard.html';
+  } else {
+    const guestUsed = localStorage.getItem('fc_guest_used');
+    if (guestUsed) {
+      showModal();
+      showMessage('Sign up and generate unlimited portfolios!', 'success');
+    } else {
+      localStorage.setItem('fc_guest_used', 'true');
+      window.location.href = 'wizard.html';
+    }
+  }
 });
 
 /* ---- PARTICLES ---- */

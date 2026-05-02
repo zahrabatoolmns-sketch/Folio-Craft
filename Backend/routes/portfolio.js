@@ -25,14 +25,6 @@ router.post('/create', async (req, res) => {
   try {
     const { portfolioName } = req.body;
 
-    // Free plan mein max 3 portfolios
-    const count = await Portfolio.countDocuments({ user: req.user._id });
-    if (count >= 3) {
-      return res.status(400).json({
-        error: 'Maximum 3 portfolios can b generated in free plan.'
-      });
-    }
-
     const portfolio = await Portfolio.create({
       user: req.user._id,
       portfolioName: portfolioName || 'My Portfolio ' + (count + 1),
