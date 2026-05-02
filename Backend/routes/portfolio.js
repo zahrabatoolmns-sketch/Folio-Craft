@@ -24,6 +24,7 @@ router.get('/all', async (req, res) => {
 router.post('/create', async (req, res) => {
   try {
     const { portfolioName } = req.body;
+    const count = await Portfolio.countDocuments({ user: req.user._id });
 
     const portfolio = await Portfolio.create({
       user: req.user._id,
@@ -31,7 +32,6 @@ router.post('/create', async (req, res) => {
       fullname: req.user.name,
       email: req.user.email
     });
-
     res.status(201).json({
       success: true,
       message: 'New portfolio generated!',

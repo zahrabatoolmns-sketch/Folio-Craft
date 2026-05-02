@@ -582,7 +582,8 @@ document.getElementById('finishBtn')?.addEventListener('click', async () => {
       list.querySelectorAll('.ps-item-delete').forEach(btn => {
         btn.addEventListener('click', async function(e) {
           e.stopPropagation();
-          if (!confirm('Do you want to delete this portfolio?')) return;
+         const confirmed = await showConfirmModal('Delete this portfolio? This cannot be undone.');
+if (!confirmed) return;
 
           const id = this.dataset.id;
           await window.FolioAPI.deletePortfolio(id);
@@ -597,7 +598,8 @@ document.getElementById('finishBtn')?.addEventListener('click', async () => {
 
   // Naya portfolio banao
   addBtn?.addEventListener('click', async function() {
-    const name = prompt('New portfolio name:') || 'My Portfolio';
+  const name = await showInputModal('Enter portfolio name', 'My Portfolio');
+  if (name === null) return;
     try {
       const portfolio = await window.FolioAPI.createPortfolio(name);
       localStorage.setItem('currentPortfolioId', portfolio._id);

@@ -99,6 +99,11 @@ const portfolioSchema = new mongoose.Schema({
     default: 'My Portfolio',
     trim: true
   },
+  
+  isPublished: {          
+  type: Boolean,
+  default: false
+},
 
   customDomain: { type: String },
 

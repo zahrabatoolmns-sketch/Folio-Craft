@@ -255,7 +255,8 @@ function selectPortfolio(id) {
 
 // ── Delete Portfolio ──
 async function deletePortfolio(id) {
-  if (!confirm('Delete this portfolio? This cannot be undone.')) return;
+  const confirmed = await showConfirmModal('Delete this portfolio? This cannot be undone.');
+if (!confirmed) return;
 
   try {
     const res = await fetch(`${API_URL}/portfolio/${id}`, {

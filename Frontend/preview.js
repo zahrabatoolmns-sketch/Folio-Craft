@@ -22,7 +22,7 @@
   const raw = localStorage.getItem('portfolioData');
 
   if (!raw) {
-    showNote('⚠️ No portfolio data found. Please complete the wizard first.', 'error');
+    showNote('No portfolio data found. Please complete the wizard first.', 'error');
     disableDownload('Complete the wizard first');
     return;
   }
@@ -117,7 +117,7 @@
 
   /* STEP 5 — Load template in iframe */
   if (!frame) {
-    showNote(' iframe#previewFrame not found in HTML.', 'error');
+    showNote('Preview component not found. Please refresh the page.', 'error');
     return;
   }
 
@@ -192,7 +192,7 @@
       ]);
 
       if (!htmlSrc) {
-        showNote(' Could not fetch template files. Make sure you are using a local server.', 'error');
+        showNote('Could not load template files. Please try again or refresh the page.', 'error');
         setStatus('Build failed', 'error');
         resetBtn();
         return;
@@ -415,13 +415,8 @@ document.getElementById('qrWebsiteBtn')?.addEventListener('click', function() {
   const btn = this;
 
   // User se URL lo
-  const url = prompt(
-    ' Enter your portfolio website URL:\n\n' +
-    'Example:\n' +
-    '  https://yourname.netlify.app\n' +
-    '  https://yourname.github.io\n\n' +
-    '(First host the portfolio then paste URL here)'
-  );
+  const url = await showInputModal('Enter your portfolio website URL', 'https://yourname.netlify.app');
+if (!url) return;
 
   if (!url || !url.trim()) return;
 
