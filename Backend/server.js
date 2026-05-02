@@ -4,6 +4,7 @@ const cors      = require('cors');
 const helmet    = require('helmet');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/database');
+const logger = require('./config/logger');
 
 const authRoutes      = require('./routes/auth');
 const portfolioRoutes = require('./routes/portfolio');
@@ -74,7 +75,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.error('Server Error:', err);
+  logger.error('Server Error', err.message);
   res.status(err.status || 500).json({
     error: process.env.NODE_ENV === 'production'
       ? 'Something went wrong.'
@@ -84,7 +85,10 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`FolioCraft Backend running on port ${PORT}`);
+  logger.banner();
+  logger.success(`Server running on port ${PORT}`);
+  logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  logger.info(`Health check: /api/health`);
 });
 
 module.exports = app;

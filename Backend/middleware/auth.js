@@ -1,5 +1,6 @@
 const jwt  = require('jsonwebtoken');
 const User = require('../models/User');
+const logger = require('../config/logger');
 
 // ── Protected Route Middleware ──
 const protect = async (req, res, next) => {
@@ -34,7 +35,7 @@ const protect = async (req, res, next) => {
     next();
 
   } catch (error) {
-    console.error('Auth Middleware Error:', error);
+    logger.error('Auth middleware error', error.message);
     res.status(500).json({ error: 'Something wrong with authentication.' });
   }
 };

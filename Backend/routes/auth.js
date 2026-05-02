@@ -9,6 +9,7 @@ const Portfolio       = require('../models/Portfolio');
 const crypto          = require('crypto');
 const { protect, generateToken } = require('../middleware/auth');
 const { sendPasswordResetEmail } = require('../config/email');
+const logger = require('../config/logger');
 
 const FRONTEND_URL = 'https://folio-craft-6frg.vercel.app';
 
@@ -49,7 +50,7 @@ router.post('/register', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Register Error:', error);
+   logger.error('Register failed', error.message);
     if (error.code === 11000) {
       return res.status(400).json({ error: 'This email is already in use.' });
     }
@@ -88,7 +89,7 @@ router.post('/login', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Login Error:', error);
+    logger.error('Login failed', error.message);
     res.status(500).json({ error: 'Login failed. Please try again.' });
   }
 });
@@ -108,7 +109,7 @@ router.get('/me', protect, async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Get Me Error:', error);
+    logger.error('Get me failed', error.message);
     res.status(500).json({ error: 'Failed to load profile.' });
   }
 });
@@ -224,7 +225,7 @@ router.get('/google/callback', async (req, res) => {
     res.redirect(`${FRONTEND_URL}/index.html?token=${token}&name=${encodeURIComponent(user.name)}`);
 
   } catch (err) {
-    console.error('Google auth error:', err);
+    logger.error('Google auth failed', err.message);
     res.redirect(`${FRONTEND_URL}?error=server_error`);
   }
 });
@@ -262,7 +263,7 @@ router.post('/forgot-password', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Forgot Password Error:', error);
+    logger.error('Forgot password failed', error.message);
     res.status(500).json({ error: 'Failed to send reset email. Please try again.' });
   }
 });
@@ -303,7 +304,7 @@ router.post('/reset-password', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Reset Password Error:', error);
+    logger.error('Reset password failed', error.message);
     res.status(500).json({ error: 'Failed to reset password. Please try again.' });
   }
 });

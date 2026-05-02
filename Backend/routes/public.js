@@ -3,6 +3,7 @@
 const express   = require('express');
 const router    = express.Router();
 const Portfolio = require('../models/Portfolio');
+const logger = require('../config/logger');
 
 // GET /api/public/p/:shareId - Share link se portfolio dekho
 router.get('/p/:shareId', async (req, res) => {
@@ -29,7 +30,7 @@ router.get('/p/:shareId', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Public Portfolio Error:', error);
+    logger.error('Public portfolio fetch failed', error.message);
     res.status(500).json({ error: 'something went wrong bringing portfolio.' });
   }
 });
@@ -77,7 +78,7 @@ async function recordView(portfolioId, req) {
 
   } catch (err) {
     // View record fail ho to koi baat nahi
-    console.error('View Record Error:', err.message);
+    logger.warn('View record failed: ' + err.message);
   }
 }
 

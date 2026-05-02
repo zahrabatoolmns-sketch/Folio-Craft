@@ -1,30 +1,27 @@
-/* config/database.js - MongoDB Connection */
-
 const mongoose = require('mongoose');
+const logger   = require('./logger');
 
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
-  serverSelectionTimeoutMS: 30000,
-  socketTimeoutMS: 45000,
-  family: 4,
-});
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+      family: 4,
+    });
 
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    logger.db(`Connected → ${conn.connection.host}`);
 
-    // Connection events
     mongoose.connection.on('disconnected', () => {
-      console.log('Connection to MongoDB lost. Reconnecting....');
+      logger.warn('MongoDB disconnected. Reconnecting...');
     });
 
     mongoose.connection.on('error', (err) => {
-      console.error(' MongoDB Error:', err);
+      logger.error('MongoDB error', err.message);
     });
 
   } catch (error) {
-    console.error('MongoDB Connection Failed:', error.message);
-    console.error('Check: Is mongodb_variable ok? Is mongodb IP- whitelisted in Atlas?');
-    process.exit(1);  
+    logger.error('MongoDB connection failed', error.message);
+    process.exit(1);
   }
 };
 
