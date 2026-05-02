@@ -307,7 +307,6 @@ body.light .t-icon--sun  { opacity: 1; transform: scale(1)  rotate(0deg); }
   line-height: 1.0;
   letter-spacing: -.035em;
   margin-bottom: 28px;
-  animation: riseUp .7s ease .1s both;
 }
 
 .hero-highlight {
@@ -335,7 +334,6 @@ body.light .t-icon--sun  { opacity: 1; transform: scale(1)  rotate(0deg); }
   line-height: 1.7;
   color: var(--text-2);
   margin-bottom: 40px;
-  animation: riseUp .7s ease .2s both;
 }
 
 .hero-actions {
@@ -362,7 +360,6 @@ body.light .t-icon--sun  { opacity: 1; transform: scale(1)  rotate(0deg); }
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: transform .25s ease, box-shadow .25s ease;
   box-shadow: 0 8px 24px var(--glow-a);
 }
 
@@ -1249,6 +1246,88 @@ body.dark .feat-label { fill: #9b8ff8; }
   .footer-brand { grid-column: 1 / -1; }
 }
 
+/* ── SCROLL ANIMATIONS ── */
+
+/* Hero elements */
+.hero-kicker,
+.hero-heading,
+.hero-body,
+.hero-actions,
+.stat-row {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 2s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-kicker.visible  { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+.hero-heading.visible { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+.hero-body.visible    { opacity: 1; transform: translateY(0); transition-delay: 0.7s; }
+.hero-actions.visible { opacity: 1; transform: translateY(0); transition-delay: 1.05s; }
+.stat-row.visible     { opacity: 1; transform: translateY(0); transition-delay: 1.4s; }
+
+/* Feature cards — left to right */
+.feat-card {
+  opacity: 0;
+  transform: translateX(-70px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.feat-card.visible { opacity: 1; transform: translateX(0); }
+.feat-card:nth-child(1) { transition-delay: 0s; }
+.feat-card:nth-child(2) { transition-delay: 0.15s; }
+.feat-card:nth-child(3) { transition-delay: 0.3s; }
+.feat-card:nth-child(4) { transition-delay: 0.45s; }
+.feat-card:nth-child(5) { transition-delay: 0.6s; }
+.feat-card:nth-child(6) { transition-delay: 0.75s; }
+
+/* How it works — left to right */
+.hiw-card {
+  opacity: 0;
+  transform: translateX(-70px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.hiw-card.visible { opacity: 1; transform: translateX(0); }
+.hiw-card:nth-child(1) { transition-delay: 0s; }
+.hiw-card:nth-child(2) { transition-delay: 0.2s; }
+.hiw-card:nth-child(3) { transition-delay: 0.4s; }
+.hiw-card:nth-child(4) { transition-delay: 0.6s; }
+
+/* Section headings — down to up */
+.why-label,
+.why-title,
+.why-sub {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.why-label.visible { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+.why-title.visible { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+.why-sub.visible   { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+
+/* FAQ — down to up */
+.faq-item {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.faq-item.visible { opacity: 1; transform: translateY(0); }
+.faq-item:nth-child(1) { transition-delay: 0s; }
+.faq-item:nth-child(2) { transition-delay: 0.12s; }
+.faq-item:nth-child(3) { transition-delay: 0.24s; }
+.faq-item:nth-child(4) { transition-delay: 0.36s; }
+.faq-item:nth-child(5) { transition-delay: 0.48s; }
+
+/* Footer — down to up */
+.footer-brand,
+.footer-links-group {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.footer-brand.visible                    { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+.footer-links-group:nth-child(2).visible { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
+.footer-links-group:nth-child(3).visible { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+.footer-links-group:nth-child(4).visible { opacity: 1; transform: translateY(0); transition-delay: 0.45s; }
 @media (max-width: 560px) {
   .footer-inner { grid-template-columns: 1fr; }
   .footer-bottom {

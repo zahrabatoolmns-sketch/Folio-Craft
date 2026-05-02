@@ -155,7 +155,7 @@ async function loadPortfolios() {
             </svg>
           </div>
           <h3>No portfolios yet</h3>
-          <p>Build your first portfolio in under 5 minutes — no code needed.</p>
+          <p>Build your first portfolio in under 5 minutes - no code needed.</p>
           <a href="wizard.html" class="btn-primary" onclick="newPortfolio()">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                  stroke-width="2.5" stroke-linecap="round">

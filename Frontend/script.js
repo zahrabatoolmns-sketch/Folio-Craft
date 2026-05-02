@@ -366,3 +366,19 @@ document.getElementById('footerDashboardBtn')?.addEventListener('click', functio
     window.showAuthModal && window.showAuthModal();
   }
 });
+
+/* ---- SCROLL ANIMATIONS ---- */
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0 });
+
+  document.querySelectorAll(
+    '.hero-kicker, .hero-heading, .hero-body, .hero-actions, .stat-row, .feat-card, .hiw-card, .faq-item, .why-label, .why-title, .why-sub, .footer-brand, .footer-links-group'
+  ).forEach(el => observer.observe(el));
+})();
