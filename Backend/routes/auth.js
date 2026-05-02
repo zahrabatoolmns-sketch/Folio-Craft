@@ -221,7 +221,6 @@ router.get('/google/callback', async (req, res) => {
 
     const jwt = require('jsonwebtoken');
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
     res.redirect(`${FRONTEND_URL}/index.html?token=${token}&name=${encodeURIComponent(user.name)}&avatar=${encodeURIComponent(user.avatar || '')}`);
 
   } catch (err) {
