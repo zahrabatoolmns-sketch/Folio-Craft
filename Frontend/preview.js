@@ -421,7 +421,7 @@ document.getElementById('qrWebsiteBtn')?.addEventListener('click', async functio
   }
 
   const name = D.fullname || D.fullName || D.name || 'portfolio';
-  generateAndDownloadQR(finalUrl, slug(name) + '-website-qr.png', btn, '🔗 QR Website');
+  generateAndDownloadQR(finalUrl, slug(name) + '-website-qr.png', btn, 'QR Website');
 });
 
 /* SHARED QR GENERATOR FUNCTION */
