@@ -412,7 +412,11 @@ document.getElementById('qrContactBtn')?.addEventListener('click', function() {
 /*  QR — WEBSITE URL */
 document.getElementById('qrWebsiteBtn')?.addEventListener('click', async function() {
   const btn = this;
-  const url = await showInputModal('Enter your portfolio website URL', 'https://yourname.netlify.app');
+
+  const url = await window.showInputModal(
+    'Enter your portfolio website URL',
+    'https://yourname.netlify.app'
+  );
   if (!url) return;
 
   let finalUrl = url.trim();
