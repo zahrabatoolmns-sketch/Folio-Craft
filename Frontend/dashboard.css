@@ -900,30 +900,571 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
   .an-charts-grid { grid-template-columns: 1fr; }
 }
 
-/* ══════════════════════════════
-   RESPONSIVE
-══════════════════════════════ */
-@media (max-width: 1100px) {
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+/* RESPONSIVE */
+
+/* ── Large Desktop (1400px+) ── */
+@media (min-width: 1400px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 28px 36px 0;
+    gap: 16px;
+  }
+
+  .section {
+    padding: 28px 36px;
+  }
+
+  .dash-header {
+    padding: 16px 36px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
 }
 
-@media (max-width: 768px) {
-  .sidebar { transform: translateX(-100%); }
-  .sidebar.open { transform: translateX(0); }
-  .main-content { margin-left: 0; }
-  .menu-btn { display: flex; }
+/* ── Desktop (1101px – 1399px) ── */
+@media (max-width: 1399px) and (min-width: 1101px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* ── Tablet Landscape (1100px) ── */
+@media (max-width: 1100px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    padding: 16px 16px 0;
-    gap: 10px;
+    gap: 12px;
   }
-  .section { padding: 16px; }
-  .dash-header { padding: 12px 16px; }
+
+  .an-charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
 }
 
-@media (max-width: 480px) {
-  .stats-grid { grid-template-columns: 1fr; }
-  .portfolio-card-actions { flex-wrap: wrap; }
-  .btn-action { flex: none; width: calc(50% - 4px); }
-  .btn-action--danger { width: 100%; }
+/* ── Tablet (769px – 1099px) ── */
+@media (max-width: 1099px) and (min-width: 769px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .main-content {
+    margin-left: 220px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px 20px 0;
+    gap: 12px;
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+  .dash-header {
+    padding: 12px 20px;
+  }
+
+  .dash-title {
+    font-size: 16px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .stat-card {
+    padding: 15px 16px;
+    gap: 12px;
+  }
+
+  .stat-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .portfolio-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .portfolio-card-name {
+    font-size: 14px;
+  }
+
+  .an-charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .an-chart-card {
+    padding: 18px;
+  }
+
+  .sidebar-brand {
+    font-size: 16px;
+    padding: 16px 14px;
+  }
+
+  .nav-item {
+    padding: 9px 11px;
+    font-size: 13px;
+  }
+
+  .sidebar-user-card {
+    padding: 10px;
+  }
+
+  .sidebar-user-name {
+    font-size: 12px;
+  }
+}
+
+/* ── Mobile Landscape + Tablet Portrait (max 768px) ── */
+@media (max-width: 768px) {
+  /* Sidebar — off canvas */
+  .sidebar {
+    width: 260px;
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 32px rgba(0,0,0,0.25);
+  }
+
+  .sidebar-overlay.show {
+    display: block;
+  }
+
+  /* Main */
+  .main-content {
+    margin-left: 0;
+  }
+
+  /* Menu button */
+  .menu-btn {
+    display: flex;
+  }
+
+  /* Header */
+  .dash-header {
+    padding: 11px 16px;
+  }
+
+  .dash-title {
+    font-size: 15px;
+  }
+
+  .dash-sub {
+    font-size: 11.5px;
+  }
+
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .theme-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .dash-header-right {
+    gap: 7px;
+  }
+
+  /* Stats */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 14px 14px 0;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 13px 14px;
+    gap: 10px;
+    border-radius: 15px;
+  }
+
+  .stat-icon-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .stat-icon-wrap svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .stat-value--sm {
+    font-size: 13px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+
+  /* Section */
+  .section {
+    padding: 14px;
+  }
+
+  .section-title {
+    font-size: 15px;
+  }
+
+  .section-header {
+    margin-bottom: 14px;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    padding: 9px 16px;
+    font-size: 12px;
+  }
+
+  /* Portfolio grid */
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+  }
+
+  .portfolio-card {
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .portfolio-card-name {
+    font-size: 14px;
+  }
+
+  .portfolio-card-meta {
+    font-size: 12px;
+    gap: 5px;
+  }
+
+  .portfolio-card-actions {
+    gap: 6px;
+    padding-top: 12px;
+  }
+
+  .btn-action {
+    padding: 7px 6px;
+    font-size: 11.5px;
+    border-radius: 9px;
+  }
+
+  /* Analytics */
+  .an-charts-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .an-chart-card {
+    padding: 16px;
+    border-radius: 15px;
+  }
+
+  .an-chart-title {
+    font-size: 14px;
+  }
+
+  .an-chart-wrap {
+    height: 180px;
+  }
+
+  /* Empty / Loading */
+  .empty-state {
+    padding: 56px 20px;
+  }
+
+  .empty-state-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
+  }
+
+  .empty-state h3 {
+    font-size: 16px;
+  }
+
+  .empty-state p {
+    font-size: 13px;
+  }
+
+  .loading-state {
+    padding: 56px 20px;
+  }
+}
+
+/* ── Mobile (max 560px) ── */
+@media (max-width: 560px) {
+  /* Header */
+  .dash-header {
+    padding: 10px 13px;
+  }
+
+  .dash-title {
+    font-size: 14px;
+  }
+
+  .dash-sub {
+    display: none;
+  }
+
+  .dash-header-left {
+    gap: 10px;
+  }
+
+  /* Stats */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 12px 12px 0;
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 12px;
+    gap: 9px;
+    border-radius: 13px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stat-icon-wrap {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+  }
+
+  .stat-icon-wrap svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+
+  .stat-value--sm {
+    font-size: 12px;
+  }
+
+  .stat-label {
+    font-size: 9.5px;
+  }
+
+  .stat-trend,
+  .stat-dot,
+  .stat-badge-pro {
+    display: none;
+  }
+
+  /* Section */
+  .section {
+    padding: 12px;
+  }
+
+  .section-title {
+    font-size: 14px;
+  }
+
+  .section-count {
+    font-size: 11px;
+  }
+
+  .btn-primary {
+    padding: 8px 14px;
+    font-size: 12px;
+    gap: 5px;
+  }
+
+  .btn-primary svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* Portfolio grid */
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .portfolio-card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .portfolio-card-header {
+    margin-bottom: 10px;
+  }
+
+  .portfolio-card-name {
+    font-size: 13.5px;
+  }
+
+  .portfolio-badge {
+    font-size: 9.5px;
+    padding: 3px 8px;
+  }
+
+  .portfolio-card-meta {
+    font-size: 11.5px;
+    margin-bottom: 12px;
+  }
+
+  .portfolio-card-actions {
+    flex-wrap: wrap;
+    gap: 5px;
+    padding-top: 11px;
+  }
+
+  .btn-action {
+    flex: none;
+    width: calc(50% - 3px);
+    padding: 7px 6px;
+    font-size: 11px;
+    border-radius: 8px;
+    gap: 4px;
+  }
+
+  .btn-action svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .btn-action--danger {
+    width: 100%;
+  }
+
+  /* Sidebar on mobile */
+  .sidebar {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .sidebar-brand {
+    font-size: 16px;
+    padding: 16px 14px;
+  }
+
+  .nav-item {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  /* Analytics */
+  .an-chart-card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .an-chart-title {
+    font-size: 13px;
+  }
+
+  .an-chart-sub {
+    font-size: 11px;
+  }
+
+  .an-chart-wrap {
+    height: 160px;
+  }
+
+  .an-device-row {
+    font-size: 12px;
+  }
+
+  /* Empty state */
+  .empty-state {
+    padding: 44px 16px;
+  }
+
+  .empty-state-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+
+  .empty-state h3 {
+    font-size: 15px;
+  }
+
+  .empty-state p {
+    font-size: 12.5px;
+    max-width: 240px;
+  }
+}
+
+/* ── Small Mobile (max 380px) ── */
+@media (max-width: 380px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .stat-card {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .stat-trend,
+  .stat-dot,
+  .stat-badge-pro {
+    display: none;
+  }
+
+  .dash-header {
+    padding: 9px 11px;
+  }
+
+  .dash-title {
+    font-size: 13px;
+  }
+
+  .section {
+    padding: 10px;
+  }
+
+  .portfolio-card {
+    padding: 12px;
+    border-radius: 13px;
+  }
+
+  .btn-action {
+    width: calc(50% - 3px);
+    font-size: 10.5px;
+    padding: 6px 5px;
+  }
+
+  .btn-action--danger {
+    width: 100%;
+  }
+
+  .sidebar {
+    max-width: 260px;
+  }
 }
