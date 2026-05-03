@@ -1566,7 +1566,7 @@ body.dark .feat-label { fill: #9b8ff8; }
   }
 
   .hero-actions {
-    width: 50%;
+    width: 100%;
     margin-bottom: 36px;
   }
 
@@ -1583,7 +1583,6 @@ body.dark .feat-label { fill: #9b8ff8; }
 
   /* Stat row */
   .stat-row {
-    width: 100%;
     flex-wrap: wrap;
     justify-content: center;
     border-radius: 16px;
