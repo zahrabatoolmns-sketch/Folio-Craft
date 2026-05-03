@@ -506,9 +506,9 @@ publishBtn?.addEventListener('click', async function() {
 
     if (!data.success) throw new Error(data.error);
 
-   const shareUrl = data.shareUrl || `https://folio-craft-6frg.vercel.app/p/${portfolioId}`;
-navigator.clipboard.writeText(shareUrl).catch(() => {});
-showShareModal(shareUrl);
+    const shareUrl = data.shareUrl || `https://folio-craft-6frg.vercel.app/p/${portfolioId}`;
+    navigator.clipboard.writeText(shareUrl).catch(() => {});
+    showShareModal(shareUrl);
 
   } catch(e) {
     showPublishAlert('Failed to publish: ' + e.message);
@@ -526,283 +526,292 @@ showShareModal(shareUrl);
   `;
 });
 
+// ── Theme detect ──
+function getThemeVars() {
+  const isDark = document.body.classList.contains('dark')
+    || localStorage.getItem('fc_theme') === 'dark'
+    || (!localStorage.getItem('fc_theme')
+        && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  return isDark ? {
+    overlay:      'rgba(7,11,20,0.75)',
+    card:         'rgba(15,20,35,0.97)',
+    border:       'rgba(255,255,255,0.09)',
+    borderErr:    'rgba(239,68,68,0.22)',
+    inset:        'inset 0 1px 0 rgba(255,255,255,0.07)',
+    shadow:       '0 32px 64px rgba(0,0,0,0.55)',
+    title:        'rgba(255,255,255,0.92)',
+    body:         'rgba(255,255,255,0.48)',
+    urlBg:        'rgba(255,255,255,0.04)',
+    urlBorder:    'rgba(255,255,255,0.09)',
+    urlText:      'rgba(255,255,255,0.48)',
+    closeBg:      'rgba(255,255,255,0.05)',
+    closeBorder:  'rgba(255,255,255,0.09)',
+    closeText:    'rgba(255,255,255,0.52)',
+    closeHoverBg: 'rgba(255,255,255,0.09)',
+    closeHoverTx: 'rgba(255,255,255,0.85)',
+    closeHoverBr: 'rgba(255,255,255,0.16)',
+    errIconBg:    'rgba(249,115,22,0.10)',
+    errIconBr:    'rgba(249,115,22,0.25)',
+  } : {
+    overlay:      'rgba(15,20,35,0.45)',
+    card:         'rgba(255,255,255,0.98)',
+    border:       'rgba(0,0,0,0.08)',
+    borderErr:    'rgba(249,115,22,0.25)',
+    inset:        'inset 0 1px 0 rgba(255,255,255,0.90)',
+    shadow:       '0 24px 48px rgba(0,0,0,0.12)',
+    title:        'rgba(15,20,35,0.90)',
+    body:         'rgba(15,20,35,0.50)',
+    urlBg:        'rgba(15,20,35,0.04)',
+    urlBorder:    'rgba(15,20,35,0.09)',
+    urlText:      'rgba(15,20,35,0.50)',
+    closeBg:      'rgba(15,20,35,0.04)',
+    closeBorder:  'rgba(15,20,35,0.10)',
+    closeText:    'rgba(15,20,35,0.50)',
+    closeHoverBg: 'rgba(15,20,35,0.08)',
+    closeHoverTx: 'rgba(15,20,35,0.85)',
+    closeHoverBr: 'rgba(15,20,35,0.18)',
+    errIconBg:    'rgba(249,115,22,0.08)',
+    errIconBr:    'rgba(249,115,22,0.22)',
+  };
+}
+
 // ── Alert helper ──
 function showPublishAlert(message) {
   const existing = document.getElementById('publishAlert');
   if (existing) existing.remove();
+  const t = getThemeVars();
 
   const el = document.createElement('div');
   el.id = 'publishAlert';
+  el.style.cssText = `
+    position:fixed; inset:0; z-index:99999;
+    display:flex; align-items:center; justify-content:center; padding:16px;
+    background:${t.overlay};
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  `;
+
   el.innerHTML = `
     <div style="
-      position:fixed; inset:0;
-      background:rgba(15,22,35,0.6);
-      backdrop-filter:blur(10px);
-      z-index:99999;
-      display:flex; align-items:center; justify-content:center;
-      padding:16px;
+      width:100%; max-width:380px;
+      background:${t.card};
+      border:1px solid ${t.borderErr};
+      border-radius:20px; padding:32px 28px 28px;
+      box-shadow:${t.shadow}, ${t.inset};
+      position:relative; overflow:hidden;
     ">
       <div style="
-        background:#ffffff;
-        border-radius:24px;
-        padding:40px 36px;
-        max-width:380px; width:100%;
-        text-align:center;
-        box-shadow:0 24px 48px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.08);
-        position:relative;
-        overflow:hidden;
+        position:absolute; top:0; left:0; right:0; height:3px;
+        background:linear-gradient(90deg,#f97316,#ef4444);
+        border-radius:20px 20px 0 0;
+      "></div>
+      <div style="
+        position:absolute; top:-80px; right:-80px;
+        width:220px; height:220px;
+        background:radial-gradient(circle,rgba(249,115,22,0.07) 0%,transparent 65%);
+        pointer-events:none;
+      "></div>
+
+      <div style="
+        width:48px; height:48px;
+        background:${t.errIconBg}; border:1px solid ${t.errIconBr};
+        border-radius:14px;
+        display:flex; align-items:center; justify-content:center;
+        margin-bottom:16px;
       ">
-        <!-- top accent bar -->
-        <div style="
-          position:absolute; top:0; left:0; right:0;
-          height:4px;
-          background:linear-gradient(90deg,#f97316,#ef4444);
-          border-radius:24px 24px 0 0;
-        "></div>
-
-        <!-- icon -->
-        <div style="
-          width:56px; height:56px;
-          background:linear-gradient(135deg,#fff7ed,#fee2e2);
-          border:1.5px solid #fed7aa;
-          border-radius:18px;
-          display:flex; align-items:center; justify-content:center;
-          margin:0 auto 18px;
-        ">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-        </div>
-
-        <h3 style="
-          font-family:'Bricolage Grotesque',sans-serif;
-          font-size:17px; font-weight:700;
-          color:#0f1623;
-          margin:0 0 8px;
-          letter-spacing:-0.02em;
-        ">Heads up</h3>
-
-        <p style="
-          font-size:14px;
-          color:#556070;
-          margin:0 0 28px;
-          line-height:1.65;
-          font-family:'Instrument Sans',sans-serif;
-        ">${message}</p>
-
-        <button onclick="document.getElementById('publishAlert').remove()" style="
-          width:100%; padding:13px;
-          border-radius:14px;
-          border:none;
-          background:linear-gradient(135deg,#f97316,#ef4444);
-          color:#fff;
-          font-size:14px; font-weight:600;
-          cursor:pointer;
-          font-family:'Instrument Sans',sans-serif;
-          box-shadow:0 4px 14px rgba(249,115,22,0.3);
-          transition:transform 0.2s, box-shadow 0.2s;
-        "
-        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(249,115,22,0.4)'"
-        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(249,115,22,0.3)'"
-        >Got it</button>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="#f97316" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
       </div>
+
+      <p style="
+        font-size:15px; font-weight:700; color:${t.title};
+        margin:0 0 8px; letter-spacing:-0.01em;
+        font-family:ui-sans-serif,system-ui,sans-serif;
+      ">Heads up</p>
+
+      <p style="
+        font-size:13px; line-height:1.65; color:${t.body};
+        margin:0 0 24px;
+        font-family:ui-sans-serif,system-ui,sans-serif;
+      ">${message}</p>
+
+      <button id="_alertOk" style="
+        width:100%; padding:11px; border-radius:12px; border:none; cursor:pointer;
+        background:linear-gradient(135deg,rgba(249,115,22,0.9),rgba(239,68,68,0.85));
+        border-top:1px solid rgba(255,255,255,0.10);
+        color:#fff; font-size:13px; font-weight:600; letter-spacing:0.01em;
+        box-shadow:0 4px 16px rgba(249,115,22,0.25);
+        font-family:ui-sans-serif,system-ui,sans-serif;
+        transition:transform .15s ease, box-shadow .15s ease;
+      "
+      onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 24px rgba(249,115,22,0.35)'"
+      onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(249,115,22,0.25)'"
+      >Got it</button>
     </div>
   `;
+
   document.body.appendChild(el);
+  el.querySelector('#_alertOk').onclick = () => el.remove();
 }
 
 // ── Share Modal ──
 function showShareModal(url) {
   const existing = document.getElementById('shareModal');
   if (existing) existing.remove();
+  const t = getThemeVars();
 
   const modal = document.createElement('div');
   modal.id = 'shareModal';
+  modal.style.cssText = `
+    position:fixed; inset:0; z-index:99999;
+    display:flex; align-items:center; justify-content:center; padding:16px;
+    background:${t.overlay};
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  `;
+
   modal.innerHTML = `
     <div style="
-      position:fixed; inset:0;
-      background:rgba(15,22,35,0.6);
-      backdrop-filter:blur(10px);
-      z-index:99999;
-      display:flex; align-items:center; justify-content:center;
-      padding:16px;
+      width:100%; max-width:460px;
+      background:${t.card};
+      border:1px solid ${t.border};
+      border-radius:22px; padding:36px 32px 32px;
+      box-shadow:${t.shadow}, ${t.inset};
+      position:relative; overflow:hidden;
     ">
       <div style="
-        background:#ffffff;
-        border-radius:28px;
-        padding:44px 40px;
-        max-width:480px; width:100%;
-        text-align:center;
-        box-shadow:0 32px 64px rgba(0,0,0,0.14), 0 8px 24px rgba(0,0,0,0.08);
-        position:relative;
-        overflow:hidden;
+        position:absolute; top:0; left:0; right:0; height:3px;
+        background:linear-gradient(90deg,#6366f1,#06b6d4);
+        border-radius:22px 22px 0 0;
+      "></div>
+      <div style="
+        position:absolute; top:-100px; right:-100px; width:280px; height:280px;
+        background:radial-gradient(circle,rgba(99,102,241,0.07) 0%,transparent 65%);
+        pointer-events:none;
+      "></div>
+      <div style="
+        position:absolute; bottom:-80px; left:-80px; width:220px; height:220px;
+        background:radial-gradient(circle,rgba(6,182,212,0.06) 0%,transparent 65%);
+        pointer-events:none;
+      "></div>
+
+      <div style="
+        width:52px; height:52px;
+        background:rgba(99,102,241,0.10); border:1px solid rgba(99,102,241,0.25);
+        border-radius:15px;
+        display:flex; align-items:center; justify-content:center;
+        margin-bottom:18px;
       ">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <defs>
+            <linearGradient id="sg2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+          <path stroke="url(#sg2)" d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/>
+          <polyline stroke="url(#sg2)" points="16,6 12,2 8,6"/>
+          <line stroke="url(#sg2)" x1="12" y1="2" x2="12" y2="15"/>
+        </svg>
+      </div>
 
-        <!-- background decoration -->
-        <div style="
-          position:absolute;
-          top:-60px; right:-60px;
-          width:200px; height:200px;
-          background:radial-gradient(circle, rgba(91,77,232,0.08) 0%, transparent 70%);
-          border-radius:50%;
-          pointer-events:none;
-        "></div>
-        <div style="
-          position:absolute;
-          bottom:-40px; left:-40px;
-          width:160px; height:160px;
-          background:radial-gradient(circle, rgba(11,168,154,0.08) 0%, transparent 70%);
-          border-radius:50%;
-          pointer-events:none;
-        "></div>
+      <p style="
+        font-size:20px; font-weight:800; color:${t.title};
+        margin:0 0 6px; letter-spacing:-0.025em;
+        font-family:ui-sans-serif,system-ui,sans-serif;
+      ">Portfolio is Live 🎉</p>
 
-        <!-- top accent bar -->
-        <div style="
-          position:absolute; top:0; left:0; right:0;
-          height:4px;
-          background:linear-gradient(90deg,#5b4de8,#0ba89a);
-          border-radius:28px 28px 0 0;
-        "></div>
+      <p style="
+        font-size:13px; line-height:1.6; color:${t.body};
+        margin:0 0 24px;
+        font-family:ui-sans-serif,system-ui,sans-serif;
+      ">Share this link with recruiters, clients, or anyone.</p>
 
-        <!-- icon -->
-        <div style="
-          width:64px; height:64px;
-          background:linear-gradient(135deg,#eeedfe,#e0f5f3);
-          border:1.5px solid #cec8f6;
-          border-radius:20px;
-          display:flex; align-items:center; justify-content:center;
-          margin:0 auto 20px;
-          box-shadow:0 4px 16px rgba(91,77,232,0.12);
-        ">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <defs>
-              <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#5b4de8"/>
-                <stop offset="100%" stop-color="#0ba89a"/>
-              </linearGradient>
-            </defs>
-            <path stroke="url(#iconGrad)" d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/>
-            <polyline stroke="url(#iconGrad)" points="16,6 12,2 8,6"/>
-            <line stroke="url(#iconGrad)" x1="12" y1="2" x2="12" y2="15"/>
+      <div style="
+        background:${t.urlBg}; border:1px solid ${t.urlBorder};
+        border-radius:12px; padding:11px 14px; margin-bottom:16px;
+        display:flex; align-items:center; gap:10px;
+      ">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+             stroke="rgba(99,102,241,0.8)" stroke-width="2" style="flex-shrink:0;">
+          <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+        </svg>
+        <span style="
+          font-size:12px; color:${t.urlText}; flex:1;
+          overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+          font-family:ui-monospace,monospace;
+        ">${url}</span>
+        <button id="_copyBtn" style="
+          padding:6px 14px; border-radius:8px; cursor:pointer;
+          border:1px solid rgba(99,102,241,0.35);
+          background:rgba(99,102,241,0.12); color:rgba(99,102,241,0.9);
+          font-size:11px; font-weight:600; white-space:nowrap;
+          font-family:ui-sans-serif,system-ui,sans-serif;
+          transition:all .15s ease;
+        "
+        onmouseover="this.style.background='rgba(99,102,241,0.22)';this.style.borderColor='rgba(99,102,241,0.5)'"
+        onmouseout="this.style.background='rgba(99,102,241,0.12)';this.style.borderColor='rgba(99,102,241,0.35)'"
+        >Copy</button>
+      </div>
+
+      <div style="display:flex; gap:8px;">
+        <a href="${url}" target="_blank" style="
+          flex:1; padding:12px; border-radius:12px; text-decoration:none;
+          background:linear-gradient(135deg,rgba(99,102,241,0.9),rgba(6,182,212,0.85));
+          border-top:1px solid rgba(255,255,255,0.10);
+          color:#fff; font-size:13px; font-weight:600;
+          display:inline-flex; align-items:center; justify-content:center; gap:6px;
+          box-shadow:0 4px 18px rgba(99,102,241,0.28);
+          font-family:ui-sans-serif,system-ui,sans-serif;
+          transition:transform .15s ease, box-shadow .15s ease;
+        "
+        onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 28px rgba(99,102,241,0.38)'"
+        onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 18px rgba(99,102,241,0.28)'"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+               stroke="white" stroke-width="2.2" stroke-linecap="round">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+            <polyline points="15,3 21,3 21,9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
           </svg>
-        </div>
+          View Live
+        </a>
 
-        <!-- title -->
-        <h2 style="
-          font-family:'Bricolage Grotesque',sans-serif;
-          font-size:26px; font-weight:800;
-          color:#0f1623;
-          margin:0 0 8px;
-          letter-spacing:-0.03em;
-        ">Portfolio is Live!</h2>
-
-        <p style="
-          font-size:14px;
-          color:#7d8ba3;
-          margin:0 0 28px;
-          line-height:1.65;
-          font-family:'Instrument Sans',sans-serif;
-        ">Your portfolio is published. Share this link<br>with recruiters, clients, or anyone.</p>
-
-        <!-- url box -->
-        <div style="
-          background:#f8f9fc;
-          border:1.5px solid #e8eaf0;
-          border-radius:16px;
-          padding:14px 16px;
-          margin-bottom:20px;
-          display:flex; align-items:center; gap:10px;
-          text-align:left;
-        ">
-          <div style="
-            width:32px; height:32px;
-            background:linear-gradient(135deg,#eeedfe,#e0f5f3);
-            border-radius:10px;
-            display:flex; align-items:center; justify-content:center;
-            flex-shrink:0;
-          ">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5b4de8" stroke-width="2">
-              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
-              <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
-            </svg>
-          </div>
-          <span style="
-            font-size:12.5px;
-            color:#556070;
-            flex:1;
-            overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-            font-family:monospace;
-          ">${url}</span>
-          <button id="copyUrlBtn" onclick="
-            navigator.clipboard.writeText('${url}');
-            this.textContent='Copied!';
-            this.style.background='linear-gradient(135deg,#5b4de8,#0ba89a)';
-            this.style.color='white';
-            this.style.borderColor='transparent';
-            setTimeout(()=>{
-              this.textContent='Copy';
-              this.style.background='white';
-              this.style.color='#5b4de8';
-              this.style.borderColor='#cec8f6';
-            },2000)
-          " style="
-            padding:7px 16px;
-            border-radius:10px;
-            border:1.5px solid #cec8f6;
-            background:white;
-            color:#5b4de8;
-            font-size:12px; font-weight:600;
-            cursor:pointer; white-space:nowrap;
-            font-family:'Instrument Sans',sans-serif;
-            transition:all 0.2s;
-          ">Copy</button>
-        </div>
-
-        <!-- actions -->
-        <div style="display:flex; gap:10px;">
-          <a href="${url}" target="_blank" style="
-            flex:1; padding:14px;
-            border-radius:16px;
-            background:linear-gradient(135deg,#5b4de8,#0ba89a);
-            color:#fff; text-decoration:none;
-            font-size:14px; font-weight:600;
-            font-family:'Instrument Sans',sans-serif;
-            display:inline-flex; align-items:center; justify-content:center; gap:7px;
-            box-shadow:0 6px 20px rgba(91,77,232,0.28);
-            transition:all 0.2s;
-          "
-          onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(91,77,232,0.36)'"
-          onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 6px 20px rgba(91,77,232,0.28)'"
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-              <polyline points="15,3 21,3 21,9"/>
-              <line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
-            View Live
-          </a>
-
-          <button onclick="document.getElementById('shareModal').remove()" style="
-            flex:1; padding:14px;
-            border-radius:16px;
-            border:1.5px solid #e8eaf0;
-            background:#f8f9fc;
-            color:#556070;
-            font-size:14px; font-weight:500;
-            cursor:pointer;
-            font-family:'Instrument Sans',sans-serif;
-            transition:all 0.2s;
-          "
-          onmouseover="this.style.background='#f0f2f8';this.style.color='#0f1623';this.style.borderColor='#d0d4e0'"
-          onmouseout="this.style.background='#f8f9fc';this.style.color='#556070';this.style.borderColor='#e8eaf0'"
-          >Close</button>
-        </div>
-
+        <button id="_closeBtn" style="
+          flex:1; padding:12px; border-radius:12px; cursor:pointer;
+          border:1px solid ${t.closeBorder};
+          background:${t.closeBg}; color:${t.closeText};
+          font-size:13px; font-weight:500;
+          font-family:ui-sans-serif,system-ui,sans-serif;
+          transition:all .15s ease;
+        "
+        onmouseover="this.style.background='${t.closeHoverBg}';this.style.color='${t.closeHoverTx}';this.style.borderColor='${t.closeHoverBr}'"
+        onmouseout="this.style.background='${t.closeBg}';this.style.color='${t.closeText}';this.style.borderColor='${t.closeBorder}'"
+        >Close</button>
       </div>
     </div>
   `;
+
   document.body.appendChild(modal);
+  modal.querySelector('#_copyBtn').onclick = function() {
+    navigator.clipboard.writeText(url).catch(() => {});
+    this.textContent = 'Copied!';
+    this.style.background  = 'rgba(34,197,94,0.15)';
+    this.style.borderColor = 'rgba(34,197,94,0.40)';
+    this.style.color       = 'rgba(34,197,94,0.90)';
+    setTimeout(() => {
+      this.textContent       = 'Copy';
+      this.style.background  = 'rgba(99,102,241,0.12)';
+      this.style.borderColor = 'rgba(99,102,241,0.35)';
+      this.style.color       = 'rgba(99,102,241,0.90)';
+    }, 2000);
+  };
+  modal.querySelector('#_closeBtn').onclick = () => modal.remove();
 }
+
 })();
