@@ -1582,7 +1582,7 @@ body.dark .feat-label { fill: #9b8ff8; }
   }
 
   /* Stat row */
-  /* ── Mobile: 3 items in one row + divider lines ── */
+  /* ── Mobile FIX (ignore separators, show only 3 items) ── */
 @media (max-width: 600px) {
   .stat-row {
     display: flex;
@@ -1591,27 +1591,14 @@ body.dark .feat-label { fill: #9b8ff8; }
     align-items: center;
   }
 
-  /* hide old separators */
-  .stat-row .stat-sep {
-    display: none;
-  }
-
   .stat-row li {
     flex: 1;
     text-align: center;
-    position: relative;
   }
 
-  /* divider line (only middle items) */
-  .stat-row li:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 22px;
-    background: rgba(0, 0, 0, 0.15);
+  /* ❌ separators hata do */
+  .stat-row .stat-sep {
+    display: none;
   }
 
   .stat-row li strong {
