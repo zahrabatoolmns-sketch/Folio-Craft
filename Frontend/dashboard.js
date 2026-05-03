@@ -288,3 +288,146 @@ if (!confirmed) return;
 
 // ── Init ──
 loadPortfolios();
+
+// ── Analytics ──
+
+let chartsRendered = false;
+
+document.getElementById('analyticsNavBtn')?.addEventListener('click', function(e) {
+  e.preventDefault();
+
+  const portfolioSection  = document.querySelector('.section:not(#analyticsSection)');
+  const analyticsSection  = document.getElementById('analyticsSection');
+
+  // Toggle
+  const isShowing = analyticsSection.style.display !== 'none';
+
+  if (isShowing) {
+    analyticsSection.style.display = 'none';
+    portfolioSection.style.display = '';
+    this.classList.remove('active');
+    document.querySelector('.nav-item.active:not(#analyticsNavBtn)')?.classList.add('active');
+  } else {
+    portfolioSection.style.display  = 'none';
+    analyticsSection.style.display  = '';
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    this.classList.add('active');
+    renderAnalyticsCharts();
+  }
+});
+
+async function renderAnalyticsCharts() {
+  if (chartsRendered) return;
+  chartsRendered = true;
+
+  const isDark    = document.body.classList.contains('dark');
+  const gridColor = isDark ? 'rgba(255,255,255,.06)' : 'rgba(0,0,0,.06)';
+  const textColor = isDark ? 'rgba(255,255,255,.45)' : 'rgba(0,0,0,.45)';
+
+  // Real data fetch
+  let stats = null;
+  try {
+    const res  = await fetch(API_URL + '/analytics/overview', {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    const data = await res.json();
+    stats      = data.stats;
+  } catch(e) {}
+
+  // Stats update
+  document.getElementById('anTotalViews').textContent = stats?.totalViews || 0;
+  document.getElementById('anVisitors').textContent   = Math.round((stats?.totalViews || 0) * 0.75);
+  document.getElementById('anLast7').textContent      = stats?.last7Days  || 0;
+  document.getElementById('anLast30').textContent     = stats?.last30Days || 0;
+
+  // Views line chart
+  const dailyViews = stats?.dailyViews || [];
+  const labels = dailyViews.length
+    ? dailyViews.slice(-7).map(d => new Date(d.date).toLocaleDateString('en', { weekday: 'short' }))
+    : ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const viewData = dailyViews.length
+    ? dailyViews.slice(-7).map(d => d.views)
+    : [0,0,0,0,0,0,0];
+
+  new Chart(document.getElementById('viewsChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data: viewData,
+        borderColor: '#7b6ef6',
+        backgroundColor: 'rgba(123,110,246,.08)',
+        borderWidth: 2,
+        tension: .4,
+        fill: true,
+        pointBackgroundColor: '#7b6ef6',
+        pointRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 11 } } },
+        y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 11 } }, beginAtZero: true }
+      }
+    }
+  });
+
+  // Device donut chart
+  const deviceBreakdown = stats?.deviceBreakdown || {};
+  const deviceLabels = Object.keys(deviceBreakdown).length ? Object.keys(deviceBreakdown) : ['Mobile','Desktop','Tablet'];
+  const deviceValues = Object.keys(deviceBreakdown).length ? Object.values(deviceBreakdown) : [0,0,0];
+  const deviceColors = ['#7b6ef6','#34d1bf','#f97316'];
+
+  new Chart(document.getElementById('deviceChart'), {
+    type: 'doughnut',
+    data: {
+      labels: deviceLabels,
+      datasets: [{ data: deviceValues, backgroundColor: deviceColors, borderWidth: 0, hoverOffset: 4 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      cutout: '72%'
+    }
+  });
+
+  const total = deviceValues.reduce((a,b) => a+b, 0) || 1;
+  document.getElementById('deviceList').innerHTML = deviceLabels.map((d,i) => `
+    <div class="an-device-row">
+      <div class="an-device-dot" style="background:${deviceColors[i]}"></div>
+      <span class="an-device-name">${d}</span>
+      <span class="an-device-pct">${Math.round(deviceValues[i]/total*100)}%</span>
+    </div>
+  `).join('');
+
+  // Portfolio bar chart
+  let portfolios = [];
+  try {
+    const res  = await fetch(API_URL + '/portfolio/all', { headers: { Authorization: 'Bearer ' + token } });
+    const data = await res.json();
+    portfolios = data.portfolios || [];
+  } catch(e) {}
+
+  new Chart(document.getElementById('portfolioViewsChart'), {
+    type: 'bar',
+    data: {
+      labels: portfolios.length ? portfolios.map(p => p.portfolioName || 'Portfolio') : ['No portfolios'],
+      datasets: [{
+        data: portfolios.length ? portfolios.map(p => p.totalViews || 0) : [0],
+        backgroundColor: 'rgba(123,110,246,.7)',
+        borderRadius: 8,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: textColor, font: { size: 12 } } },
+        y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 11 } }, beginAtZero: true }
+      }
+    }
+  });
+}

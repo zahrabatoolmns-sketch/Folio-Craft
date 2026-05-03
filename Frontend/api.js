@@ -121,7 +121,11 @@ async function savePortfolio(portfolioData) {
 
 // Portfolio publish karo
 async function publishPortfolio() {
-  const data = await apiFetch('/portfolio/publish', { method: 'POST' });
+  const currentId = localStorage.getItem('currentPortfolioId');
+  if (!currentId) {
+    throw new Error('No portfolio selected. Please generate a portfolio first.');
+  }
+  const data = await apiFetch(`/portfolio/${currentId}/publish`, { method: 'POST' });
   return data;
 }
 
@@ -225,90 +229,113 @@ function showConfirmModal(message) {
     const overlay = document.createElement('div');
     overlay.style.cssText = `
       position: fixed; inset: 0; z-index: 99999;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       display: flex; align-items: center; justify-content: center;
       padding: 16px;
-      animation: fadeIn 0.15s ease;
+      animation: fcFadeIn 0.2s ease;
     `;
 
     overlay.innerHTML = `
+      <style>
+        @keyframes fcFadeIn  { from { opacity:0 } to { opacity:1 } }
+        @keyframes fcSlideUp { from { opacity:0; transform:translateY(16px) scale(0.97) } to { opacity:1; transform:translateY(0) scale(1) } }
+      </style>
       <div style="
         background: var(--bg-card, #fff);
         border: 1px solid var(--border-hi, rgba(0,0,0,0.1));
-        border-radius: 20px;
-        padding: 32px 28px;
+        border-radius: 24px;
+        padding: 36px 32px;
         max-width: 380px;
         width: 100%;
-        box-shadow: 0 24px 48px rgba(0,0,0,0.2);
-        animation: slideUp 0.2s ease;
+        box-shadow: 0 32px 64px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.08);
+        animation: fcSlideUp 0.25s cubic-bezier(0.34,1.56,0.64,1);
       ">
         <div style="
-          width: 48px; height: 48px;
-          background: rgba(220,38,38,0.1);
-          border-radius: 14px;
+          width: 52px; height: 52px;
+          background: rgba(220,38,38,0.08);
+          border: 1px solid rgba(220,38,38,0.18);
+          border-radius: 16px;
           display: flex; align-items: center; justify-content: center;
-          margin: 0 auto 16px;
+          margin: 0 auto 20px;
+          box-shadow: 0 4px 12px rgba(220,38,38,0.1);
         ">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round">
             <polyline points="3,6 5,6 21,6"/>
             <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
             <path d="M10 11v6M14 11v6"/>
           </svg>
         </div>
+
         <p style="
           text-align: center;
-          font-size: 15px;
-          font-weight: 600;
+          font-size: 16px;
+          font-weight: 700;
           color: var(--text, #0f1623);
           margin: 0 0 8px;
           font-family: 'Bricolage Grotesque', sans-serif;
+          letter-spacing: -0.02em;
         ">Are you sure?</p>
+
         <p style="
           text-align: center;
-          font-size: 13px;
+          font-size: 13.5px;
           color: var(--text-2, #556070);
-          margin: 0 0 24px;
-          line-height: 1.5;
+          margin: 0 0 28px;
+          line-height: 1.6;
+          font-family: 'Instrument Sans', sans-serif;
         ">${message}</p>
+
         <div style="display: flex; gap: 10px;">
           <button id="cancelBtn" style="
-            flex: 1; padding: 11px;
-            border-radius: 12px;
+            flex: 1; padding: 12px 16px;
+            border-radius: 14px;
             border: 1px solid var(--border-hi, rgba(0,0,0,0.1));
             background: transparent;
             color: var(--text-2, #556070);
             font-size: 14px; font-weight: 500;
             cursor: pointer;
             font-family: 'Instrument Sans', sans-serif;
-            transition: all 0.2s;
-          ">Cancel</button>
+            transition: all 0.2s ease;
+            letter-spacing: 0.01em;
+          "
+          onmouseover="this.style.background='var(--a-dim, rgba(91,77,232,0.08))';this.style.borderColor='var(--a, #5b4de8)';this.style.color='var(--a, #5b4de8)'"
+          onmouseout="this.style.background='transparent';this.style.borderColor='var(--border-hi, rgba(0,0,0,0.1))';this.style.color='var(--text-2, #556070)'"
+          >Cancel</button>
+
           <button id="confirmBtn" style="
-            flex: 1; padding: 11px;
-            border-radius: 12px;
-            border: none;
-            background: #dc2626;
+            flex: 1; padding: 12px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(220,38,38,0.3);
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
             color: white;
             font-size: 14px; font-weight: 600;
             cursor: pointer;
             font-family: 'Instrument Sans', sans-serif;
-            transition: all 0.2s;
-          ">Delete</button>
+            transition: all 0.2s ease;
+            letter-spacing: 0.01em;
+            box-shadow: 0 4px 14px rgba(220,38,38,0.25), inset 0 1px 0 rgba(255,255,255,0.12);
+          "
+          onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 20px rgba(220,38,38,0.35), inset 0 1px 0 rgba(255,255,255,0.12)'"
+          onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(220,38,38,0.25), inset 0 1px 0 rgba(255,255,255,0.12)'"
+          >Delete</button>
         </div>
       </div>
     `;
 
     document.body.appendChild(overlay);
 
-    overlay.querySelector('#cancelBtn').onclick = () => {
+   function safeRemove() {
+  try {
+    if (document.body.contains(overlay)) {
       document.body.removeChild(overlay);
-      resolve(false);
-    };
+    }
+  } catch(e) {}
+}
 
-    overlay.querySelector('#confirmBtn').onclick = () => {
-      document.body.removeChild(overlay);
-      resolve(true);
-    };
+    overlay.querySelector('#cancelBtn').onclick  = () => { safeRemove(); resolve(false); };
+    overlay.querySelector('#confirmBtn').onclick = () => { safeRemove(); resolve(true);  };
   });
 }
 
@@ -318,21 +345,28 @@ function showInputModal(label, placeholder = '') {
     const overlay = document.createElement('div');
     overlay.style.cssText = `
       position: fixed; inset: 0; z-index: 99999;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       display: flex; align-items: center; justify-content: center;
       padding: 16px;
+      animation: fcFadeIn 0.2s ease;
     `;
 
     overlay.innerHTML = `
+      <style>
+        @keyframes fcFadeIn  { from { opacity:0 } to { opacity:1 } }
+        @keyframes fcSlideUp { from { opacity:0; transform:translateY(16px) scale(0.97) } to { opacity:1; transform:translateY(0) scale(1) } }
+      </style>
       <div style="
         background: var(--bg-card, #fff);
         border: 1px solid var(--border-hi, rgba(0,0,0,0.1));
-        border-radius: 20px;
-        padding: 32px 28px;
-        max-width: 400px;
+        border-radius: 24px;
+        padding: 36px 32px;
+        max-width: 420px;
         width: 100%;
-        box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+        box-shadow: 0 32px 64px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.08);
+        animation: fcSlideUp 0.25s cubic-bezier(0.34,1.56,0.64,1);
       ">
         <p style="
           font-size: 16px;
@@ -340,42 +374,59 @@ function showInputModal(label, placeholder = '') {
           color: var(--text, #0f1623);
           margin: 0 0 16px;
           font-family: 'Bricolage Grotesque', sans-serif;
+          letter-spacing: -0.02em;
         ">${label}</p>
-        <input id="modalInput" type="text" placeholder="${placeholder}" style="
-          width: 100%;
-          padding: 12px 15px;
-          border-radius: 12px;
-          border: 1px solid var(--border, rgba(0,0,0,0.1));
-          background: var(--bg-card, #fff);
-          color: var(--text, #0f1623);
-          font-size: 14px;
-          font-family: 'Instrument Sans', sans-serif;
-          outline: none;
-          margin-bottom: 20px;
-          box-sizing: border-box;
-          transition: border-color 0.2s;
-        "/>
+
+        <div style="position: relative; margin-bottom: 20px;">
+          <input id="modalInput" type="text" placeholder="${placeholder}" style="
+            width: 100%;
+            padding: 13px 16px;
+            border-radius: 14px;
+            border: 1px solid var(--border, rgba(0,0,0,0.1));
+            background: var(--bg-card, #fff);
+            color: var(--text, #0f1623);
+            font-size: 14px;
+            font-family: 'Instrument Sans', sans-serif;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            caret-color: var(--a, #5b4de8);
+          "/>
+        </div>
+
         <div style="display: flex; gap: 10px;">
           <button id="cancelBtn" style="
-            flex: 1; padding: 11px;
-            border-radius: 12px;
+            flex: 1; padding: 12px 16px;
+            border-radius: 14px;
             border: 1px solid var(--border-hi, rgba(0,0,0,0.1));
             background: transparent;
             color: var(--text-2, #556070);
             font-size: 14px; font-weight: 500;
             cursor: pointer;
             font-family: 'Instrument Sans', sans-serif;
-          ">Cancel</button>
+            transition: all 0.2s ease;
+            letter-spacing: 0.01em;
+          "
+          onmouseover="this.style.background='var(--a-dim, rgba(91,77,232,0.08))';this.style.borderColor='var(--a, #5b4de8)';this.style.color='var(--a, #5b4de8)'"
+          onmouseout="this.style.background='transparent';this.style.borderColor='var(--border-hi, rgba(0,0,0,0.1))';this.style.color='var(--text-2, #556070)'"
+          >Cancel</button>
+
           <button id="okBtn" style="
-            flex: 1; padding: 11px;
-            border-radius: 12px;
+            flex: 1; padding: 12px 16px;
+            border-radius: 14px;
             border: none;
             background: linear-gradient(135deg, #5b4de8, #0ba89a);
             color: white;
             font-size: 14px; font-weight: 600;
             cursor: pointer;
             font-family: 'Instrument Sans', sans-serif;
-          ">OK</button>
+            transition: all 0.2s ease;
+            letter-spacing: 0.01em;
+            box-shadow: 0 4px 14px rgba(91,77,232,0.25), inset 0 1px 0 rgba(255,255,255,0.12);
+          "
+          onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 20px rgba(91,77,232,0.35), inset 0 1px 0 rgba(255,255,255,0.12)'"
+          onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(91,77,232,0.25), inset 0 1px 0 rgba(255,255,255,0.12)'"
+          >OK</button>
         </div>
       </div>
     `;
@@ -385,26 +436,36 @@ function showInputModal(label, placeholder = '') {
     const input = overlay.querySelector('#modalInput');
     input.focus();
 
+    input.addEventListener('focus', () => {
+      input.style.borderColor = 'var(--a, #5b4de8)';
+      input.style.boxShadow   = '0 0 0 3px var(--a-dim, rgba(91,77,232,0.12))';
+    });
+    input.addEventListener('blur', () => {
+      input.style.borderColor = 'var(--border, rgba(0,0,0,0.1))';
+      input.style.boxShadow   = 'none';
+    });
+
+    function safeRemove() {
+  try {
+    if (document.body.contains(overlay)) {
+      document.body.removeChild(overlay);
+    }
+  } catch(e) {}
+}
+
     const submit = () => {
       const val = input.value.trim();
-      document.body.removeChild(overlay);
-      resolve(val || placeholder);
+      safeRemove();
+      resolve(val || null);
     };
 
     input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') submit();
-      if (e.key === 'Escape') {
-        document.body.removeChild(overlay);
-        resolve(null);
-      }
+      if (e.key === 'Enter')  submit();
+      if (e.key === 'Escape') { safeRemove(); resolve(null); }
     });
 
-    overlay.querySelector('#cancelBtn').onclick = () => {
-      document.body.removeChild(overlay);
-      resolve(null);
-    };
-
-    overlay.querySelector('#okBtn').onclick = submit;
+    overlay.querySelector('#cancelBtn').onclick = () => { safeRemove(); resolve(null);  };
+    overlay.querySelector('#okBtn').onclick      = submit;
   });
 }
 

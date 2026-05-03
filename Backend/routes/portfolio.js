@@ -167,7 +167,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// POST /api/portfolio/:id/publish - Publish karo
+// POST /api/portfolio/:id/publish
 router.post('/:id/publish', async (req, res) => {
   try {
     const portfolio = await Portfolio.findOne({
@@ -185,10 +185,17 @@ router.post('/:id/publish', async (req, res) => {
       });
     }
 
+    // Agar shareId nahi hai to generate karo
+    if (!portfolio.shareId) {
+      const crypto = require('crypto');
+      portfolio.shareId = crypto.randomBytes(5).toString('hex');
+    }
+
     portfolio.isPublished = true;
     await portfolio.save();
 
-    const shareUrl = `${process.env.APP_BASE_URL}/p/${portfolio.shareId}`;
+    const baseUrl = 'https://folio-craft-6frg.vercel.app';
+const shareUrl = `${baseUrl}/p/${portfolio.shareId}`;
 
     res.json({
       success: true,
@@ -196,9 +203,35 @@ router.post('/:id/publish', async (req, res) => {
       shareUrl,
       shareId: portfolio.shareId
     });
+
   } catch (error) {
     res.status(500).json({ error: 'Something went wrong with publishing portfolio.' });
   }
 });
 
+// GET /api/portfolio/:id/share-link
+router.get('/:id/share-link', async (req, res) => {
+  try {
+    const portfolio = await Portfolio.findOne({
+      _id: req.params.id,
+      user: req.user._id
+    });
+
+    if (!portfolio) {
+      return res.status(404).json({ error: 'Portfolio not found.' });
+    }
+
+    if (!portfolio.isPublished) {
+      return res.status(400).json({ error: 'Publish the portfolio first.' });
+    }
+
+    const shareUrl = `${process.env.APP_BASE_URL}/p/${portfolio.shareId}`;
+    res.json({ success: true, shareUrl, shareId: portfolio.shareId });
+
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to get share link.' });
+  }
+});
+
 module.exports = router;
+

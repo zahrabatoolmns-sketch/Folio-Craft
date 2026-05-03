@@ -469,4 +469,340 @@ function generateAndDownloadQR(data, filename, btn, originalText) {
 
   img.src = qrUrl;
 }
+
+/* ── Publish & Share ── */
+const publishBtn = document.getElementById('publishBtn');
+
+publishBtn?.addEventListener('click', async function() {
+  if (!window.FolioAPI || !window.FolioAPI.isLoggedIn()) {
+    showPublishAlert('Please login to publish your portfolio.');
+    return;
+  }
+
+  const portfolioId = localStorage.getItem('currentPortfolioId');
+  if (!portfolioId) {
+    showPublishAlert('Please save your portfolio first.');
+    return;
+  }
+
+  publishBtn.disabled = true;
+  publishBtn.innerHTML = `
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+         style="display:block;flex-shrink:0;animation:publishSpin 0.8s linear infinite;">
+      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+    </svg>
+    Publishing...
+  `;
+
+  try {
+    const token = localStorage.getItem('fc_token');
+    const API   = 'https://folio-craft-two.vercel.app/api';
+
+    const res  = await fetch(`${API}/portfolio/${portfolioId}/publish`, {
+      method:  'POST',
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    const data = await res.json();
+
+    if (!data.success) throw new Error(data.error);
+
+   const shareUrl = data.shareUrl || `https://folio-craft-6frg.vercel.app/p/${portfolioId}`;
+navigator.clipboard.writeText(shareUrl).catch(() => {});
+showShareModal(shareUrl);
+
+  } catch(e) {
+    showPublishAlert('Failed to publish: ' + e.message);
+  }
+
+  publishBtn.disabled = false;
+  publishBtn.innerHTML = `
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="white" stroke-width="2" style="display:block;flex-shrink:0;">
+      <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/>
+      <polyline points="16,6 12,2 8,6"/>
+      <line x1="12" y1="2" x2="12" y2="15"/>
+    </svg>
+    Publish & Share
+  `;
+});
+
+// ── Alert helper ──
+function showPublishAlert(message) {
+  const existing = document.getElementById('publishAlert');
+  if (existing) existing.remove();
+
+  const el = document.createElement('div');
+  el.id = 'publishAlert';
+  el.innerHTML = `
+    <div style="
+      position:fixed; inset:0;
+      background:rgba(15,22,35,0.6);
+      backdrop-filter:blur(10px);
+      z-index:99999;
+      display:flex; align-items:center; justify-content:center;
+      padding:16px;
+    ">
+      <div style="
+        background:#ffffff;
+        border-radius:24px;
+        padding:40px 36px;
+        max-width:380px; width:100%;
+        text-align:center;
+        box-shadow:0 24px 48px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.08);
+        position:relative;
+        overflow:hidden;
+      ">
+        <!-- top accent bar -->
+        <div style="
+          position:absolute; top:0; left:0; right:0;
+          height:4px;
+          background:linear-gradient(90deg,#f97316,#ef4444);
+          border-radius:24px 24px 0 0;
+        "></div>
+
+        <!-- icon -->
+        <div style="
+          width:56px; height:56px;
+          background:linear-gradient(135deg,#fff7ed,#fee2e2);
+          border:1.5px solid #fed7aa;
+          border-radius:18px;
+          display:flex; align-items:center; justify-content:center;
+          margin:0 auto 18px;
+        ">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+
+        <h3 style="
+          font-family:'Bricolage Grotesque',sans-serif;
+          font-size:17px; font-weight:700;
+          color:#0f1623;
+          margin:0 0 8px;
+          letter-spacing:-0.02em;
+        ">Heads up</h3>
+
+        <p style="
+          font-size:14px;
+          color:#556070;
+          margin:0 0 28px;
+          line-height:1.65;
+          font-family:'Instrument Sans',sans-serif;
+        ">${message}</p>
+
+        <button onclick="document.getElementById('publishAlert').remove()" style="
+          width:100%; padding:13px;
+          border-radius:14px;
+          border:none;
+          background:linear-gradient(135deg,#f97316,#ef4444);
+          color:#fff;
+          font-size:14px; font-weight:600;
+          cursor:pointer;
+          font-family:'Instrument Sans',sans-serif;
+          box-shadow:0 4px 14px rgba(249,115,22,0.3);
+          transition:transform 0.2s, box-shadow 0.2s;
+        "
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(249,115,22,0.4)'"
+        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(249,115,22,0.3)'"
+        >Got it</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(el);
+}
+
+// ── Share Modal ──
+function showShareModal(url) {
+  const existing = document.getElementById('shareModal');
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'shareModal';
+  modal.innerHTML = `
+    <div style="
+      position:fixed; inset:0;
+      background:rgba(15,22,35,0.6);
+      backdrop-filter:blur(10px);
+      z-index:99999;
+      display:flex; align-items:center; justify-content:center;
+      padding:16px;
+    ">
+      <div style="
+        background:#ffffff;
+        border-radius:28px;
+        padding:44px 40px;
+        max-width:480px; width:100%;
+        text-align:center;
+        box-shadow:0 32px 64px rgba(0,0,0,0.14), 0 8px 24px rgba(0,0,0,0.08);
+        position:relative;
+        overflow:hidden;
+      ">
+
+        <!-- background decoration -->
+        <div style="
+          position:absolute;
+          top:-60px; right:-60px;
+          width:200px; height:200px;
+          background:radial-gradient(circle, rgba(91,77,232,0.08) 0%, transparent 70%);
+          border-radius:50%;
+          pointer-events:none;
+        "></div>
+        <div style="
+          position:absolute;
+          bottom:-40px; left:-40px;
+          width:160px; height:160px;
+          background:radial-gradient(circle, rgba(11,168,154,0.08) 0%, transparent 70%);
+          border-radius:50%;
+          pointer-events:none;
+        "></div>
+
+        <!-- top accent bar -->
+        <div style="
+          position:absolute; top:0; left:0; right:0;
+          height:4px;
+          background:linear-gradient(90deg,#5b4de8,#0ba89a);
+          border-radius:28px 28px 0 0;
+        "></div>
+
+        <!-- icon -->
+        <div style="
+          width:64px; height:64px;
+          background:linear-gradient(135deg,#eeedfe,#e0f5f3);
+          border:1.5px solid #cec8f6;
+          border-radius:20px;
+          display:flex; align-items:center; justify-content:center;
+          margin:0 auto 20px;
+          box-shadow:0 4px 16px rgba(91,77,232,0.12);
+        ">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#5b4de8"/>
+                <stop offset="100%" stop-color="#0ba89a"/>
+              </linearGradient>
+            </defs>
+            <path stroke="url(#iconGrad)" d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/>
+            <polyline stroke="url(#iconGrad)" points="16,6 12,2 8,6"/>
+            <line stroke="url(#iconGrad)" x1="12" y1="2" x2="12" y2="15"/>
+          </svg>
+        </div>
+
+        <!-- title -->
+        <h2 style="
+          font-family:'Bricolage Grotesque',sans-serif;
+          font-size:26px; font-weight:800;
+          color:#0f1623;
+          margin:0 0 8px;
+          letter-spacing:-0.03em;
+        ">Portfolio is Live!</h2>
+
+        <p style="
+          font-size:14px;
+          color:#7d8ba3;
+          margin:0 0 28px;
+          line-height:1.65;
+          font-family:'Instrument Sans',sans-serif;
+        ">Your portfolio is published. Share this link<br>with recruiters, clients, or anyone.</p>
+
+        <!-- url box -->
+        <div style="
+          background:#f8f9fc;
+          border:1.5px solid #e8eaf0;
+          border-radius:16px;
+          padding:14px 16px;
+          margin-bottom:20px;
+          display:flex; align-items:center; gap:10px;
+          text-align:left;
+        ">
+          <div style="
+            width:32px; height:32px;
+            background:linear-gradient(135deg,#eeedfe,#e0f5f3);
+            border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            flex-shrink:0;
+          ">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5b4de8" stroke-width="2">
+              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+            </svg>
+          </div>
+          <span style="
+            font-size:12.5px;
+            color:#556070;
+            flex:1;
+            overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+            font-family:monospace;
+          ">${url}</span>
+          <button id="copyUrlBtn" onclick="
+            navigator.clipboard.writeText('${url}');
+            this.textContent='Copied!';
+            this.style.background='linear-gradient(135deg,#5b4de8,#0ba89a)';
+            this.style.color='white';
+            this.style.borderColor='transparent';
+            setTimeout(()=>{
+              this.textContent='Copy';
+              this.style.background='white';
+              this.style.color='#5b4de8';
+              this.style.borderColor='#cec8f6';
+            },2000)
+          " style="
+            padding:7px 16px;
+            border-radius:10px;
+            border:1.5px solid #cec8f6;
+            background:white;
+            color:#5b4de8;
+            font-size:12px; font-weight:600;
+            cursor:pointer; white-space:nowrap;
+            font-family:'Instrument Sans',sans-serif;
+            transition:all 0.2s;
+          ">Copy</button>
+        </div>
+
+        <!-- actions -->
+        <div style="display:flex; gap:10px;">
+          <a href="${url}" target="_blank" style="
+            flex:1; padding:14px;
+            border-radius:16px;
+            background:linear-gradient(135deg,#5b4de8,#0ba89a);
+            color:#fff; text-decoration:none;
+            font-size:14px; font-weight:600;
+            font-family:'Instrument Sans',sans-serif;
+            display:inline-flex; align-items:center; justify-content:center; gap:7px;
+            box-shadow:0 6px 20px rgba(91,77,232,0.28);
+            transition:all 0.2s;
+          "
+          onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(91,77,232,0.36)'"
+          onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 6px 20px rgba(91,77,232,0.28)'"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+              <polyline points="15,3 21,3 21,9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            View Live
+          </a>
+
+          <button onclick="document.getElementById('shareModal').remove()" style="
+            flex:1; padding:14px;
+            border-radius:16px;
+            border:1.5px solid #e8eaf0;
+            background:#f8f9fc;
+            color:#556070;
+            font-size:14px; font-weight:500;
+            cursor:pointer;
+            font-family:'Instrument Sans',sans-serif;
+            transition:all 0.2s;
+          "
+          onmouseover="this.style.background='#f0f2f8';this.style.color='#0f1623';this.style.borderColor='#d0d4e0'"
+          onmouseout="this.style.background='#f8f9fc';this.style.color='#556070';this.style.borderColor='#e8eaf0'"
+          >Close</button>
+        </div>
+
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
 })();

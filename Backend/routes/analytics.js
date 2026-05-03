@@ -2,6 +2,7 @@ const express   = require('express');
 const router    = express.Router();
 const Portfolio = require('../models/Portfolio');
 const { protect } = require('../middleware/auth');
+ const logger = require('../config/logger');
 
 router.use(protect);
 
@@ -94,7 +95,8 @@ router.get('/overview', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Analytics Error:', error);
+    const logger = require('../config/logger');
+logger.error('Analytics fetch failed', error.message);
     res.status(500).json({ error: 'Something wrong with fetching analytics.' });
   }
 });

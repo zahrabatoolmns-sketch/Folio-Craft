@@ -833,6 +833,73 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
   max-width: 280px;
 }
 
+/* ── ANALYTICS ── */
+.an-charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 14px;
+}
+
+.an-chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.an-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.an-chart-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.an-chart-sub {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-top: 3px;
+}
+
+.an-chart-wrap {
+  position: relative;
+  height: 200px;
+}
+
+.an-device-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.an-device-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.an-device-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.an-device-name { flex: 1; color: var(--text-2); }
+.an-device-pct  { font-weight: 600; color: var(--text); }
+
+@media (max-width: 768px) {
+  .an-charts-grid { grid-template-columns: 1fr; }
+}
+
 /* ══════════════════════════════
    RESPONSIVE
 ══════════════════════════════ */
