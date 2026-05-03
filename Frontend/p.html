@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loading Portfolio...</title>
+  <title>Portfolio</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { 
-      background:#0f1623; color:#fff; 
-      font-family:'Instrument Sans',system-ui,sans-serif;
+      background:#0f1623;
       display:flex; align-items:center; justify-content:center; 
-      min-height:100vh; 
+      min-height:100vh;
+      font-family:'Instrument Sans',system-ui,sans-serif;
     }
-    .loader { text-align:center; }
+    .loader { text-align:center; color:rgba(255,255,255,0.5); font-size:14px; }
     .spinner { 
       width:44px; height:44px; 
       border:3px solid rgba(123,110,246,0.2);
@@ -22,8 +22,16 @@
       margin:0 auto 16px; 
     }
     @keyframes spin { to { transform:rotate(360deg); } }
-    p { font-size:14px; color:rgba(255,255,255,0.5); }
-    .error { color:#ef4444; font-size:14px; max-width:300px; line-height:1.6; }
+    .error { color:#ef4444; max-width:300px; line-height:1.7; text-align:center; }
+
+    #portfolioFrame {
+      display:none;
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:none;
+    }
   </style>
 </head>
 <body>
@@ -32,40 +40,76 @@
     <p>Loading portfolio...</p>
   </div>
 
-  <script>
-    (async function() {
-      // URL se shareId nikalo
-      const path    = window.location.pathname;
-      const shareId = path.replace('/p/', '').replace('/', '');
+  <iframe id="portfolioFrame" title="Portfolio"></iframe>
 
-      if (!shareId || shareId === 'p.html') {
-        document.getElementById('loader').innerHTML = 
-          '<p class="error">Invalid portfolio link.</p>';
+  <script>
+    (async function () {
+
+      /* ── 1. shareId URL se nikalo ── */
+      const shareId = window.location.pathname.split('/p/')[1]?.replace(/\/$/, '');
+
+      if (!shareId) {
+        showError('Invalid portfolio link.');
         return;
       }
 
+      /* ── 2. Backend se portfolio data fetch karo ── */
+      let portfolio;
       try {
         const res  = await fetch('https://folio-craft-two.vercel.app/api/public/p/' + shareId);
         const data = await res.json();
 
         if (!data.success || !data.portfolio) {
-          document.getElementById('loader').innerHTML = 
-            '<p class="error">Portfolio not found or not published yet.</p>';
+          showError('Portfolio not found or not published yet.');
           return;
         }
-
-        // Data localStorage mein save karo
-        localStorage.setItem('portfolioData',   JSON.stringify(data.portfolio));
-        localStorage.setItem('selectedTemplate', data.portfolio.selectedTemplate || 'modern-dark');
-        localStorage.setItem('isPublicView',     'true');
-
-        // Preview pe redirect karo — root se
-        window.location.href = '/preview.html';
-
-      } catch(e) {
-        document.getElementById('loader').innerHTML = 
-          '<p class="error">Failed to load. Please check your connection.</p>';
+        portfolio = data.portfolio;
+      } catch (e) {
+        showError('Network error. Please check your connection.');
+        return;
       }
+
+      /* ── 3. Template path banao ── */
+      const template = portfolio.selectedTemplate || 'modern-dark';
+      const templatePath = '/templates/' + template + '/index.html';
+
+      /* ── 4. iframe load karo ── */
+      const frame = document.getElementById('portfolioFrame');
+      frame.src   = templatePath;
+
+      frame.addEventListener('load', function () {
+        /* Exactly preview.js wala tarika — localStorage sync */
+        try {
+          frame.contentWindow.localStorage.setItem(
+            'portfolioData',
+            JSON.stringify(portfolio)
+          );
+        } catch (e) {
+          console.warn('localStorage sync failed:', e.message);
+        }
+
+        /* postMessage backup bhi — preview.js ki tarah */
+        try {
+          frame.contentWindow.postMessage(
+            { type: 'FOLIOCRAFT_DATA', payload: portfolio },
+            '*'
+          );
+        } catch (e) {}
+
+        /* Loader hide karo, iframe dikhao */
+        document.getElementById('loader').style.display = 'none';
+        frame.style.display = 'block';
+      });
+
+      frame.addEventListener('error', function () {
+        showError('Template not found: ' + template);
+      });
+
+      function showError(msg) {
+        document.getElementById('loader').innerHTML =
+          '<p class="error">' + msg + '</p>';
+      }
+
     })();
   </script>
 </body>
