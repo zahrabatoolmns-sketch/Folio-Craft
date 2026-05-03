@@ -1582,27 +1582,28 @@ body.dark .feat-label { fill: #9b8ff8; }
   }
 
   /* Stat row */
+  @media (max-width: 600px) {
   .stat-row {
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    border-radius: 16px;
-    gap: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
   }
 
   .stat-row li {
-    padding: 12px 18px;
-    min-width: 33%;
+    flex: 1;
+    min-width: auto;
+    padding: 10px 6px;
+    text-align: center;
   }
 
   .stat-row li strong {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .stat-row li span {
-    font-size: 9px;
+    font-size: 8px;
   }
-
+}
 
   /* Why section */
   .why-section {
