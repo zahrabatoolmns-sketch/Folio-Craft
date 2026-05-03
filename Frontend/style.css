@@ -1583,6 +1583,7 @@ body.dark .feat-label { fill: #9b8ff8; }
 
   /* Stat row */
   .stat-row {
+    width: 100%;
     flex-wrap: wrap;
     justify-content: center;
     border-radius: 16px;
@@ -1600,10 +1601,6 @@ body.dark .feat-label { fill: #9b8ff8; }
 
   .stat-row li span {
     font-size: 9px;
-  }
-
-  .stat-sep {
-    display: none;
   }
 
   /* Why section */
