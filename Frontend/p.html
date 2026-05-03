@@ -3,30 +3,44 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio</title>
+  <title>Loading Portfolio...</title>
   <style>
-    body { margin:0; background:#0f1623; color:#fff; 
-           font-family:'Instrument Sans',sans-serif;
-           display:flex; align-items:center; justify-content:center; 
-           min-height:100vh; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { 
+      background:#0f1623; color:#fff; 
+      font-family:'Instrument Sans',system-ui,sans-serif;
+      display:flex; align-items:center; justify-content:center; 
+      min-height:100vh; 
+    }
     .loader { text-align:center; }
-    .spinner { width:40px; height:40px; border:3px solid rgba(255,255,255,0.1);
-               border-top-color:#7b6ef6; border-radius:50%;
-               animation:spin 0.8s linear infinite; margin:0 auto 16px; }
+    .spinner { 
+      width:44px; height:44px; 
+      border:3px solid rgba(123,110,246,0.2);
+      border-top-color:#7b6ef6; 
+      border-radius:50%;
+      animation:spin 0.8s linear infinite; 
+      margin:0 auto 16px; 
+    }
     @keyframes spin { to { transform:rotate(360deg); } }
+    p { font-size:14px; color:rgba(255,255,255,0.5); }
+    .error { color:#ef4444; font-size:14px; max-width:300px; line-height:1.6; }
   </style>
 </head>
 <body>
-  <div class="loader">
+  <div class="loader" id="loader">
     <div class="spinner"></div>
     <p>Loading portfolio...</p>
   </div>
 
   <script>
     (async function() {
-      const shareId = window.location.pathname.split('/p/')[1];
-      if (!shareId) {
-        document.body.innerHTML = '<p>Invalid link.</p>';
+      // URL se shareId nikalo
+      const path    = window.location.pathname;
+      const shareId = path.replace('/p/', '').replace('/', '');
+
+      if (!shareId || shareId === 'p.html') {
+        document.getElementById('loader').innerHTML = 
+          '<p class="error">Invalid portfolio link.</p>';
         return;
       }
 
@@ -34,70 +48,23 @@
         const res  = await fetch('https://folio-craft-two.vercel.app/api/public/p/' + shareId);
         const data = await res.json();
 
-        if (!data.portfolio) {
-          document.body.innerHTML = '<p>Portfolio not found.</p>';
+        if (!data.success || !data.portfolio) {
+          document.getElementById('loader').innerHTML = 
+            '<p class="error">Portfolio not found or not published yet.</p>';
           return;
         }
 
-        localStorage.setItem('portfolioData', JSON.stringify(data.portfolio));
+        // Data localStorage mein save karo
+        localStorage.setItem('portfolioData',   JSON.stringify(data.portfolio));
         localStorage.setItem('selectedTemplate', data.portfolio.selectedTemplate || 'modern-dark');
+        localStorage.setItem('isPublicView',     'true');
 
-        window.location.href = 'preview.html';
+        // Preview pe redirect karo — root se
+        window.location.href = '/preview.html';
 
       } catch(e) {
-        document.body.innerHTML = '<p>Failed to load portfolio.</p>';
-      }
-    })();
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio</title>
-  <style>
-    body { margin:0; background:#0f1623; color:#fff; 
-           font-family:'Instrument Sans',sans-serif;
-           display:flex; align-items:center; justify-content:center; 
-           min-height:100vh; }
-    .loader { text-align:center; }
-    .spinner { width:40px; height:40px; border:3px solid rgba(255,255,255,0.1);
-               border-top-color:#7b6ef6; border-radius:50%;
-               animation:spin 0.8s linear infinite; margin:0 auto 16px; }
-    @keyframes spin { to { transform:rotate(360deg); } }
-  </style>
-</head>
-<body>
-  <div class="loader">
-    <div class="spinner"></div>
-    <p>Loading portfolio...</p>
-  </div>
-
-  <script>
-    (async function() {
-      const shareId = window.location.pathname.split('/p/')[1];
-      if (!shareId) {
-        document.body.innerHTML = '<p>Invalid link.</p>';
-        return;
-      }
-
-      try {
-        const res  = await fetch('https://folio-craft-two.vercel.app/api/public/p/' + shareId);
-        const data = await res.json();
-
-        if (!data.portfolio) {
-          document.body.innerHTML = '<p>Portfolio not found.</p>';
-          return;
-        }
-
-        localStorage.setItem('portfolioData', JSON.stringify(data.portfolio));
-        localStorage.setItem('selectedTemplate', data.portfolio.selectedTemplate || 'modern-dark');
-
-        window.location.href = 'preview.html';
-
-      } catch(e) {
-        document.body.innerHTML = '<p>Failed to load portfolio.</p>';
+        document.getElementById('loader').innerHTML = 
+          '<p class="error">Failed to load. Please check your connection.</p>';
       }
     })();
   </script>
