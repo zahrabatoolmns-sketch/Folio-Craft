@@ -31,13 +31,11 @@
 
   /* ══════════════════════════════════════════
      RENDER — called on load AND on postMessage
-     No page reload → zero blink
   ══════════════════════════════════════════ */
   function render(d) {
     const name  = d.fullname || d.fullName || d.name || "Your Name";
     const title = d.title || d.profession || "Professional Title";
 
-    /* Basic fields */
     txt("name",           name);
     txt("title",          title);
     txt("bio",            d.bio            || "");
@@ -47,14 +45,12 @@
     txt("footerName",     name);
     document.title = name + " | Portfolio";
 
-    /* Location + Email in hero */
     const locEl = document.getElementById("location");
     if (locEl) locEl.textContent = d.location ? "📍 " + d.location : "";
 
     const emailHeroEl = document.getElementById("email");
     if (emailHeroEl) emailHeroEl.textContent = d.email ? "✉ " + d.email : "";
 
-    /* Profile image */
     if (d.profile_base64) {
       const img = document.getElementById("profileImage");
       const ph  = document.getElementById("avatarPlaceholder");
@@ -62,24 +58,20 @@
       if (ph)  ph.style.display = "none";
     }
 
-    /* Social links */
     setSocial("linkedinLink",  d.linkedin);
     setSocial("githubLink",    d.github_social);
     setSocial("instagramLink", d.instagram);
 
-    /* Contact section */
     txt("contactEmail", d.email || "");
     attr("emailCard",    "href", d.email        ? "mailto:" + d.email : "#");
     attr("linkedinCard", "href", d.linkedin      || "#");
     attr("githubCard",   "href", d.github_social || "#");
 
-    /* Arrays */
     const projects   = Array.isArray(d.projects)   ? d.projects   : [];
     const skills     = Array.isArray(d.skills)      ? d.skills     : [];
     const experience = Array.isArray(d.experience)  ? d.experience : [];
     const education  = Array.isArray(d.education)   ? d.education  : [];
 
-    /* Stats */
     txt("projectCount", projects.length   + "+");
     txt("skillCount",   skills.length     + "+");
     txt("expCount",     experience.length + "+");
@@ -159,7 +151,6 @@
         : `<p style="color:rgba(255,255,255,0.4);font-size:14px">No education added.</p>`;
     }
 
-    /* Re-attach observers after DOM rebuild */
     attachReveal();
   }
 
@@ -183,7 +174,6 @@
       io.observe(el);
     });
 
-    /* Animate bars already visible on first paint */
     setTimeout(() => {
       document.querySelectorAll(".skill-bar-fill").forEach(bar => {
         if (bar.getBoundingClientRect().top < window.innerHeight)
@@ -229,6 +219,7 @@
     window.addEventListener("resize", resize);
     requestAnimationFrame(draw);
   }
+
   /* ══════════════════════════════════════════
      NAV SCROLL EFFECT
   ══════════════════════════════════════════ */
@@ -241,7 +232,7 @@
   }
 
   /* ══════════════════════════════════════════
-     BOOT — load data, render, init features
+     BOOT
   ══════════════════════════════════════════ */
   let data = {};
   try {
@@ -252,28 +243,18 @@
 
   render(data);
   initCanvas();
-  initCursor();
   initNav();
+  // NOTE: initCursor() removed — custom cursor is disabled in CSS,
+  // system cursor is used instead. No function needed.
 
   /* ══════════════════════════════════════════
      postMessage RECEIVER — live preview sync
-     ────────────────────────────────────────
-     preview.js sends FOLIOCRAFT_DATA after the
-     iframe finishes loading.
-
-     OLD (broken): window.location.reload()
-       → caused the white-flash blink
-
-     NEW (fixed): render(incoming) directly
-       → zero blink, instant smooth update
   ══════════════════════════════════════════ */
   window.addEventListener("message", function (event) {
     if (!event.data || event.data.type !== "FOLIOCRAFT_DATA") return;
     try {
       const incoming = event.data.payload;
-      /* Persist so baked-in ZIP read also works */
       localStorage.setItem("portfolioData", JSON.stringify(incoming));
-      /* Update DOM in-place — NO reload, NO blink */
       render(incoming);
     } catch (e) {
       console.warn("[FolioCraft] postMessage render error:", e.message);
