@@ -1582,26 +1582,46 @@ body.dark .feat-label { fill: #9b8ff8; }
   }
 
   /* Stat row */
-  @media (max-width: 600px) {
+  /* ── Mobile: 3 items in one row + divider lines ── */
+@media (max-width: 600px) {
   .stat-row {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
+    align-items: center;
+  }
+
+  /* hide old separators */
+  .stat-row .stat-sep {
+    display: none;
   }
 
   .stat-row li {
     flex: 1;
-    min-width: auto;
-    padding: 10px 6px;
     text-align: center;
+    position: relative;
+  }
+
+  /* divider line (only middle items) */
+  .stat-row li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 22px;
+    background: rgba(0, 0, 0, 0.15);
   }
 
   .stat-row li strong {
     font-size: 16px;
+    display: block;
   }
 
   .stat-row li span {
-    font-size: 8px;
+    font-size: 9px;
+    display: block;
   }
 }
 
