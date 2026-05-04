@@ -1,14 +1,7 @@
-/* =============================================
-   MODERN DARK — script.js
-   Single IIFE · render() pattern · zero blink
-   postMessage → direct DOM update, NO reload()
-============================================= */
 (function () {
   "use strict";
 
-  /* ══════════════════════════════════════════
-     HELPERS
-  ══════════════════════════════════════════ */
+  /* HELPERS */
   function txt(id, val) {
     const el = document.getElementById(id);
     if (el && val != null) el.textContent = val;
@@ -29,9 +22,7 @@
     else el.style.display = "none";
   }
 
-  /* ══════════════════════════════════════════
-     RENDER — called on load AND on postMessage
-  ══════════════════════════════════════════ */
+  /* RENDER — called on load AND on postMessage */
   function render(d) {
     const name  = d.fullname || d.fullName || d.name || "Your Name";
     const title = d.title || d.profession || "Professional Title";
@@ -77,7 +68,7 @@
     txt("expCount",     experience.length + "+");
     txt("eduCount",     education.length);
 
-    /* ── Skills ── */
+    /* Skills */
     const skillsGrid = document.getElementById("skillsGrid");
     if (skillsGrid) {
       skillsGrid.innerHTML = skills.length
@@ -96,7 +87,7 @@
         : `<p style="color:rgba(255,255,255,0.4);font-size:14px">No skills added yet.</p>`;
     }
 
-    /* ── Projects ── */
+    /* Projects */
     const projectsGrid = document.getElementById("projectsGrid");
     if (projectsGrid) {
       projectsGrid.innerHTML = projects.length
@@ -123,7 +114,7 @@
         : `<p style="color:rgba(255,255,255,0.4);font-size:14px">No projects added yet.</p>`;
     }
 
-    /* ── Experience ── */
+    /* Experience  */
     const expTl = document.getElementById("experienceTimeline");
     if (expTl) {
       expTl.innerHTML = experience.length
@@ -154,9 +145,7 @@
     attachReveal();
   }
 
-  /* ══════════════════════════════════════════
-     SCROLL REVEAL + SKILL BAR ANIMATION
-  ══════════════════════════════════════════ */
+  /* SCROLL REVEAL + SKILL BAR ANIMATION */
   function attachReveal() {
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -182,9 +171,7 @@
     }, 400);
   }
 
-  /* ══════════════════════════════════════════
-     BACKGROUND CANVAS — animated star field
-  ══════════════════════════════════════════ */
+  /*  CANVAS — animated star field */
   function initCanvas() {
     const canvas = document.getElementById("bgCanvas");
     if (!canvas) return;
@@ -220,9 +207,7 @@
     requestAnimationFrame(draw);
   }
 
-  /* ══════════════════════════════════════════
-     NAV SCROLL EFFECT
-  ══════════════════════════════════════════ */
+  /* NAV SCROLL EFFECT */
   function initNav() {
     const nav = document.getElementById("nav");
     if (!nav) return;
@@ -230,10 +215,7 @@
       nav.classList.toggle("scrolled", window.scrollY > 60);
     });
   }
-
-  /* ══════════════════════════════════════════
-     BOOT
-  ══════════════════════════════════════════ */
+/* BOOT */
   let data = {};
   try {
     data = JSON.parse(localStorage.getItem("portfolioData") || "{}");
@@ -244,12 +226,7 @@
   render(data);
   initCanvas();
   initNav();
-  // NOTE: initCursor() removed — custom cursor is disabled in CSS,
-  // system cursor is used instead. No function needed.
-
-  /* ══════════════════════════════════════════
-     postMessage RECEIVER — live preview sync
-  ══════════════════════════════════════════ */
+ 
   window.addEventListener("message", function (event) {
     if (!event.data || event.data.type !== "FOLIOCRAFT_DATA") return;
     try {

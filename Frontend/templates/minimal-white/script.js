@@ -1,12 +1,9 @@
-/* =============================================
-   MINIMAL WHITE — script.js
-   Data injection + Swiss editorial interactions
-============================================= */
+
 
 (function () {
   "use strict";
 
-  /* ---- LOAD DATA ---- */
+  /*  LOAD DATA  */
   let data = {};
   try {
     data = JSON.parse(localStorage.getItem("portfolioData") || "{}");
@@ -22,7 +19,7 @@
     );
   }
 
-  /* ---- BASIC INFO ---- */
+  /*  BASIC INFO  */
   const fullName = data.fullname || data.fullName || data.name || "Your Name";
   const role = data.title || data.profession || "Professional Title";
   const initials = fullName.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
@@ -41,7 +38,7 @@
   document.title = fullName + " | Portfolio";
   document.getElementById("pageTitle") && (document.getElementById("pageTitle").textContent = fullName + " | Portfolio");
 
-  /* ---- PROFILE IMAGE ---- */
+  /*  PROFILE IMAGE  */
   if (data.profile_base64) {
     const img = document.getElementById("profileImage");
     const ph = document.getElementById("imgPlaceholder");
@@ -49,7 +46,7 @@
     if (ph) ph.style.display = "none";
   }
 
-  /* ---- SOCIAL LINKS ---- */
+  /*  SOCIAL LINKS  */
   function setLink(id, url) {
     const el = document.getElementById(id);
     if (el) { el.href = url || "#"; if (!url) el.style.display = "none"; }
@@ -61,24 +58,24 @@
   setLink("fGithub", data.github_social);
   setLink("fInstagram", data.instagram);
 
-  /* ---- CONTACT ---- */
+  /*  CONTACT  */
   txt("cEmail", data.email || "");
   setLink("emailCard", data.email ? "mailto:" + data.email : "");
   setLink("linkedinCard", data.linkedin);
   setLink("githubCard", data.github_social);
 
-  /* ---- ARRAYS ---- */
+  /*  ARRAYS  */
   const projects = Array.isArray(data.projects) ? data.projects : [];
   const skills = Array.isArray(data.skills) ? data.skills : [];
   const experience = Array.isArray(data.experience) ? data.experience : [];
   const education = Array.isArray(data.education) ? data.education : [];
 
-  /* ---- STATS ---- */
+  /*  STATS */
   txt("hProjectCount", projects.length);
   txt("hSkillCount", skills.length);
   txt("hExpCount", experience.length);
 
-  /* ---- MARQUEE ---- */
+  /*  MARQUEE  */
   const marqueeTrack = document.getElementById("marqueeTrack");
   if (marqueeTrack) {
     const items = skills.length
@@ -91,7 +88,7 @@
     ).join("");
   }
 
-  /* ---- SKILLS ---- */
+  /*  SKILLS  */
   const skillsTable = document.getElementById("skillsTable");
   if (skillsTable && skills.length) {
     skillsTable.innerHTML = skills.map(s => `
@@ -107,7 +104,7 @@
     skillsTable.innerHTML = `<p style="font-size:14px;color:#9a9890;">No skills listed yet.</p>`;
   }
 
-  /* ---- PROJECTS ---- */
+  /*  PROJECTS */
   const projectsList = document.getElementById("projectsList");
   if (projectsList && projects.length) {
     projectsList.innerHTML = projects.map((p, i) => `
@@ -137,7 +134,7 @@
     projectsList.innerHTML = `<p style="font-size:14px;color:#9a9890;padding:24px 0;">No projects added yet.</p>`;
   }
 
-  /* ---- EXPERIENCE ---- */
+  /* EXPERIENCE */
   const expList = document.getElementById("expList");
   if (expList && experience.length) {
     expList.innerHTML = experience.map(e => `
@@ -151,7 +148,7 @@
     expList.innerHTML = `<p style="font-size:13px;color:#9a9890;padding:16px 0;">No experience added.</p>`;
   }
 
-  /* ---- EDUCATION ---- */
+  /* EDUCATION */
   const eduList = document.getElementById("eduList");
   if (eduList && education.length) {
     eduList.innerHTML = education.map(e => `
@@ -165,12 +162,12 @@
     eduList.innerHTML = `<p style="font-size:13px;color:#9a9890;padding:16px 0;">No education added.</p>`;
   }
 
-  /* ---- NAV SCROLL ---- */
+  /* NAV SCROLL */
   window.addEventListener("scroll", () => {
     document.getElementById("nav")?.classList.toggle("scrolled", window.scrollY > 60);
   });
 
-  /* ---- SCROLL REVEAL + SKILL BARS ---- */
+  /* SCROLL REVEAL + SKILL BARS */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -195,7 +192,7 @@
     });
   }, 100);
 
-  /* ---- STAT COUNTER ANIMATION ---- */
+  /* STAT COUNTER ANIMATION */
   function animateCount(el, target) {
     let current = 0;
     const step = Math.max(1, Math.floor(target / 30));
