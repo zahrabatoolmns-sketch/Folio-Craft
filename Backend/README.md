@@ -1,6 +1,6 @@
 # FolioCraft Backend — Complete Setup Guide
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 foliocraft-backend/
@@ -27,7 +27,7 @@ foliocraft-backend/
 
 ---
 
-## 🚀 STEP BY STEP SETUP
+##  STEP BY STEP SETUP
 
 ### Step 1: MongoDB Atlas Setup (Free Database)
 
@@ -47,7 +47,7 @@ foliocraft-backend/
 #### Network Access:
 - Left panel → **Network Access** → **Add IP Address**
 - **"Allow Access From Anywhere"** (0.0.0.0/0) → Confirm
-  > ⚠️ Production mein specific IPs allow karo
+  > Production mein specific IPs allow karo
 
 #### Connection String lo:
 - **Database** → **Connect** → **Connect your application**
@@ -128,7 +128,7 @@ Wizard ke **Finish button** ke paas jahan `localStorage.setItem('portfolioData',
 if (window.FolioAPI && window.FolioAPI.isLoggedIn()) {
   try {
     await window.FolioAPI.savePortfolio(portfolioData);
-    toast('Portfolio cloud mein save ho gaya! ☁️', 'success');
+    toast('Portfolio cloud mein save ho gaya! ', 'success');
   } catch(err) {
     console.warn('Cloud save failed:', err.message);
     // Local save hoga, koi baat nahi
@@ -193,7 +193,7 @@ if (window.FolioAPI && window.FolioAPI.isLoggedIn()) {
 
 ---
 
-## 🔒 Security Notes (Production ke liye)
+## Security Notes (Production ke liye)
 
 1. `JWT_SECRET` minimum 64 random characters ka hona chahiye
 2. MongoDB Network Access mein specific IPs allow karo
@@ -202,12 +202,10 @@ if (window.FolioAPI && window.FolioAPI.isLoggedIn()) {
 
 ---
 
-## 📊 Database Collections
+## Database Collections
 
 MongoDB mein yeh collections ban jaenge automatically:
 - `users` - User accounts
 - `portfolios` - Portfolio data + analytics
 
 ---
-
-Good luck! Koi bhi problem ho to API documentation check karo ya console errors dekho. 🚀
