@@ -1,14 +1,7 @@
-/* ═══════════════════════════════════════════════════════
-   CYBER NEON PORTFOLIO — script.js
-   Custom cursor · Perspective grid canvas · Glitch text
-   Full localStorage data injection
-═══════════════════════════════════════════════════════ */
+
 
 (function () {
-
-  /* ════════════════════════════════════
-     CUSTOM CURSOR
-  ════════════════════════════════════ */
+/* Custom Cursor */
   const cursorRing = document.getElementById("cursorRing");
   const cursorDot  = document.getElementById("cursorDot");
 
@@ -46,9 +39,7 @@
     });
   });
 
-  /* ════════════════════════════════════
-     PERSPECTIVE GRID CANVAS
-  ════════════════════════════════════ */
+  /* PERSPECTIVE GRID CANVAS */
   const canvas = document.getElementById("gridCanvas");
   const ctx    = canvas ? canvas.getContext("2d") : null;
 
@@ -69,7 +60,7 @@
     const horizon = H * 0.62;
     const vp = { x: W / 2, y: horizon };  // vanishing point
 
-    /* ── FLOOR GRID ── */
+    /*  FLOOR GRID */
     const cols = 24;
     const rows = 28;
 
@@ -107,7 +98,7 @@
       ctx.stroke();
     }
 
-    /* ── HORIZON GLOW LINE ── */
+    /*  HORIZON GLOW LINE  */
     const grad = ctx.createLinearGradient(0, horizon, W, horizon);
     grad.addColorStop(0,   "transparent");
     grad.addColorStop(0.3, "rgba(0,220,255,0.35)");
@@ -124,7 +115,7 @@
     ctx.stroke();
     ctx.shadowBlur = 0;
 
-    /* ── PINK ACCENT GRID (thinner, offset) ── */
+    /*  PINK ACCENT GRID (thinner, offset)  */
     ctx.strokeStyle = "rgba(255,45,120,0.05)";
     ctx.lineWidth   = 0.3;
     const pinkCols  = 10;
@@ -137,7 +128,7 @@
       ctx.stroke();
     }
 
-    /* ── FLOATING PARTICLES ── */
+    /*  FLOATING PARTICLES  */
     for (const p of particles) {
       p.y -= p.speed;
       if (p.y < 0) { p.y = canvas.height; p.x = Math.random() * canvas.width; }
@@ -178,9 +169,7 @@
   animate();
   window.addEventListener("resize", () => { resizeCanvas(); initParticles(); });
 
-  /* ════════════════════════════════════
-     DATA INJECTION
-  ════════════════════════════════════ */
+  /* DATA INJECTION */
   let data = {};
   try {
     const raw = localStorage.getItem("portfolioData");
@@ -248,16 +237,16 @@
   const mcRoles = document.getElementById("mcRoles");
   if (mcRoles) mcRoles.querySelector(".mc-val").textContent = padNum(exp.length);
 
-  /* ── ABOUT ── */
+  /*  ABOUT */
   set("aboutDesc",          data.description);
   set("aboutSkillsSummary", data.skills_summary);
 
-  /* ── CONTACT INFO ── */
+  /* CONTACT INFO  */
   set("cInfoEmail",    data.email);
   set("cInfoPhone",    data.phone);
   set("cInfoLocation", data.location);
 
-  /* ── SKILLS ── */
+  /*  SKILLS  */
   const skillsGrid = document.getElementById("skillsGrid");
   if (skillsGrid) {
     if (!skills.length) {
@@ -278,7 +267,7 @@
     }
   }
 
-  /* ── PROJECTS ── */
+  /* PROJECTS */
   const projectsGrid = document.getElementById("projectsGrid");
   if (projectsGrid) {
     if (!projects.length) {
@@ -305,7 +294,7 @@
     }
   }
 
-  /* ── EXPERIENCE ── */
+  /* EXPERIENCE */
   const expList = document.getElementById("expList");
   if (expList) {
     if (!exp.length) {
@@ -324,7 +313,7 @@
     }
   }
 
-  /* ── EDUCATION ── */
+  /* EDUCATION */
   const eduGrid = document.getElementById("eduGrid");
   if (eduGrid) {
     if (!edu.length) {
@@ -340,7 +329,7 @@
     }
   }
 
-  /* ── SOCIAL ── */
+  /* SOCIAL */
   const socialRow = document.getElementById("socialRow");
   if (socialRow) {
     const links = [];
@@ -361,7 +350,7 @@
     }
   }
 
-  /* ── CONTACT FORM ── */
+  /*  CONTACT FORM */
   window.submitCyber = function (e) {
     e.preventDefault();
     const name  = document.getElementById("cName")?.value?.trim();
@@ -379,7 +368,7 @@
     }
   };
 
-  /* ── SKILL BAR SCROLL ANIMATION ── */
+  /*  SKILL BAR SCROLL ANIMATION  */
   const skillObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -394,7 +383,7 @@
   const skillSection = document.getElementById("skills");
   if (skillSection) skillObs.observe(skillSection);
 
-  /* ── ENTRANCE ANIMATION ── */
+  /*  ENTRANCE ANIMATION  */
   const entryObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -417,7 +406,7 @@
 
   document.querySelectorAll(".cn-section").forEach(s => entryObs.observe(s));
 
-  /* ── HERO COUNTER ANIMATE ── */
+  /*  HERO COUNTER ANIMATE  */
   function countUp(el, target, duration = 1200) {
     const start = performance.now();
     function update(now) {
