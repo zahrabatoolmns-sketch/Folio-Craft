@@ -1,12 +1,7 @@
-/* ═══════════════════════════════════════════════════════════
-   CREATIVE GRADIENT PORTFOLIO — script.js
-   Reads localStorage "portfolioData" and populates all sections
-═══════════════════════════════════════════════════════════ */
-
 (function () {
   "use strict";
 
-  /* ── 1. LOAD DATA ──────────────────────────────────────── */
+  /* 1. LOAD DATA  */
   let data = {};
   try {
     const raw = localStorage.getItem("portfolioData");
@@ -15,7 +10,7 @@
     console.warn("[Portfolio] Could not parse portfolioData:", e);
   }
 
-  /* ── helpers ── */
+  /* helpers  */
   const $ = (id) => document.getElementById(id);
   const esc = (str) =>
     String(str ?? "").replace(/[&<>"']/g, (s) => ({
@@ -23,13 +18,13 @@
       '"': "&quot;", "'": "&#039;",
     }[s]));
 
-  /* ── 2. NAVBAR SCROLL ──────────────────────────────────── */
+  /* 2. NAVBAR SCROLL */
   const navbar = document.getElementById("navbar");
   window.addEventListener("scroll", () => {
     navbar?.classList.toggle("scrolled", window.scrollY > 50);
   });
 
-  /* ── 3. MOBILE MENU ────────────────────────────────────── */
+  /*3. MOBILE MENU */
   const menuToggle = $("menuToggle");
   const mobileMenu = $("mobileMenu");
   menuToggle?.addEventListener("click", () => {
@@ -39,7 +34,7 @@
     link.addEventListener("click", () => mobileMenu?.classList.remove("open"));
   });
 
-  /* ── 4. CUSTOM CURSOR ──────────────────────────────────── */
+  /*  4. CUSTOM CURSOR  */
   const dot  = $("cursorDot");
   const ring = $("cursorRing");
   let mx = 0, my = 0, rx = 0, ry = 0;
@@ -62,7 +57,7 @@
     el.addEventListener("mouseleave", () => ring?.classList.remove("hover"));
   });
 
-  /* ── 5. NOISE CANVAS ───────────────────────────────────── */
+  /* 5. NOISE CANVAS */
   (function initNoise() {
     const canvas = $("noiseCanvas");
     if (!canvas) return;
@@ -79,7 +74,7 @@
     canvas.style.backgroundSize = "200px 200px";
   })();
 
-  /* ── 6. REVEAL ON SCROLL ───────────────────────────────── */
+  /* 6. REVEAL ON SCROLL */
   function setupReveal() {
     const items = document.querySelectorAll(".reveal");
     const io = new IntersectionObserver((entries) => {
@@ -93,7 +88,7 @@
     items.forEach((el) => io.observe(el));
   }
 
-  /* ── 7. PAGE TITLE & LOGO ──────────────────────────────── */
+  /* 7. PAGE TITLE & LOGO  */
   const name  = data.fullname || data.fullName || data.name || "Portfolio";
   const title = data.title || data.profession || data.role || "";
 
@@ -103,7 +98,7 @@
   const footerName = $("footerName");
   if (footerName) footerName.textContent = name;
 
-  /* ── 8. HERO SECTION ───────────────────────────────────── */
+  /*  8. HERO SECTION */
   function buildHero() {
     // Name
     const heroName = $("heroName");
@@ -162,7 +157,7 @@
     el.innerHTML = html;
   }
 
-  /* ── 9. ABOUT SECTION ──────────────────────────────────── */
+  /* 9. ABOUT SECTION */
   function buildAbout() {
     const desc = $("aboutDesc");
     if (desc) desc.textContent = data.description || data.bio || "";
@@ -210,7 +205,7 @@
     </div>`;
   }
 
-  /* ── 10. SKILLS SECTION ────────────────────────────────── */
+  /*  10. SKILLS SECTION */
   function buildSkills() {
     const grid = $("skillsGrid");
     if (!grid) return;
@@ -253,7 +248,7 @@
     bars.forEach((b) => io.observe(b));
   }
 
-  /* ── 11. PROJECTS SECTION ──────────────────────────────── */
+  /* 11. PROJECTS SECTION  */
   function buildProjects() {
     const grid  = $("projectsGrid");
     const empty = $("projectsEmpty");
@@ -288,7 +283,7 @@
     }).join("");
   }
 
-  /* ── 12. EXPERIENCE SECTION ────────────────────────────── */
+  /* 12. EXPERIENCE SECTION */
   function buildExperience() {
     const tl    = $("experienceTimeline");
     const empty = $("expEmpty");
@@ -311,7 +306,7 @@
     ).join("");
   }
 
-  /* ── 13. EDUCATION SECTION ─────────────────────────────── */
+  /*  13. EDUCATION SECTION */
   function buildEducation() {
     const grid  = $("educationGrid");
     const empty = $("eduEmpty");
@@ -333,7 +328,7 @@
     ).join("");
   }
 
-  /* ── 14. CONTACT SECTION ───────────────────────────────── */
+  /*  14. CONTACT SECTION */
   function buildContact() {
     // Info rows
     const info = $("contactInfo");
@@ -368,7 +363,7 @@
     </a>`;
   }
 
-  /* ── 15. CONTACT FORM ──────────────────────────────────── */
+  /*  15. CONTACT FORM  */
   function setupContactForm() {
     const form    = $("contactForm");
     const success = $("formSuccess");
@@ -388,7 +383,7 @@
     });
   }
 
-  /* ── 16. ACTIVE NAV LINK ───────────────────────────────── */
+  /* 16. ACTIVE NAV LINK */
   function setupActiveNav() {
     const sections = document.querySelectorAll("section[id]");
     const navLinks = document.querySelectorAll(".nav-link");
@@ -406,7 +401,7 @@
     sections.forEach((s) => io.observe(s));
   }
 
-  /* ── 17. PARALLAX ORBS ON MOUSE ────────────────────────── */
+  /* 17. PARALLAX ORBS ON MOUSE */
   document.addEventListener("mousemove", (e) => {
     const cx = e.clientX / window.innerWidth  - 0.5;
     const cy = e.clientY / window.innerHeight - 0.5;
@@ -416,7 +411,7 @@
     });
   });
 
-  /* ── 18. STAGGER REVEAL DELAYS ─────────────────────────── */
+  /* 18. STAGGER REVEAL DELAYS */
   function staggerDelays() {
     // Hero children
     document.querySelectorAll(".hero .reveal").forEach((el, i) => {
@@ -424,7 +419,7 @@
     });
   }
 
-  /* ── 19. INIT ───────────────────────────────────────────── */
+  /* 19. INIT  */
   function init() {
     buildHero();
     buildAbout();

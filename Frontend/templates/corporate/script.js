@@ -1,10 +1,8 @@
-/* ═══════════════════════════════════════════
-   CORPORATE PORTFOLIO — script.js
-═══════════════════════════════════════════ */
+/* CORPORATE PORTFOLIO — script.js*/
 
 (function () {
 
-  /* ── LOAD DATA ── */
+  /*  LOAD DATA  */
   let data = {};
   try {
     const raw = localStorage.getItem("portfolioData");
@@ -26,7 +24,7 @@
   const experience= Array.isArray(data.experience)? data.experience : [];
   const education= Array.isArray(data.education)  ? data.education  : [];
 
-  /* ── MONOGRAM ── */
+  /*  MONOGRAM */
   function initials(name) {
     const parts = (name || "").trim().split(/\s+/);
     if (parts.length >= 2) return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
@@ -36,12 +34,12 @@
   setText("brandMonogram", mono);
   setText("footerMonogram", mono);
 
-  /* ── TOP RIBBON ── */
+  /* TOP RIBBON */
   setText("ribbonEmail",    data.email);
   setText("ribbonPhone",    data.phone);
   setText("ribbonLocation", data.location);
 
-  /* ── HEADER / HERO ── */
+  /* HEADER / HERO  */
   setText("brandName",    data.fullname);
   setText("brandTitle",   data.title);
   setText("heroNameMain", data.fullname);
@@ -65,14 +63,14 @@
   setText("footerName", data.fullname);
   setText("footerYear", new Date().getFullYear());
 
-  /* ── ABOUT ── */
+  /*  ABOUT */
   setText("aboutDesc",          data.description);
   setText("aboutSkillsSummary", data.skills_summary);
   setText("aboutEmail",         data.email);
   setText("aboutPhone",         data.phone);
   setText("aboutLocation",      data.location);
 
-  /* ── EXPERTISE / SKILLS ── */
+  /*  EXPERTISE / SKILLS  */
   const expertiseTable = document.getElementById("expertiseTable");
   if (expertiseTable) {
     if (skills.length === 0) {
@@ -93,7 +91,7 @@
     }
   }
 
-  /* ── WORK / PROJECTS ── */
+  /* WORK / PROJECTS */
   const workGrid = document.getElementById("workGrid");
   if (workGrid) {
     if (projects.length === 0) {
@@ -121,7 +119,7 @@
     }
   }
 
-  /* ── EXPERIENCE ── */
+  /* EXPERIENCE */
   const expTable = document.getElementById("expTable");
   if (expTable) {
     if (experience.length === 0) {
@@ -137,7 +135,7 @@
     }
   }
 
-  /* ── EDUCATION ── */
+  /*  EDUCATION */
   const eduTable = document.getElementById("eduTable");
   if (eduTable) {
     if (education.length === 0) {
@@ -153,7 +151,7 @@
     }
   }
 
-  /* ── SOCIAL ── */
+  /* SOCIAL */
   const socialRow = document.getElementById("socialRow");
   if (socialRow) {
     const links = [];
@@ -176,7 +174,7 @@
     }
   }
 
-  /* ── CONTACT FORM ── */
+  /*  CONTACT FORM */
   window.sendMessage = function (e) {
     e.preventDefault();
     const name    = document.getElementById("cName")?.value?.trim();
@@ -194,7 +192,7 @@
     }
   };
 
-  /* ── SCROLL — animate skill bars ── */
+  /* SCROLL — animate skill bars */
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -209,7 +207,7 @@
   const expertiseSection = document.getElementById("expertise");
   if (expertiseSection) observer.observe(expertiseSection);
 
-  /* ── REVEAL ANIMATION ── */
+  /* REVEAL ANIMATION */
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
