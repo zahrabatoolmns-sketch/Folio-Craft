@@ -1,9 +1,3 @@
-/* =============================================
-   CYBER NEON — Cyberpunk Portfolio
-   Font: Share Tech Mono + Rajdhani
-   Theme: Black, neon green, hot pink, electric blue
-============================================= */
-
 :root {
   --bg: #050a0e;
   --bg2: #070d12;
@@ -38,7 +32,7 @@ body {
   cursor: none;
 }
 
-/* ---- SCANLINES ---- */
+/*  SCANLINES */
 .scanlines {
   position: fixed;
   inset: 0;
@@ -70,7 +64,7 @@ body {
   );
 }
 
-/* ---- BACKGROUND ---- */
+/* BACKGROUND */
 .bg {
   position: fixed;
   inset: 0;
@@ -106,7 +100,7 @@ body {
   to { opacity: 1; transform: scale(1.15); }
 }
 
-/* ---- BOOT OVERLAY ---- */
+/* BOOT OVERLAY  */
 .boot-overlay {
   position: fixed;
   inset: 0;
@@ -155,7 +149,7 @@ body {
   transition: width 0.1s linear;
 }
 
-/* ---- CURSOR ---- */
+/* CURSOR  */
 .cursor-dot {
   position: fixed;
   width: 6px; height: 6px;
@@ -185,7 +179,7 @@ body {
 .cursor-cross::before { width: 100%; height: 1px; top: 50%; left: 0; transform: translateY(-50%); }
 .cursor-cross::after { width: 1px; height: 100%; top: 0; left: 50%; transform: translateX(-50%); }
 
-/* ---- NAV ---- */
+/*  NAV */
 .nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -236,7 +230,7 @@ body {
 }
 .status-txt { font-size: 11px; color: var(--neon-green); letter-spacing: 1.5px; }
 
-/* ---- HERO ---- */
+/*  HERO */
 .hero {
   position: relative;
   z-index: 1;
@@ -487,7 +481,7 @@ body {
 .a-key { color: var(--text-faint); letter-spacing: 1px; }
 .a-val { color: var(--neon-green); text-shadow: 0 0 6px rgba(0,255,136,0.4); }
 
-/* ---- SECTIONS ---- */
+/* SECTIONS  */
 .section {
   position: relative;
   z-index: 1;
@@ -512,7 +506,7 @@ body {
   opacity: 0.4;
 }
 
-/* ---- ABOUT ---- */
+/* ABOUT  */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
 .code-block {
   border: 1px solid var(--border);
@@ -563,7 +557,7 @@ body {
 .sp-link:hover { color: var(--neon-green); background: rgba(0,255,136,0.05); text-shadow: 0 0 8px rgba(0,255,136,0.4); }
 .sp-arrow { color: var(--neon-green); font-size: 16px; }
 
-/* ---- SKILLS ---- */
+/*  SKILLS  */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -621,7 +615,7 @@ body {
 }
 .sc-cat { font-size: 11px; color: var(--neon-blue); letter-spacing: 1px; text-shadow: 0 0 6px rgba(0,200,255,0.4); }
 
-/* ---- PROJECTS ---- */
+/*  PROJECTS */
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; }
 .proj-card {
   border: 1px solid var(--border);
@@ -673,7 +667,7 @@ body {
 }
 .proj-link:hover { text-shadow: 0 0 12px rgba(0,255,136,0.8); }
 
-/* ---- TIMELINE ---- */
+/*  TIMELINE */
 .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
 .tl-col-header {
   font-size: 11px;
@@ -707,7 +701,7 @@ body {
 .tl-sub { font-size: 12px; color: var(--neon-pink); letter-spacing: 1px; margin-bottom: 8px; text-shadow: 0 0 6px rgba(255,0,144,0.3); }
 .tl-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
 
-/* ---- CONTACT ---- */
+/*  CONTACT  */
 .contact-inner { max-width: 800px; margin: 0 auto; }
 .contact-terminal {
   border: 1px solid var(--border);
@@ -732,7 +726,7 @@ body {
 .ct-link:hover { background: rgba(0,255,136,0.06); color: var(--neon-green); text-shadow: 0 0 8px rgba(0,255,136,0.4); }
 .ct-arrow { color: var(--neon-green); font-size: 18px; }
 
-/* ---- FOOTER ---- */
+/* FOOTER  */
 .footer {
   position: relative;
   z-index: 1;
@@ -749,7 +743,7 @@ body {
 .footer-ver { color: var(--neon-blue); font-size: 11px; }
 .status-ok { color: var(--neon-green); text-shadow: 0 0 8px rgba(0,255,136,0.5); }
 
-/* ---- ANIMATIONS ---- */
+/* ANIMATIONS */
 @keyframes heroFadeIn {
   from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
   to { opacity: 1; transform: none; filter: blur(0); }
@@ -761,7 +755,7 @@ body {
 }
 .reveal.visible { opacity: 1; transform: none; }
 
-/* ---- RESPONSIVE ---- */
+/* RESPONSIVE */
 @media (max-width: 1100px) {
   .hero { grid-template-columns: 1fr; }
   .avatar-container { display: none; }

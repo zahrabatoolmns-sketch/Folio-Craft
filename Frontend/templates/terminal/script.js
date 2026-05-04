@@ -1,8 +1,3 @@
-/* =============================================
-   CYBER NEON — script.js
-   Boot sequence + data injection + cyber effects
-============================================= */
-
 (function () {
   "use strict";
 
@@ -26,7 +21,7 @@
   const role = data.title || data.profession || "UNDEFINED_ROLE";
   const nameUpper = fullName.toUpperCase();
 
-  /* ---- BOOT SEQUENCE ---- */
+  /* BOOT SEQUENCE */
   const bootLog = document.getElementById("bootLog");
   const bootBar = document.getElementById("bootBar");
   const bootOverlay = document.getElementById("bootOverlay");
@@ -70,7 +65,7 @@
 
   addBootLine();
 
-  /* ---- INJECT DATA ---- */
+  /* INJECT DATA  */
   function injectData() {
     // name + glitch
     const nameEl = document.getElementById("name");
@@ -226,7 +221,7 @@
     }, 100);
   }
 
-  /* ---- EFFECTS ---- */
+  /* EFFECTS  */
   function startEffects() {
     // Background canvas (particle field)
     const canvas = document.getElementById("bgCanvas");

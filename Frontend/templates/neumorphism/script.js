@@ -1,7 +1,3 @@
-/* ═══════════════════════════════════════════
-   NEUMORPHISM PORTFOLIO — script.js
-═══════════════════════════════════════════ */
-
 (function () {
 
   /* ── DATA ── */
@@ -24,7 +20,7 @@
     if (el) el.textContent = val || fb;
   }
 
-  /* ── INITIALS ── */
+  /* INITIALS */
   function initials(name) {
     const p = (name || "").trim().split(/\s+/);
     if (p.length >= 2) return (p[0][0] + p[p.length-1][0]).toUpperCase();
@@ -32,7 +28,7 @@
   }
   set("sidebarInitials", initials(data.fullname));
 
-  /* ── HERO ── */
+  /* HERO */
   set("heroName",     data.fullname);
   set("heroTitle",    data.title);
   set("heroBio",      data.bio);
@@ -65,16 +61,16 @@
     if (avatarPh) avatarPh.style.display = "none";
   }
 
-  /* ── ABOUT ── */
+  /* ABOUT  */
   set("aboutDesc",          data.description);
   set("aboutSkillsSummary", data.skills_summary);
 
-  /* ── CONTACT INFO ── */
+  /*  CONTACT INFO  */
   set("cInfoEmail",    data.email);
   set("cInfoPhone",    data.phone);
   set("cInfoLocation", data.location);
 
-  /* ── SKILLS ── */
+  /* SKILLS */
   const skillsGrid = document.getElementById("skillsGrid");
   if (skillsGrid) {
     if (!skills.length) {
@@ -95,7 +91,7 @@
     }
   }
 
-  /* ── PROJECTS ── */
+  /*  PROJECTS */
   const projectsGrid = document.getElementById("projectsGrid");
   if (projectsGrid) {
     if (!projects.length) {
@@ -122,7 +118,7 @@
     }
   }
 
-  /* ── EXPERIENCE ── */
+  /*  EXPERIENCE  */
   const expList = document.getElementById("expList");
   const icons = ["💼","🚀","⚡","🎯","🔧","🌟","💡","🎨"];
   if (expList) {
@@ -142,7 +138,7 @@
     }
   }
 
-  /* ── EDUCATION ── */
+  /*  EDUCATION  */
   const eduGrid = document.getElementById("eduGrid");
   if (eduGrid) {
     if (!edu.length) {
@@ -158,7 +154,7 @@
     }
   }
 
-  /* ── SOCIAL ── */
+  /*  SOCIAL */
   const socialRow = document.getElementById("socialRow");
   if (socialRow) {
     const links = [];
@@ -178,7 +174,7 @@
     }
   }
 
-  /* ── CONTACT FORM ── */
+  /* CONTACT FORM  */
   window.submitNm = function (e) {
     e.preventDefault();
     const name  = document.getElementById("cName")?.value?.trim();
@@ -196,7 +192,7 @@
     }
   };
 
-  /* ── SIDEBAR ACTIVE STATE ── */
+  /* SIDEBAR ACTIVE STATE */
   const sections = document.querySelectorAll(".page-section");
   const navLinks = document.querySelectorAll(".snav-link");
 
@@ -213,7 +209,7 @@
 
   sections.forEach(s => io.observe(s));
 
-  /* ── SKILL BAR ANIMATION ── */
+  /* SKILL BAR ANIMATION */
   const skillObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -228,7 +224,7 @@
   const skillSection = document.getElementById("skills");
   if (skillSection) skillObs.observe(skillSection);
 
-  /* ── ENTRANCE ANIMATION ── */
+  /*ENTR ANCE ANIMATION */
   const entryObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

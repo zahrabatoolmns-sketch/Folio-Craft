@@ -1,12 +1,8 @@
-/* ═══════════════════════════════════════════════════
-   SPLIT LAYOUT — script.js
-   All wizard fields injected + scroll-spy + effects
-═══════════════════════════════════════════════════ */
 
 (function () {
   "use strict";
 
-  /* ─── helpers ─── */
+  /* helpers */
   const $ = id => document.getElementById(id);
   const setText  = (id, val) => { const e = $(id); if (e && val != null && val !== '') e.textContent = val; };
   const setHref  = (id, url) => { const e = $(id); if (e) { e.href = url || '#'; if (!url) e.style.display = 'none'; } };
@@ -18,13 +14,11 @@
     );
   }
 
-  /* ─── load data ─── */
+  /*  load data */
   let d = {};
   try { d = JSON.parse(localStorage.getItem('portfolioData') || '{}'); } catch(e) {}
 
-  /* ════════════════════════════════════════
-     STEP 1 — PERSONAL INFORMATION
-  ════════════════════════════════════════ */
+  /* STEP 1 — PERSONAL INFORMATION */
   const name  = d.fullname || d.fullName || d.name || 'Your Name';
   const title = d.title || d.profession || 'Professional Title';
   const bio   = d.bio   || '';
@@ -60,7 +54,7 @@
   setText('aboutDescription',   d.description    || '');
   setText('aboutSkillsSummary', d.skills_summary || '');
 
-  /* ── profile image ── */
+  /* profile image */
   if (d.profile_base64) {
     const img = $('sidebarProfileImage');
     const ph  = $('sbAvatarPh');
@@ -68,23 +62,19 @@
     if (ph)  ph.style.display = 'none';
   }
 
-  /* ════════════════════════════════════════
-     ARRAYS
-  ════════════════════════════════════════ */
+  /*  ARRAYS */
   const skills     = Array.isArray(d.skills)     ? d.skills     : [];
   const projects   = Array.isArray(d.projects)   ? d.projects   : [];
   const experience = Array.isArray(d.experience) ? d.experience : [];
   const education  = Array.isArray(d.education)  ? d.education  : [];
 
-  /* ── stats ── */
+  /* stats  */
   setText('statProjects', projects.length);
   setText('statSkills',   skills.length);
   setText('statExp',      experience.length);
   setText('statEdu',      education.length);
 
-  /* ════════════════════════════════════════
-     STEP 4 — SOCIAL MEDIA
-  ════════════════════════════════════════ */
+  /* STEP 4 — SOCIAL MEDIA */
   setHref('sbLinkedin',  d.linkedin);
   setHref('sbGithub',    d.github_social);
   setHref('sbInstagram', d.instagram);
@@ -106,9 +96,7 @@
   setHref('footerGithub',    d.github_social);
   setHref('footerInstagram', d.instagram);
 
-  /* ════════════════════════════════════════
-     STEP 2 — SKILLS (grouped by category)
-  ════════════════════════════════════════ */
+  /* STEP 2 — SKILLS (grouped by category) */
   const skillsByCatEl = $('skillsByCategory');
 
   if (skillsByCatEl) {
@@ -142,9 +130,7 @@
     }
   }
 
-  /* ════════════════════════════════════════
-     STEP 2 — PROJECTS
-  ════════════════════════════════════════ */
+  /* STEP 2 — PROJECTS */
   const projListEl = $('projectsList');
 
   if (projListEl) {
@@ -176,10 +162,7 @@
       projListEl.innerHTML = `<p style="color:var(--text-light);font-size:14px;">No projects added yet.</p>`;
     }
   }
-
-  /* ════════════════════════════════════════
-     STEP 3 — EXPERIENCE
-  ════════════════════════════════════════ */
+/* STEP 3 — EXPERIENCE */
   const expEl = $('experienceTimeline');
 
   if (expEl) {
@@ -200,9 +183,7 @@
     }
   }
 
-  /* ════════════════════════════════════════
-     STEP 3 — EDUCATION
-  ════════════════════════════════════════ */
+  /* STEP 3 — EDUCATION */
   const eduEl = $('educationGrid');
 
   if (eduEl) {
@@ -222,9 +203,7 @@
     }
   }
 
-  /* ════════════════════════════════════════
-     SCROLL SPY — highlight active nav link
-  ════════════════════════════════════════ */
+  /* SCROLL SPY — highlight active nav link */
   const mainContent  = $('mainContent');
   const navLinks     = document.querySelectorAll('.sb-nav-link');
   const sections     = document.querySelectorAll('.content-section[data-section]');
@@ -251,7 +230,7 @@
   mainContent?.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
 
-  /* ─ smooth scroll on nav click ─ */
+  /*  smooth scroll on nav click  */
   navLinks.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
@@ -279,9 +258,7 @@
     });
   });
 
-  /* ════════════════════════════════════════
-     MOBILE SIDEBAR TOGGLE
-  ════════════════════════════════════════ */
+  /* MOBILE SIDEBAR TOGGLE */
   const mobBtn  = $('mobToggle');
   const sidebar = $('sidebar');
 
@@ -290,9 +267,7 @@
     mobBtn.classList.toggle('open');
   });
 
-  /* ════════════════════════════════════════
-     SCROLL REVEAL
-  ════════════════════════════════════════ */
+  /* SCROLL REVEAL */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;

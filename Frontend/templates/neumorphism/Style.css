@@ -1,43 +1,36 @@
-/* ═══════════════════════════════════════════════════════
-   NEUMORPHISM PORTFOLIO
-   Soft UI · Tactile · Clay Surface · Elevated Depth
-   Fonts: Outfit (headings) + Nunito (body)
-   Palette: Warm dove-grey base, lavender + coral accents
-═══════════════════════════════════════════════════════ */
-
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap');
 
 :root {
-  /* ── BASE SURFACE ── */
+  /*  BASE SURFACE */
   --base:        #e8e8f0;
   --base-dark:   #d8d8e8;
   --base-light:  #f4f4fc;
   --base-inset:  #dcdce8;
 
-  /* ── SHADOW SYSTEM ── (the heart of neumorphism) */
+  /*  SHADOW SYSTEM  (the heart of neumorphism) */
   --shadow-out:  8px 8px 20px #c8c8d8, -8px -8px 20px #ffffff;
   --shadow-in:   inset 5px 5px 14px #c8c8d8, inset -5px -5px 14px #ffffff;
   --shadow-out-lg: 14px 14px 35px #c0c0d0, -14px -14px 35px #ffffff;
   --shadow-in-lg:  inset 8px 8px 22px #c0c0d0, inset -8px -8px 22px #ffffff;
   --shadow-float: 20px 20px 50px #b8b8cc, -10px -10px 30px #ffffff;
 
-  /* ── ACCENT COLORS ── */
+  /* ACCENT COLORS */
   --accent:      #7c6bff;   /* lavender violet */
   --accent-2:    #ff6b9d;   /* coral pink */
   --accent-3:    #6bcfff;   /* sky blue */
   --accent-4:    #6bffbc;   /* mint */
   --accent-glow: rgba(124,107,255,0.18);
 
-  /* ── TEXT ── */
+  /* TEXT  */
   --text:        #3a3a5c;
   --text-dim:    #7878a0;
   --text-muted:  #ababc8;
   --text-accent: var(--accent);
 
-  /* ── SIDEBAR ── */
+  /* SIDEBAR */
   --sidebar-w: 74px;
 
-  /* ── FONTS ── */
+  /*  FONTS */
   --ff-head: 'Outfit', sans-serif;
   --ff-body: 'Nunito', sans-serif;
 
@@ -61,7 +54,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ═══════════════════ AMBIENT BACKGROUND ═══════════════════ */
+/* AMBIENT BACKGROUND */
 .ambient {
   position: fixed;
   inset: 0;
@@ -100,7 +93,7 @@ body {
   to   { transform: translate(30px, 20px) scale(1.06); }
 }
 
-/* ═══════════════════ SIDEBAR ═══════════════════ */
+/* SIDEBAR */
 .sidebar {
   position: fixed;
   top: 0; left: 0;
@@ -204,7 +197,7 @@ body {
 }
 @keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
 
-/* ═══════════════════ MAIN CONTENT ═══════════════════ */
+/* MAIN CONTENT */
 .main-content {
   position: relative;
   z-index: 2;
@@ -212,7 +205,7 @@ body {
   padding: 40px 50px;
 }
 
-/* ═══════════════════ SECTIONS ═══════════════════ */
+/* SECTIONS */
 .page-section {
   margin-bottom: 80px;
   scroll-margin-top: 40px;
@@ -252,7 +245,7 @@ body {
   background-clip: text;
 }
 
-/* ═══════════════════ NM CARD (core element) ═══════════════════ */
+/* NM CARD (core element) */
 .nm-card {
   background: var(--base);
   border-radius: var(--radius-lg);
@@ -306,7 +299,7 @@ body {
   font-weight: 400;
 }
 
-/* ═══════════════════ HERO ═══════════════════ */
+/*  HERO  */
 .hero-section { margin-bottom: 80px; }
 
 .hero-layout {
@@ -478,7 +471,7 @@ body {
 /* ACTIONS */
 .hero-actions-nm { display: flex; gap: 14px; flex-wrap: wrap; }
 
-/* ═══════════════════ STAT CLUSTER ═══════════════════ */
+/*  STAT CLUSTER  */
 .stat-cluster {
   display: flex;
   flex-direction: column;
@@ -521,7 +514,7 @@ body {
   color: var(--text-muted);
 }
 
-/* ═══════════════════ BUTTONS ═══════════════════ */
+/* BUTTONS */
 .btn-nm-primary {
   display: inline-flex;
   align-items: center;
@@ -573,14 +566,14 @@ body {
   color: var(--accent);
 }
 
-/* ═══════════════════ ABOUT ═══════════════════ */
+/* ABOUT */
 .about-grid-nm {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 24px;
 }
 
-/* ═══════════════════ SKILLS ═══════════════════ */
+/* SKILLS */
 .skills-nm-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -649,7 +642,7 @@ body {
   color: var(--text-muted);
 }
 
-/* ═══════════════════ PROJECTS ═══════════════════ */
+/* PROJECTS  */
 .projects-nm-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -754,7 +747,7 @@ body {
   box-shadow: 8px 8px 22px rgba(124,107,255,0.45), -3px -3px 10px #fff;
 }
 
-/* ═══════════════════ EXPERIENCE ═══════════════════ */
+/* EXPERIENCE  */
 .exp-nm-list {
   display: flex;
   flex-direction: column;
@@ -807,7 +800,7 @@ body {
   line-height: 1.8;
 }
 
-/* ═══════════════════ EDUCATION ═══════════════════ */
+/* EDUCATION */
 .edu-nm-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -852,7 +845,7 @@ body {
   color: var(--text-muted);
 }
 
-/* ═══════════════════ SOCIAL ═══════════════════ */
+/*  SOCIAL */
 .social-nm-row {
   display: flex;
   flex-wrap: wrap;
@@ -892,7 +885,7 @@ body {
   flex-shrink: 0;
 }
 
-/* ═══════════════════ CONTACT ═══════════════════ */
+/* CONTACT  */
 .contact-nm-layout {
   display: grid;
   grid-template-columns: 340px 1fr;
@@ -971,7 +964,7 @@ body {
   min-height: 20px;
 }
 
-/* ═══════════════════ FOOTER ═══════════════════ */
+/* FOOTER */
 .nm-footer {
   border-radius: var(--radius-xl);
   background: var(--base);
@@ -991,12 +984,12 @@ body {
 }
 .footer-dot { color: var(--accent); }
 
-/* ═══════════════════ SCROLLBAR ═══════════════════ */
+/* SCROLLBAR */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--base-dark); }
 ::-webkit-scrollbar-thumb { background: linear-gradient(var(--accent), var(--accent-2)); border-radius: 3px; }
 
-/* ═══════════════════ RESPONSIVE ═══════════════════ */
+/* RESPONSIVE */
 @media (max-width: 1100px) {
   .hero-layout { grid-template-columns: auto 1fr; }
   .stat-cluster { flex-direction: row; }
