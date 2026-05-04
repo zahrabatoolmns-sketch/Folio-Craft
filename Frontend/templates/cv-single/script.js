@@ -1,15 +1,11 @@
-/* ════════════════════════════════════════════
-   CV-SINGLE  ·  script.js
-   All wizard fields → DOM
-════════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  /* ── 1. Load data ── */
+  /* 1. Load data */
   let D = {};
   try { D = JSON.parse(localStorage.getItem('portfolioData') || '{}'); } catch (_) {}
 
-  /* ── 2. Helpers ── */
+  /*  2. Helpers */
   const el  = id => document.getElementById(id);
   const set = (id, val) => { const e = el(id); if (e && val) e.textContent = val; };
   const setHref = (id, href) => {
@@ -22,20 +18,20 @@
     ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])
   );
 
-  /* ── 3. Page title ── */
+  /* 3. Page title  */
   document.title = (D.fullname || 'Portfolio') + ' | CV';
 
-  /* ── 4. Nav + Sidebar identity ── */
+  /* 4. Nav + Sidebar identity */
   set('tnName',  D.fullname);
   set('sbName',  D.fullname);
   set('sbTitle', D.title);
 
-  /* ── 5. Sidebar contact ── */
+  /* 5. Sidebar contact */
   set('sbEmail',    D.email);
   set('sbPhone',    D.phone);
   set('sbLocation', D.location);
 
-  /* ── 6. Avatar ── */
+  /* 6. Avatar */
   const sbImg = el('sbAvatar');
   const sbPh  = el('sbAvatarPh');
   if (D.profile_base64 && sbImg) {
@@ -44,7 +40,7 @@
     if (sbPh) sbPh.style.display = 'none';
   }
 
-  /* ── 7. Social links ── */
+  /*  7. Social links */
   setHref('sbLinkedin',  D.linkedin);
   setHref('sbGithub',    D.github_social);
   setHref('sbInstagram', D.instagram);
@@ -52,11 +48,11 @@
   setHref('ccvGh', D.github_social);
   setHref('ccvIg', D.instagram);
 
-  /* ── 8. About section ── */
+  /*  8. About section  */
   set('cvAboutDesc',    D.description);
   set('cvAboutSummary', D.skills_summary);
 
-  /* ── 9. Quick stats ── */
+  /* 9. Quick stats */
   const pC = (D.projects  || []).length;
   const sC = (D.skills    || []).length;
   const eC = (D.experience|| []).length;
@@ -67,15 +63,15 @@
   set('qsExp',   eC + '+');
   set('qsEdu',   dC + '+');
 
-  /* ── 10. Contact section ── */
+  /* 10. Contact section */
   set('ccvEmail',    D.email);
   set('ccvPhone',    D.phone);
   set('ccvLocation', D.location);
 
-  /* ── 11. Footer ── */
+  /* 11. Footer */
   set('footerName', D.fullname);
 
-  /* ── 12. Sidebar skill pills (top 8) ── */
+  /*  12. Sidebar skill pills (top 8) */
   const pillsWrap = el('sbSkillPills');
   if (pillsWrap && D.skills?.length) {
     pillsWrap.innerHTML = D.skills
@@ -84,7 +80,7 @@
       .join('');
   }
 
-  /* ── 13. Sidebar Education ── */
+  /*  13. Sidebar Education */
   const sbEdu = el('sbEduList');
   if (sbEdu && D.education?.length) {
     sbEdu.innerHTML = D.education.map(e => `
@@ -96,7 +92,7 @@
     `).join('');
   }
 
-  /* ── 14. Skills grid ── */
+  /* 14. Skills grid */
   const sg = el('skillsCvGrid');
   if (sg && D.skills?.length) {
     sg.innerHTML = D.skills.map(s => `
@@ -113,7 +109,7 @@
     `).join('');
   }
 
-  /* ── 15. Projects ── */
+  /* 15. Projects */
   const pl = el('projectsCvList');
   if (pl && D.projects?.length) {
     pl.innerHTML = D.projects.map(p => `
@@ -144,7 +140,7 @@
     `).join('');
   }
 
-  /* ── 16. Experience timeline ── */
+  /* 16. Experience timeline */
   const tl = el('timelineCv');
   if (tl && D.experience?.length) {
     tl.innerHTML = D.experience.map((e, i) => `
@@ -164,7 +160,7 @@
     `).join('');
   }
 
-  /* ── 17. Scroll reveal ── */
+  /* 17. Scroll reveal */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -173,7 +169,7 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  /* ── 18. Animate quick-stats numbers ── */
+  /*  18. Animate quick-stats numbers  */
   function animateCount(id, target) {
     const el = document.getElementById(id);
     if (!el || !target) return;
@@ -203,7 +199,7 @@
     statsObs.observe(statsSection);
   }
 
-  /* ── 19. Active nav link on scroll ── */
+  /* 19. Active nav link on scroll */
   const sections  = document.querySelectorAll('.cv-section');
   const navLinks  = document.querySelectorAll('.tn-links a');
   const navObs = new IntersectionObserver(entries => {
