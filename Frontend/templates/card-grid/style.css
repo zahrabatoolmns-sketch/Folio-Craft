@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap');
 
-/* ─── TOKENS ─── */
+/* TOKENS  */
 :root {
   --bg:       #08090d;
   --bg2:      #0e1018;
@@ -32,14 +32,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ─── CANVAS BG ─── */
+/*  CANVAS BG */
 #bgCanvas {
   position: fixed; inset: 0; z-index: 0;
   width: 100%; height: 100%;
   pointer-events: none;
 }
 
-/* ─── NAV ─── */
+/*  NAV */
 .nav {
   position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
   z-index: 200;
@@ -81,7 +81,7 @@ body {
 }
 .nav-hire:hover { transform: translateY(-2px); box-shadow: 0 8px 28px var(--glow1); }
 
-/* ─── HERO ─── */
+/* HERO */
 .hero {
   position: relative; z-index: 1;
   min-height: 100vh;
@@ -197,7 +197,7 @@ body {
 }
 .soc-pill:hover { border-color: var(--a1); color: var(--a1); }
 
-/* ─── HERO CARD ─── */
+/* HERO CARD */
 .hero-card-wrap {
   position: relative; z-index: 2;
   flex-shrink: 0;
@@ -310,7 +310,7 @@ body {
 .sec-heading.white { color: var(--text); -webkit-text-fill-color: var(--text); background: none; }
 .sec-heading.white em { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-/* ─── ABOUT BENTO ─── */
+/* ABOUT BENTO  */
 .about-bento {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
@@ -361,7 +361,7 @@ body {
 .sg-n { font-size: 32px; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .sg-l { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
 
-/* ─── SKILLS CARD GRID ─── */
+/* SKILLS CARD GRID  */
 .skills-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -395,7 +395,7 @@ body {
 @keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .sk-cat { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
 
-/* ─── PROJECTS MASONRY ─── */
+/* PROJECTS MASONRY */
 .projects-masonry {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -451,7 +451,7 @@ body {
 .pci-link.live { background: var(--grad); color: #fff; box-shadow: 0 4px 16px var(--glow1); }
 .pci-link:hover { transform: translateY(-2px); }
 
-/* ─── EXPERIENCE ─── */
+/* EXPERIENCE */
 .exp-edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
 
 .ee-col-head {
@@ -484,7 +484,7 @@ body {
 .ec-sub { font-size: 13px; color: var(--a1); font-weight: 600; margin-bottom: 8px; }
 .ec-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
 
-/* ─── CONTACT ─── */
+/*  CONTACT */
 .contact-bento {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
@@ -550,7 +550,7 @@ body {
 .cf-field input::placeholder, .cf-field textarea::placeholder { color: var(--dim); }
 .cf-field textarea { min-height: 130px; resize: vertical; }
 
-/* ─── FOOTER ─── */
+/*  FOOTER */
 .footer {
   padding: 28px;
   border-top: 1px solid var(--border);
@@ -564,11 +564,11 @@ body {
 .footer-name { font-weight: 700; color: var(--text); }
 .footer-sep { color: var(--dim); }
 
-/* ─── REVEAL ─── */
+/*  REVEAL */
 .reveal { opacity: 0; transform: translateY(32px); transition: opacity .65s ease, transform .65s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ─── RESPONSIVE ─── */
+/*  RESPONSIVE */
 @media (max-width: 1100px) {
   .about-bento { grid-template-columns: 1fr; }
   .bc-main, .bc-contact, .bc-stats { grid-column: 1; grid-row: auto; }

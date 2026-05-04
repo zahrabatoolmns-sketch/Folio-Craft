@@ -51,9 +51,7 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-/* ══════════════════════════════
-   SIDEBAR
-══════════════════════════════ */
+/* SIDEBAR */
 .sidebar {
   width: 248px;
   min-height: 100vh;
@@ -248,9 +246,7 @@ body {
 }
 .sidebar-overlay.show { display: block; }
 
-/* ══════════════════════════════
-   MAIN CONTENT
-══════════════════════════════ */
+/* MAIN CONTENT */
 .main-content {
   margin-left: 248px;
   flex: 1;
@@ -259,9 +255,7 @@ body {
   flex-direction: column;
 }
 
-/* ══════════════════════════════
-   HEADER
-══════════════════════════════ */
+/* HEADER */
 .dash-header {
   display: flex;
   align-items: center;
@@ -371,9 +365,7 @@ body.dark  .t-icon--sun  { opacity: 0; transform: rotate(-90deg) scale(0.4); }
   box-shadow: 0 4px 16px var(--glow-a);
 }
 
-/* ══════════════════════════════
-   STATS GRID
-══════════════════════════════ */
+/* STATS GRID */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -508,9 +500,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
   border-radius: 999px;
 }
 
-/* ══════════════════════════════
-   SECTION
-══════════════════════════════ */
+/* SECTION */
 .section {
   padding: 24px 28px;
   flex: 1;
@@ -587,9 +577,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
 .btn-primary:hover::before { opacity: 1; }
 .btn-primary:active { transform: translateY(0); }
 
-/* ══════════════════════════════
-   PORTFOLIO GRID
-══════════════════════════════ */
+/* PORTFOLIO GRID */
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -764,9 +752,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
 }
 .btn-action--danger:hover svg { transform: scale(1.1); }
 
-/* ══════════════════════════════
-   LOADING / EMPTY
-══════════════════════════════ */
+/* LOADING / EMPTY */
 .loading-state {
   grid-column: 1/-1;
   display: flex;
@@ -902,7 +888,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
 
 /* RESPONSIVE */
 
-/* ── Large Desktop (1400px+) ── */
+/*  Large Desktop (1400px+) */
 @media (min-width: 1400px) {
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -923,7 +909,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
   }
 }
 
-/* ── Desktop (1101px – 1399px) ── */
+/* Desktop (1101px – 1399px) */
 @media (max-width: 1399px) and (min-width: 1101px) {
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -934,7 +920,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
   }
 }
 
-/* ── Tablet Landscape (1100px) ── */
+/* Tablet Landscape (1100px)  */
 @media (max-width: 1100px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -950,7 +936,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
   }
 }
 
-/* ── Tablet (769px – 1099px) ── */
+/* Tablet (769px – 1099px) */
 @media (max-width: 1099px) and (min-width: 769px) {
   .sidebar {
     width: 220px;
@@ -1034,7 +1020,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
   }
 }
 
-/* ── Mobile Landscape + Tablet Portrait (max 768px) ── */
+/* Mobile Landscape + Tablet Portrait (max 768px) */
 @media (max-width: 768px) {
   /* Sidebar — off canvas */
   .sidebar {
@@ -1219,7 +1205,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
   }
 }
 
-/* ── Mobile (max 560px) ── */
+/*  Mobile (max 560px)  */
 @media (max-width: 560px) {
   /* Header */
   .dash-header {
@@ -1419,7 +1405,7 @@ body.dark .stat-icon-wrap--orange { background: rgba(251,146,60,.13);  color: #f
   }
 }
 
-/* ── Small Mobile (max 380px) ── */
+/*  Small Mobile (max 380px)  */
 @media (max-width: 380px) {
   .stats-grid {
     grid-template-columns: 1fr;

@@ -230,7 +230,7 @@ googleBtn?.addEventListener('click', function() {
     clearMessage();
     try {
       await window.FolioAPI.register(name, email, pass);
-      showMessage('Account created! 🎉', 'success');
+      showMessage('Account created! ', 'success');
       updateNav();
       setTimeout(function() {
         hideModal();

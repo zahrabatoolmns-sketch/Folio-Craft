@@ -1,7 +1,7 @@
 
 'use strict';
 
-// ── Backend URL - Apna Vercel URL yahan dalein ──
+// ── Backend URL ──
     const API_URL = 'https://folio-craft-two.vercel.app/api';
 // ── Token Helper ──
 const getToken  = ()        => localStorage.getItem('fc_token');
@@ -65,7 +65,6 @@ async function login(email, password) {
   setToken(data.token);
   localStorage.setItem('fc_user', JSON.stringify(data.user));
 
-  // Server se portfolio data bhi localStorge mein save karo
   if (data.portfolio) {
     localStorage.setItem('portfolioData', JSON.stringify(data.portfolio));
   }
@@ -88,8 +87,6 @@ function getCurrentUser() {
 
 //   PORTFOLIO FUNCTIONS
 
-
-// Portfolio load karo (login ke baad)
 async function loadPortfolio() {
   const data = await apiFetch('/portfolio');
 
@@ -102,12 +99,10 @@ async function loadPortfolio() {
   return data.portfolio;
 }
 
-// Wizard data save karo
 async function savePortfolio(portfolioData) {
-  // Pehle localStorage mein save karo (existing code ke liye)
+
   localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
 
-  // Agar logged in hain to server pe bhi save karo
   if (isLoggedIn()) {
     const data = await apiFetch('/portfolio', {
       method: 'PUT',
@@ -119,7 +114,7 @@ async function savePortfolio(portfolioData) {
   return { success: true, local: true };
 }
 
-// Portfolio publish karo
+// Publish Portfolio
 async function publishPortfolio() {
   const currentId = localStorage.getItem('currentPortfolioId');
   if (!currentId) {
@@ -129,7 +124,7 @@ async function publishPortfolio() {
   return data;
 }
 
-// Share link lo
+// Take Share link 
 async function getShareLink() {
   const data = await apiFetch('/portfolio/share-link');
   return data.shareUrl;
@@ -154,7 +149,7 @@ async function getAllPortfolios() {
   return data.portfolios;
 }
 
-// Naya portfolio banao
+// Make new Portfolio
 async function createPortfolio(name) {
   const data = await apiFetch('/portfolio/create', {
     method: 'POST',
@@ -472,7 +467,6 @@ function showInputModal(label, placeholder = '') {
 window.showConfirmModal = showConfirmModal;
 window.showInputModal   = showInputModal;
 
-// Yeh code api.js mein add karo (file ke end mein, ya jahan token handle hota hai)
 (function handleGoogleCallback() {
   const params = new URLSearchParams(window.location.search);
   const token  = params.get('token');
@@ -486,10 +480,10 @@ window.showInputModal   = showInputModal;
       avatar:  decodeURIComponent(avatar || '')
     }));
 
-    // URL clean karo
+    // Clean URL 
     window.history.replaceState({}, document.title, '/index.html');
 
-    // Dashboard pe bhejo
+    // Send to Dashboard
     window.location.href = 'dashboard.html';
   }
 })();

@@ -3,11 +3,11 @@
 (function () {
   'use strict';
 
-  /* ── 1. Data ── */
+  /* 1. Data */
   let D = {};
   try { D = JSON.parse(localStorage.getItem('portfolioData') || '{}'); } catch (_) {}
 
-  /* ── 2. Utils ── */
+  /*  2. Utils  */
   const el  = id => document.getElementById(id);
   const set = (id, val) => { const e = el(id); if (e && val) e.textContent = val; };
   const setHref = (id, href) => {
@@ -20,7 +20,7 @@
     ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])
   );
 
-  /* ── 3. Simple fields ── */
+  /*  3. Simple fields  */
   document.title = (D.fullname || 'Portfolio') + ' | Portfolio';
   set('navName',      D.fullname);
   set('heroName',     D.fullname);
@@ -59,14 +59,14 @@
   set('sgExp',     expN + '+');
   set('sgEdu',     eduN + '+');
 
-  /* ── 4. Avatar ── */
+  /*  4. Avatar  */
   if (D.profile_base64) {
     const img = el('heroAvatar'), ph = el('avatarPh');
     if (img) { img.src = D.profile_base64; img.style.display = 'block'; }
     if (ph)  ph.style.display = 'none';
   }
 
-  /* ── 5. Socials ── */
+  /*  5. Socials  */
   setHref('hLinkedin',  D.linkedin);
   setHref('hGithub',    D.github_social);
   setHref('hInstagram', D.instagram);
@@ -77,7 +77,7 @@
   setHref('ctGh', D.github_social);
   setHref('ctIg', D.instagram);
 
-  /* ── 6. Hero card skill tags (top 5) ── */
+  /* 6. Hero card skill tags (top 5) */
   const hcTags = el('hcTags');
   if (hcTags && D.skills?.length) {
     hcTags.innerHTML = D.skills.slice(0, 5).map(s =>
@@ -85,7 +85,7 @@
     ).join('');
   }
 
-  /* ── 7. Skills ── */
+  /* 7. Skills */
   const sg = el('skillsCardGrid');
   if (sg && D.skills?.length) {
     sg.innerHTML = D.skills.map(s => `
@@ -102,7 +102,7 @@
     `).join('');
   }
 
-  /* ── 8. Projects ── */
+  /*  8. Projects */
   const pm = el('projectsMasonry');
   if (pm && D.projects?.length) {
     pm.innerHTML = D.projects.map(p => `
@@ -125,7 +125,7 @@
     `).join('');
   }
 
-  /* ── 9. Experience ── */
+  /*  9. Experience  */
   const expEl = el('expCards');
   if (expEl && D.experience?.length) {
     expEl.innerHTML = D.experience.map(e => `
@@ -137,7 +137,7 @@
     `).join('');
   }
 
-  /* ── 10. Education ── */
+  /*  10. Education  */
   const eduEl = el('eduCards');
   if (eduEl && D.education?.length) {
     eduEl.innerHTML = D.education.map(e => `
@@ -149,13 +149,13 @@
     `).join('');
   }
 
-  /* ── 11. Scroll reveal ── */
+  /*  11. Scroll reveal */
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(e => obs.observe(e));
 
-  /* ── 12. Canvas Background ── */
+  /*  12. Canvas Background  */
   const canvas = el('bgCanvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
@@ -200,7 +200,7 @@
     init(); loop();
   }
 
-  /* ── 13. Tilt on hero card ── */
+  /* 13. Tilt on hero card  */
   const card = el('heroCard');
   if (card) {
     const wrap = card.closest('.hero-card-wrap');
@@ -213,7 +213,7 @@
     wrap?.addEventListener('mouseleave', () => { card.style.transform = ''; });
   }
 
-  /* ── 14. Nav scroll glass ── */
+  /* 14. Nav scroll glass */
   const nav = document.querySelector('.nav');
   window.addEventListener('scroll', () => {
     if (!nav) return;

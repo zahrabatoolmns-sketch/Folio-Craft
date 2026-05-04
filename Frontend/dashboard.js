@@ -2,7 +2,7 @@
 
 const THEME_KEY = 'fc_theme';
 
-// ── Theme ──
+//  Theme 
 function applyTheme(t) {
   document.body.classList.remove('light', 'dark');
   document.body.classList.add(t);
@@ -15,11 +15,11 @@ document.getElementById('themeBtn')?.addEventListener('click', () => {
   applyTheme(document.body.classList.contains('dark') ? 'light' : 'dark');
 });
 
-// ── Auth Check ──
+// Auth Check
 const token = localStorage.getItem('fc_token');
 if (!token) window.location.replace('index.html');
 
-// ── User Info ──
+// User Info 
 const user = JSON.parse(localStorage.getItem('fc_user') || '{}');
 if (user.name) {
   const firstName    = user.name.split(' ')[0];
@@ -44,7 +44,7 @@ if (user.name) {
   if (mainAvatar)    mainAvatar.innerHTML    = avatarHTML;
   if (sidebarAvatar) sidebarAvatar.innerHTML = avatarHTML;
 }
-// ── Mobile Sidebar ──
+//  Mobile Sidebar 
 const sidebar        = document.getElementById('sidebar');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 
@@ -58,19 +58,19 @@ sidebarOverlay?.addEventListener('click', () => {
   sidebarOverlay.classList.remove('show');
 });
 
-// ── Logout ──
+// Logout 
 document.getElementById('logoutBtn')?.addEventListener('click', () => {
   localStorage.clear();
   window.location.href = 'index.html';
 });
 
-// ── New Portfolio ──
+// New Portfolio
 function newPortfolio() {
   localStorage.removeItem('currentPortfolioId');
   localStorage.removeItem('portfolioData');
 }
 
-// ── Format Date + Time ──
+// Format Date + Time 
 function formatDateTime(dateStr) {
   const d = new Date(dateStr);
   const dateFormatted = d.toLocaleDateString('en-US', {
@@ -86,7 +86,7 @@ function formatDateTime(dateStr) {
   return `${dateFormatted}, ${timeFormatted}`;
 }
 
-// Short version for stat card (date + time on 2 lines)
+// (date + time on 2 lines)
 function formatDateTimeShort(dateStr) {
   const d = new Date(dateStr);
   const dateFormatted = d.toLocaleDateString('en-US', {
@@ -101,7 +101,7 @@ function formatDateTimeShort(dateStr) {
   return `${dateFormatted} · ${timeFormatted}`;
 }
 
-// ── API Helper ──
+// API Helper
 async function apiFetch(endpoint, options = {}) {
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
@@ -114,7 +114,7 @@ async function apiFetch(endpoint, options = {}) {
   return res.json();
 }
 
-// ── Load Portfolios ──
+// Load Portfolios
 async function loadPortfolios() {
   try {
     const data       = await apiFetch('/portfolio/all');
@@ -124,7 +124,6 @@ async function loadPortfolios() {
     document.getElementById('publishedCount').textContent  =
       portfolios.filter(p => p.isPublished).length;
 
-    // Update section count badge
     const countEl = document.getElementById('sectionCount');
     if (countEl) {
       countEl.textContent = `${portfolios.length} item${portfolios.length !== 1 ? 's' : ''}`;
@@ -260,12 +259,12 @@ async function loadPortfolios() {
   }
 }
 
-// ── Select Portfolio ──
+// Select Portfolio
 function selectPortfolio(id) {
   localStorage.setItem('currentPortfolioId', id);
 }
 
-// ── Delete Portfolio ──
+// Delete Portfolio
 async function deletePortfolio(id) {
   const confirmed = await showConfirmModal('Delete this portfolio? This cannot be undone.');
 if (!confirmed) return;
@@ -286,10 +285,10 @@ if (!confirmed) return;
   }
 }
 
-// ── Init ──
+// Init 
 loadPortfolios();
 
-// ── Analytics ──
+// Analytics
 
 let chartsRendered = false;
 

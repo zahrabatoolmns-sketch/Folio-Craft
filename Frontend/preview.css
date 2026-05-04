@@ -1,4 +1,4 @@
-/* ─── CSS Variables ─── */
+/* CSS Variables */
 :root {
   --bg:     #0b0f1a;
   --panel:  rgba(255, 255, 255, .06);
@@ -10,14 +10,14 @@
   --red:    #ef4444;
 }
 
-/* ─── Reset ─── */
+/* Reset*/
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* ─── Base ─── */
+/*  Base  */
 body {
   font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
   background:
@@ -127,7 +127,7 @@ body {
   transform: none !important;
 }
 
-/* ─── Ghost ─── */
+/* Ghost */
 .btn.ghost {
   background: rgba(255, 255, 255, .05);
   border-color: rgba(255, 255, 255, .15);
@@ -144,7 +144,7 @@ body {
   transform: translateY(0) scale(.98);
 }
 
-/* ─── Primary — Download ZIP ─── */
+/* Primary — Download ZIP */
 .btn.primary {
   background: linear-gradient(135deg, rgba(99,102,241,.9), rgba(139,92,246,.85));
   border-color: rgba(99, 102, 241, .4);
@@ -165,7 +165,7 @@ body {
   box-shadow: 0 2px 8px rgba(99,102,241,.3);
 }
 
-/* ─── QR Contact ─── */
+/* QR Contact */
 .btn.qr-contact {
   background: linear-gradient(135deg, rgba(6,182,212,.9), rgba(34,197,94,.85));
   border-color: rgba(6, 182, 212, .4);
@@ -186,7 +186,7 @@ body {
   box-shadow: 0 2px 8px rgba(6,182,212,.3);
 }
 
-/* ─── QR Website ─── */
+/* QR Website */
 .btn.qr-website {
   background: linear-gradient(135deg, rgba(168,85,247,.9), rgba(99,102,241,.85));
   border-color: rgba(168, 85, 247, .4);
@@ -207,7 +207,7 @@ body {
   box-shadow: 0 2px 8px rgba(168,85,247,.3);
 }
 
-/* ─── Publish & Share ─── */
+/* Publish & Share */
 .btn.qr-publish {
   background: linear-gradient(135deg, rgba(6,182,212,.9), rgba(34,197,94,.85));
   border-color: rgba(34, 197, 94, .4);
@@ -228,13 +228,13 @@ body {
   box-shadow: 0 2px 8px rgba(34,197,94,.3);
 }
 
-/* ─── Download button — SVG icon left-aligned ─── */
+/* Download button — SVG icon left-aligned */
 .btn .icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  order: -1; /* forces icon to the LEFT of the label */
+  order: -1; 
 }
 
 /* LAYOUT */
@@ -447,7 +447,7 @@ iframe {
 }
 /* RESPONSIVE */
 
-/* ── Large Desktop (1200px+) ── */
+/* Large Desktop (1200px+) */
 @media (min-width: 1200px) {
   .layout {
     grid-template-columns: 360px 1fr;
@@ -464,7 +464,7 @@ iframe {
   }
 }
 
-/* ── Desktop (981px – 1199px) ── */
+/* Desktop (981px – 1199px) */
 @media (max-width: 1199px) and (min-width: 981px) {
   .layout {
     grid-template-columns: 300px 1fr;
@@ -476,7 +476,7 @@ iframe {
   }
 }
 
-/* ── Tablet Landscape (769px – 980px) ── */
+/* Tablet Landscape (769px – 980px) */
 @media (max-width: 980px) and (min-width: 769px) {
   .topbar {
     padding: 12px 16px;
@@ -541,7 +541,7 @@ iframe {
   }
 }
 
-/* ── Tablet Portrait (561px – 768px) ── */
+/* Tablet Portrait (561px – 768px) */
 @media (max-width: 768px) and (min-width: 561px) {
   .topbar {
     padding: 10px 14px;
@@ -636,7 +636,7 @@ iframe {
   }
 }
 
-/* ── Mobile (max 560px) ── */
+/* Mobile (max 560px) */
 @media (max-width: 560px) {
   .topbar {
     padding: 10px 12px;
@@ -752,7 +752,7 @@ iframe {
   }
 }
 
-/* ── Small Mobile (max 380px) ── */
+/* Small Mobile (max 380px) */
 @media (max-width: 380px) {
   .topbar {
     padding: 9px 10px;
