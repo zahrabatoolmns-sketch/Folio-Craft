@@ -538,11 +538,49 @@ input[type="file"]::file-selector-button:hover {
 }
 .project-card:hover { transform: translateY(-4px); border-color: rgba(123,110,246,.3); }
 
+.project-img { position: relative; }
 .project-img img { width: 100%; height: 130px; object-fit: cover; display: block; }
+
+.img-rm-btn {
+  position: absolute; top: 8px; right: 8px;
+  width: 24px; height: 24px; border-radius: 50%; border: none;
+  background: rgba(17,17,20,.65); color: #fff; font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; backdrop-filter: blur(4px);
+  transition: transform .18s, background .18s;
+}
+.img-rm-btn:hover { background: var(--danger); transform: scale(1.12); }
 
 .project-body { padding: 14px; }
 .project-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
 .project-head h4 { font-size: 14px; font-weight: 600; }
+
+.project-actions { display: flex; align-items: center; gap: 6px; }
+
+.edit-btn {
+  width: 22px; height: 22px; border-radius: 50%; border: none;
+  background: var(--a-dim); color: var(--a); font-size: 12px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: transform .18s, box-shadow .18s;
+}
+.edit-btn:hover { transform: scale(1.15); box-shadow: 0 4px 12px var(--glow-a); }
+
+/* project form: image preview + remove, add/cancel row */
+.img-preview-wrap { position: relative; margin-top: 8px; }
+.img-preview-thumb {
+  width: 100%; max-height: 140px; object-fit: cover;
+  display: block; border-radius: 12px; border: 1px solid var(--border);
+}
+.img-remove-btn {
+  margin-top: 6px; display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--danger);
+  background: rgba(239,68,68,.08); color: var(--danger);
+  font-family: 'Instrument Sans', sans-serif; font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: background .2s, transform .2s;
+}
+.img-remove-btn:hover { background: rgba(239,68,68,.16); transform: translateY(-1px); }
+
+.project-form-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
 .project-body p { font-size: 13px; color: var(--text-2); line-height: 1.55; margin-bottom: 10px; }
 

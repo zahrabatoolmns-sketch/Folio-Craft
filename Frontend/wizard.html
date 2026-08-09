@@ -215,6 +215,10 @@
           <label class="field">
             <span>Screenshot</span>
             <input type="file" id="projectImage" accept="image/*"/>
+            <div class="img-preview-wrap" id="projectImagePreviewWrap" hidden>
+              <img src="" id="projectImagePreview" class="img-preview-thumb" alt="Project screenshot preview"/>
+              <button type="button" class="img-remove-btn" id="removeProjectImageBtn" aria-label="Remove image">✕ Remove image</button>
+            </div>
           </label>
         </div>
 
@@ -229,7 +233,10 @@
           </label>
         </div>
 
-        <button type="button" class="btn-add" id="addProjectBtn">+ Add project</button>
+        <div class="project-form-actions">
+          <button type="button" class="btn-add" id="addProjectBtn">+ Add project</button>
+          <button type="button" class="btn-ghost" id="cancelProjectEditBtn" hidden>Cancel edit</button>
+        </div>
         <div class="items-grid" id="projectsList" aria-live="polite"></div>
 
         <div class="wiz-nav">

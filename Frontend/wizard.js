@@ -1,4 +1,3 @@
-
 'use strict';
 // Google Login Token Handle
 (function() {
@@ -249,6 +248,10 @@ function rmBtn(attr, idx) {
   return `<button class="rm-btn" data-rm="${attr}" data-idx="${idx}" aria-label="Remove">✕</button>`;
 }
 
+function editBtn(attr, idx) {
+  return `<button type="button" class="edit-btn" data-edit="${attr}" data-idx="${idx}" aria-label="Edit">✎</button>`;
+}
+
 function renderSkills() {
   const el = document.getElementById('skillsList');
   if (!el) return;
@@ -278,11 +281,18 @@ function renderProjects() {
 
   el.innerHTML = model.projects.map((p, i) => `
     <div class="project-card">
-      ${p.image_base64 ? `<div class="project-img"><img src="${p.image_base64}" alt="${esc(p.title)}" loading="lazy"/></div>` : ''}
+      ${p.image_base64 ? `
+        <div class="project-img">
+          <img src="${p.image_base64}" alt="${esc(p.title)}" loading="lazy"/>
+          <button type="button" class="img-rm-btn" data-rm-img="project" data-idx="${i}" aria-label="Delete image">✕</button>
+        </div>` : ''}
       <div class="project-body">
         <div class="project-head">
           <h4>${esc(p.title)}</h4>
-          ${rmBtn('project', i)}
+          <div class="project-actions">
+            ${editBtn('project', i)}
+            ${rmBtn('project', i)}
+          </div>
         </div>
         <p>${esc(p.description || '')}</p>
         <div class="project-tech">${(p.tech || []).map(t => `<span>${esc(t)}</span>`).join('')}</div>
@@ -350,6 +360,52 @@ document.getElementById('addSkillBtn')?.addEventListener('click', () => {
   renderSkills();
 });
 
+/* project image preview + remove (for the file picker, before saving) */
+let pendingProjectImage = ''; // base64 currently staged (kept image on edit, or newly picked file)
+const projectImageInput      = document.getElementById('projectImage');
+const projectImagePreviewWrap= document.getElementById('projectImagePreviewWrap');
+const projectImagePreview    = document.getElementById('projectImagePreview');
+
+function showProjectImagePreview(src) {
+  pendingProjectImage = src || '';
+  if (!projectImagePreviewWrap || !projectImagePreview) return;
+  if (pendingProjectImage) {
+    projectImagePreview.src = pendingProjectImage;
+    projectImagePreviewWrap.hidden = false;
+  } else {
+    projectImagePreview.src = '';
+    projectImagePreviewWrap.hidden = true;
+  }
+}
+
+projectImageInput?.addEventListener('change', async () => {
+  const file = projectImageInput.files?.[0] || null;
+  if (!file) return;
+  const b64 = await fileToBase64(file);
+  showProjectImagePreview(b64);
+});
+
+document.getElementById('removeProjectImageBtn')?.addEventListener('click', () => {
+  if (projectImageInput) projectImageInput.value = '';
+  showProjectImagePreview('');
+});
+
+/* add / update project */
+let editingProjectIndex = null; // null = adding new, otherwise index being edited
+
+function resetProjectForm() {
+  ['projectTitle','projectDescription','projectTech','projectGithub','projectLive'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  if (projectImageInput) projectImageInput.value = '';
+  showProjectImagePreview('');
+  editingProjectIndex = null;
+  const addBtn = document.getElementById('addProjectBtn');
+  if (addBtn) addBtn.textContent = '+ Add project';
+  const cancelBtn = document.getElementById('cancelProjectEditBtn');
+  if (cancelBtn) cancelBtn.hidden = true;
+}
+
 document.getElementById('addProjectBtn')?.addEventListener('click', async () => {
   const title = document.getElementById('projectTitle')?.value?.trim();
   if (!title) { toast('Enter a project title'); return; }
@@ -358,19 +414,26 @@ document.getElementById('addProjectBtn')?.addEventListener('click', async () => 
   const techRaw      = document.getElementById('projectTech')?.value?.trim();
   const github       = document.getElementById('projectGithub')?.value?.trim();
   const live         = document.getElementById('projectLive')?.value?.trim();
-  const imgFile      = document.getElementById('projectImage')?.files?.[0] || null;
-  const image_base64 = await fileToBase64(imgFile);
-  const tech         = techRaw ? techRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const imgFile      = projectImageInput?.files?.[0] || null;
+  // if a new file was picked use it, else keep whatever is staged (existing image on edit, or '' if removed)
+  const image_base64 = imgFile ? await fileToBase64(imgFile) : pendingProjectImage;
+  const tech          = techRaw ? techRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
 
-  model.projects.push({ title, description, tech, github, live, image_base64 });
+  const projectData = { title, description, tech, github, live, image_base64 };
+
+  if (editingProjectIndex !== null) {
+    model.projects[editingProjectIndex] = projectData;
+    toast('Project updated', 'success');
+  } else {
+    model.projects.push(projectData);
+  }
   setPortfolio(model);
-
-  ['projectTitle','projectDescription','projectTech','projectGithub','projectLive'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = '';
-  });
-  const imgEl = document.getElementById('projectImage');
-  if (imgEl) imgEl.value = '';
+  resetProjectForm();
   renderProjects();
+});
+
+document.getElementById('cancelProjectEditBtn')?.addEventListener('click', () => {
+  resetProjectForm();
 });
 
 document.getElementById('addExperienceBtn')?.addEventListener('click', () => {
@@ -405,9 +468,57 @@ document.addEventListener('click', e => {
   const i = Number(idx);
 
   if (rm === 'skill')   { model.skills.splice(i,1);     setPortfolio(model); renderSkills(); }
-  if (rm === 'project') { model.projects.splice(i,1);   setPortfolio(model); renderProjects(); }
+  if (rm === 'project') {
+    model.projects.splice(i,1);   setPortfolio(model); renderProjects();
+    if (editingProjectIndex === i) resetProjectForm();
+  }
   if (rm === 'exp')     { model.experience.splice(i,1); setPortfolio(model); renderExperience(); }
   if (rm === 'edu')     { model.education.splice(i,1);  setPortfolio(model); renderEducation(); }
+});
+
+/* 8b.  DELETE JUST THE IMAGE from an already-added project card */
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-rm-img]');
+  if (!btn) return;
+  const { rmImg, idx } = btn.dataset;
+  const i = Number(idx);
+
+  if (rmImg === 'project' && model.projects[i]) {
+    model.projects[i].image_base64 = '';
+    setPortfolio(model);
+    renderProjects();
+    if (editingProjectIndex === i) showProjectImagePreview('');
+    toast('Image removed', 'success');
+  }
+});
+
+/* 8c.  EDIT a project — load its data back into the form */
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-edit]');
+  if (!btn) return;
+  const { edit, idx } = btn.dataset;
+  const i = Number(idx);
+
+  if (edit === 'project' && model.projects[i]) {
+    const p = model.projects[i];
+    editingProjectIndex = i;
+
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val ?? ''; };
+    set('projectTitle', p.title);
+    set('projectDescription', p.description);
+    set('projectTech', (p.tech || []).join(', '));
+    set('projectGithub', p.github);
+    set('projectLive', p.live);
+    if (projectImageInput) projectImageInput.value = '';
+    showProjectImagePreview(p.image_base64 || '');
+
+    const addBtn = document.getElementById('addProjectBtn');
+    if (addBtn) addBtn.textContent = 'Update project';
+    const cancelBtn = document.getElementById('cancelProjectEditBtn');
+    if (cancelBtn) cancelBtn.hidden = false;
+
+    document.getElementById('projectTitle')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 });
 
 /* 9.  TEMPLATE SELECTION */
